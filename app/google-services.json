@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "",
+    "firebase_url": "https://example-bb31f.firebaseio.com",
+    "project_id": "example-bb31f",
+    "storage_bucket": "example-bb31f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "",
+        "android_client_info": {
+          "package_name": "com.example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

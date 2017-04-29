@@ -1,0 +1,11 @@
+image: uber/android-build-environment:latest
+
+pipelines:
+  default:
+    - step:
+        script:
+          - ./build.sh
+          - echo y | android update sdk --filter "extra-android-m2repository" --no-ui -a
+          - echo y | android update sdk --filter "extra-google-m2repository" --no-ui -a
+          - ./gradlew clean checkstyle --stacktrace --debug --continue
+          - ./gradlew testDebug --stacktrace --info --continue

@@ -1,0 +1,83 @@
+buildscript {
+    ext.kotlin_version = '1.1.2'
+    ext.fabricGradle = '1.22.1'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://jitpack.io" }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:2.3.1"
+        classpath "com.neenbedankt.gradle.plugins:android-apt:1.8"
+        classpath "me.tatarka:gradle-retrolambda:3.6.1"
+        classpath "me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2"
+        classpath "com.google.gms:google-services:3.0.0"
+        classpath "io.fabric.tools:gradle:$fabricGradle"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.4'
+        classpath "com.uber:okbuck:0.20.5"
+    }
+
+    System.properties['com.android.build.gradle.overrideVersionCheck'] = 'true'
+
+    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
+}
+
+apply plugin: 'com.uber.okbuck'
+
+ext {
+    // support
+    supportLibrary = '25.3.1'
+    testSupportLibrary = '0.5'
+
+    // test dependencies
+    junit = '4.12'
+    hamcrest = '1.3'
+    testButler = '1.3.0'
+    robolectric = '3.2.2'
+    espresso = '2.2.2'
+    mockito = '1.10.19'
+
+    // main dependencies
+    okhttp = '3.7.0'
+    retrofit = '2.2.0'
+    picasso = '2.5.2'
+    butterKnife = '8.5.1'
+    play = '10.2.4'
+    firebase = '10.2.4'
+    gson = '2.7'
+    facebook = '4.22.0'
+    rebound = '0.3.8'
+    rxAndroid = '2.0.1'
+    rxJava = '2.0.9'
+    eventbus = '3.0.0'
+    licensesDialog = '1.8.2'
+    shapeImageView = '0.9.3@aar'
+    crashlytics = '2.6.7@aar'
+
+    // utils
+    leakCanary = '1.5.1'
+    stetho = '1.5.0'
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url 'https://maven.fabric.io/public' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+task printBuildScriptClasspath {
+    doLast {
+        println project.buildscript.configurations.classpath.asPath
+    }
+}

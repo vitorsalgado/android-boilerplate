@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  wiremock:
+    build:
+      context: ./wiremock
+    container_name: android_mock
+    volumes:
+      - ./wiremock/data:/app/data
+    ports:
+      - 3000:3000
+
+  wiremock_reloader:
+    build:
+      context: ./wiremock-reloader
+    container_name: android_mock_reloader
+    volumes:
+      - ./wiremock/data:/app/data
+    depends_on:
+      - wiremock

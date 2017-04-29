@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <issue id="NewApi">
+        <ignore regexp="Try-with-resources requires API level 19"/>
+    </issue>
+    <issue id="InvalidPackage">
+        <ignore regexp=".*okio.*"/>
+        <ignore regexp=".*retrofit.*"/>
+    </issue>
+
+    <issue id="DefaultLocale" severity="informational"/>
+    <issue id="Overdraw" severity="informational"/>
+
+    <issue id="UnusedResources">
+        <ignore path="build/generated/res/google-services/**"/>
+    </issue>
+    <issue id="AllowBackup" severity="informational"/>
+
+    <!-- Ignores -->
+    <issue id="Typos" severity="ignore"/>
+    <issue id="IconDensities" severity="ignore"/>
+    <issue id="GoogleAppIndexingWarning" severity="ignore"/>
+    <issue id="ClickableViewAccessibility">
+        <ignore path="build/generated/source/apt/**"/>
+    </issue>
+</lint>

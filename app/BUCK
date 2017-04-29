@@ -1,0 +1,572 @@
+android_resource(
+	name = 'res_debug',
+	package = 'com.example',
+	res = res_glob([
+		('src/main/res', '**'),
+	]),
+	resource_union = True,
+	deps = [
+		'//.okbuck/cache:com.android.databinding.adapters-1.3.1.aar',
+		'//.okbuck/cache:com.android.databinding.library-1.3.1.aar',
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.cardview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.customtabs-25.0.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v13-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.test.espresso.espresso-idling-resource-2.2.2.aar',
+		'//.okbuck/cache:com.android.support.transition-25.3.1.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.answers-1.3.12.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.beta-1.2.4.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-2.6.7.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-core-2.3.16.aar',
+		'//.okbuck/cache:com.facebook.android.facebook-android-sdk-4.18.0.aar',
+		'//.okbuck/cache:com.facebook.stetho.stetho-1.4.2.aar',
+		'//.okbuck/cache:com.facebook.stetho.stetho-okhttp3-1.4.2.aar',
+		'//.okbuck/cache:com.github.siyamed.android-shape-imageview-0.9.3.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-base-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-basement-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-location-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-tasks-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-impl-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-common-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-core-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-iid-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-messaging-10.2.1.aar',
+		'//.okbuck/cache:com.jakewharton.butterknife-8.4.0.aar',
+		'//.okbuck/cache:com.squareup.leakcanary.leakcanary-android-1.5.aar',
+		'//.okbuck/cache:de.psdev.licensesdialog.licensesdialog-1.8.1.aar',
+		'//.okbuck/cache:io.fabric.sdk.android.fabric-1.3.16.aar',
+		'//.okbuck/cache:io.reactivex.rxjava2.rxandroid-2.0.1.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_build_config(
+	name = 'build_config_debug',
+	package = 'com.example',
+	values = [
+		'String APPLICATION_ID = "com.example"',
+		'String BUILD_TYPE = "debug"',
+		'String FLAVOR = ""',
+		'int VERSION_CODE = 1000',
+		'String VERSION_NAME = "1.0"',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_library(
+	name = 'src_debug',
+	srcs = glob([
+		'src/main/java/**/*.java',
+		'src/debug/java/**/*.java',
+	]),
+	manifest = '//.okbuck/gen/app/debug:AndroidManifest.xml',
+	annotation_processors = [
+		'butterknife.compiler.ButterKnifeProcessor',
+		'android.databinding.annotationprocessor.ProcessDataBinding',
+	],
+	annotation_processor_deps = [
+		'//.okbuck/cache:com.android.databinding.baseLibrary-2.3.1.jar',
+		'//.okbuck/cache:com.android.databinding.compiler-2.3.1.jar',
+		'//.okbuck/cache:com.android.support.support-annotations-25.3.1.jar',
+		'//.okbuck/cache:com.google.auto.auto-common-0.6.jar',
+		'//.okbuck/cache:com.google.auto.service.auto-service-1.0-rc2.jar',
+		'//.okbuck/cache:com.google.guava.guava-18.0.jar',
+		'//.okbuck/cache:com.googlecode.juniversalchardet.juniversalchardet-1.0.3.jar',
+		'//.okbuck/cache:com.jakewharton.butterknife-annotations-8.4.0.jar',
+		'//.okbuck/cache:com.jakewharton.butterknife-compiler-8.4.0.jar',
+		'//.okbuck/cache:com.squareup.javapoet-1.7.0.jar',
+	],
+	provided_deps = [
+		'//.okbuck/cache/retrolambda:rt-stub.jar',
+	],
+	source = '8',
+	target = '8',
+	extra_arguments = [
+		'-Aandroid.databinding.artifactType=APPLICATION',
+		'-Aandroid.databinding.printEncodedErrors=0',
+		'-Aandroid.databinding.minApi=19',
+		'-Aandroid.databinding.isTestVariant=0',
+		'-Aandroid.databinding.enableDebugLogs=0',
+		'-Aandroid.databinding.sdkDir=/home/vsalgado/Android/Sdk',
+		'-Aandroid.databinding.bindingBuildFolder=/home/vsalgado/Documents/github/android-boilerplate/app/build/intermediates/data-binding-compiler/debug',
+		'-Aandroid.databinding.enableForTests=0',
+		'-Aandroid.databinding.modulePackage=com.example',
+		'-Aandroid.databinding.generationalFileOutDir=/home/vsalgado/Documents/github/android-boilerplate/app/build/intermediates/bundles/debug/data-binding',
+		'-Aandroid.databinding.xmlOutDir=/home/vsalgado/Documents/github/android-boilerplate/app/build/intermediates/data-binding-info/debug',
+	],
+	postprocess_classes_commands = [
+		'(read CLASSES_DIR && java -Dretrolambda.inputDir="${CLASSES_DIR}" -Dretrolambda.classpath="${COMPILATION_BOOTCLASSPATH}":"${COMPILATION_CLASSPATH}":"${CLASSES_DIR}" -jar .okbuck/cache/retrolambda/retrolambda-2.5.0.jar) <<<',
+	],
+	deps = [
+		'//.okbuck/cache:com.android.databinding.adapters-1.3.1.aar',
+		'//.okbuck/cache:com.android.databinding.baseLibrary-2.3.1.jar',
+		'//.okbuck/cache:com.android.databinding.library-1.3.1.aar',
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.cardview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.customtabs-25.0.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-annotations-25.3.1.jar',
+		'//.okbuck/cache:com.android.support.support-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v13-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.test.espresso.espresso-idling-resource-2.2.2.aar',
+		'//.okbuck/cache:com.android.support.transition-25.3.1.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.answers-1.3.12.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.beta-1.2.4.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-2.6.7.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-core-2.3.16.aar',
+		'//.okbuck/cache:com.facebook.android.facebook-android-sdk-4.18.0.aar',
+		'//.okbuck/cache:com.facebook.rebound.rebound-0.3.8.jar',
+		'//.okbuck/cache:com.facebook.stetho.stetho-1.4.2.aar',
+		'//.okbuck/cache:com.facebook.stetho.stetho-okhttp3-1.4.2.aar',
+		'//.okbuck/cache:com.github.siyamed.android-shape-imageview-0.9.3.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-base-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-basement-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-location-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-tasks-10.2.1.aar',
+		'//.okbuck/cache:com.google.code.findbugs.jsr305-3.0.1.jar',
+		'//.okbuck/cache:com.google.code.gson.gson-2.7.jar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-impl-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-common-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-core-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-iid-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-messaging-10.2.1.aar',
+		'//.okbuck/cache:com.jakewharton.butterknife-8.4.0.aar',
+		'//.okbuck/cache:com.jakewharton.butterknife-annotations-8.4.0.jar',
+		'//.okbuck/cache:com.parse.bolts.bolts-android-1.4.0.jar',
+		'//.okbuck/cache:com.parse.bolts.bolts-applinks-1.4.0.jar',
+		'//.okbuck/cache:com.parse.bolts.bolts-tasks-1.4.0.jar',
+		'//.okbuck/cache:com.squareup.haha.haha-2.0.3.jar',
+		'//.okbuck/cache:com.squareup.leakcanary.leakcanary-analyzer-1.5.jar',
+		'//.okbuck/cache:com.squareup.leakcanary.leakcanary-android-1.5.aar',
+		'//.okbuck/cache:com.squareup.leakcanary.leakcanary-watcher-1.5.jar',
+		'//.okbuck/cache:com.squareup.okhttp3.logging-interceptor-3.5.0.jar',
+		'//.okbuck/cache:com.squareup.okhttp3.okhttp-3.5.0.jar',
+		'//.okbuck/cache:com.squareup.okio.okio-1.11.0.jar',
+		'//.okbuck/cache:com.squareup.picasso.picasso-2.5.2.jar',
+		'//.okbuck/cache:com.squareup.retrofit2.adapter-rxjava-2.1.0.jar',
+		'//.okbuck/cache:com.squareup.retrofit2.converter-gson-2.1.0.jar',
+		'//.okbuck/cache:com.squareup.retrofit2.retrofit-2.1.0.jar',
+		'//.okbuck/cache:commons-cli.commons-cli-1.2.jar',
+		'//.okbuck/cache:de.psdev.licensesdialog.licensesdialog-1.8.1.aar',
+		'//.okbuck/cache:io.fabric.sdk.android.fabric-1.3.16.aar',
+		'//.okbuck/cache:io.reactivex.rxjava-1.1.5.jar',
+		'//.okbuck/cache:io.reactivex.rxjava2.rxandroid-2.0.1.aar',
+		'//.okbuck/cache:io.reactivex.rxjava2.rxjava-2.0.9.jar',
+		'//.okbuck/cache:org.greenrobot.eventbus-3.0.0.jar',
+		'//.okbuck/cache:org.jetbrains.annotations-13.0.jar',
+		'//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-1.1.1.jar',
+		'//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-jre7-1.1.1.jar',
+		'//.okbuck/cache:org.reactivestreams.reactive-streams-1.0.0.jar',
+		':build_config_debug',
+		':res_debug',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+genrule(
+	name = 'lint_debug',
+	srcs = [
+		'src/main/java',
+		'src/debug/java',
+		'src/main/res',
+	],
+	out = 'lint_debug_out',
+	bash = '' \
+	'export ANDROID_LINT_JARS="$(location //.okbuck/cache:com.jakewharton.butterknife-8.4.0-lint.jar)"; ' \
+	'mkdir -p $OUT; ' \
+	'RUN_IN=`dirname $(location //.okbuck/gen/app/debug:AndroidManifest.xml)`; ' \
+	'exec java ' \
+	'-Djava.awt.headless=true ' \
+	'-Xmx1024m ' \
+	'-classpath $(location //.okbuck/cache/lint:okbuck_lint) ' \
+	'com.android.tools.lint.Main ' \
+	'--classpath $(location :src_debug) ' \
+	'--exitcode ' \
+	'--fullpath ' \
+	'--config $(location //.okbuck/cache/lint:app_lint.xml) ' \
+	'--xml "$OUT/lint-results.xml" ' \
+	'--html "$OUT/lint-results.html" ' \
+	'--sources src/main/java ' \
+	'--sources src/debug/java ' \
+	'--resources src/main/res ' \
+	'$RUN_IN ' \
+	'',
+)
+
+android_manifest(
+	name = 'manifest_debug',
+	skeleton = '//.okbuck/gen/app/debug:AndroidManifest.xml',
+	deps = [
+		'//.okbuck/cache:com.android.databinding.adapters-1.3.1.aar',
+		'//.okbuck/cache:com.android.databinding.library-1.3.1.aar',
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.cardview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.customtabs-25.0.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v13-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.test.espresso.espresso-idling-resource-2.2.2.aar',
+		'//.okbuck/cache:com.android.support.transition-25.3.1.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.answers-1.3.12.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.beta-1.2.4.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-2.6.7.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-core-2.3.16.aar',
+		'//.okbuck/cache:com.facebook.android.facebook-android-sdk-4.18.0.aar',
+		'//.okbuck/cache:com.facebook.stetho.stetho-1.4.2.aar',
+		'//.okbuck/cache:com.facebook.stetho.stetho-okhttp3-1.4.2.aar',
+		'//.okbuck/cache:com.github.siyamed.android-shape-imageview-0.9.3.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-base-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-basement-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-location-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-tasks-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-impl-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-common-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-core-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-iid-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-messaging-10.2.1.aar',
+		'//.okbuck/cache:com.jakewharton.butterknife-8.4.0.aar',
+		'//.okbuck/cache:com.squareup.leakcanary.leakcanary-android-1.5.aar',
+		'//.okbuck/cache:de.psdev.licensesdialog.licensesdialog-1.8.1.aar',
+		'//.okbuck/cache:io.fabric.sdk.android.fabric-1.3.16.aar',
+		'//.okbuck/cache:io.reactivex.rxjava2.rxandroid-2.0.1.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_binary(
+	name = 'bin_debug',
+	manifest = ':manifest_debug',
+	keystore = '//.okbuck/gen/app/debug:app.keystore',
+	package_type = 'release',
+	android_sdk_proguard_config = 'none',
+	proguard_config = '//.okbuck/gen/app/debug:proguard.pro',
+	manifest_entries = {
+		'placeholders': {
+			'applicationId': 'com.example',
+		},
+	},
+	deps = [
+		':res_debug',
+		':src_debug',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_resource(
+	name = 'res_release',
+	package = 'com.example',
+	res = res_glob([
+		('src/main/res', '**'),
+	]),
+	resource_union = True,
+	deps = [
+		'//.okbuck/cache:com.android.databinding.adapters-1.3.1.aar',
+		'//.okbuck/cache:com.android.databinding.library-1.3.1.aar',
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.cardview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.customtabs-25.0.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v13-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.test.espresso.espresso-idling-resource-2.2.2.aar',
+		'//.okbuck/cache:com.android.support.transition-25.3.1.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.answers-1.3.12.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.beta-1.2.4.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-2.6.7.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-core-2.3.16.aar',
+		'//.okbuck/cache:com.facebook.android.facebook-android-sdk-4.18.0.aar',
+		'//.okbuck/cache:com.github.siyamed.android-shape-imageview-0.9.3.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-base-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-basement-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-location-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-tasks-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-impl-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-common-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-core-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-iid-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-messaging-10.2.1.aar',
+		'//.okbuck/cache:com.jakewharton.butterknife-8.4.0.aar',
+		'//.okbuck/cache:com.squareup.leakcanary.leakcanary-android-no-op-1.5.aar',
+		'//.okbuck/cache:de.psdev.licensesdialog.licensesdialog-1.8.1.aar',
+		'//.okbuck/cache:io.fabric.sdk.android.fabric-1.3.16.aar',
+		'//.okbuck/cache:io.reactivex.rxjava2.rxandroid-2.0.1.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_build_config(
+	name = 'build_config_release',
+	package = 'com.example',
+	values = [
+		'String APPLICATION_ID = "com.example"',
+		'String BUILD_TYPE = "release"',
+		'String FLAVOR = ""',
+		'int VERSION_CODE = 1000',
+		'String VERSION_NAME = "1.0"',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_library(
+	name = 'src_release',
+	srcs = glob([
+		'src/main/java/**/*.java',
+	]),
+	manifest = '//.okbuck/gen/app/release:AndroidManifest.xml',
+	annotation_processors = [
+		'butterknife.compiler.ButterKnifeProcessor',
+		'android.databinding.annotationprocessor.ProcessDataBinding',
+	],
+	annotation_processor_deps = [
+		'//.okbuck/cache:com.android.databinding.baseLibrary-2.3.1.jar',
+		'//.okbuck/cache:com.android.databinding.compiler-2.3.1.jar',
+		'//.okbuck/cache:com.android.support.support-annotations-25.3.1.jar',
+		'//.okbuck/cache:com.google.auto.auto-common-0.6.jar',
+		'//.okbuck/cache:com.google.auto.service.auto-service-1.0-rc2.jar',
+		'//.okbuck/cache:com.google.guava.guava-18.0.jar',
+		'//.okbuck/cache:com.googlecode.juniversalchardet.juniversalchardet-1.0.3.jar',
+		'//.okbuck/cache:com.jakewharton.butterknife-annotations-8.4.0.jar',
+		'//.okbuck/cache:com.jakewharton.butterknife-compiler-8.4.0.jar',
+		'//.okbuck/cache:com.squareup.javapoet-1.7.0.jar',
+	],
+	provided_deps = [
+		'//.okbuck/cache/retrolambda:rt-stub.jar',
+	],
+	source = '8',
+	target = '8',
+	extra_arguments = [
+		'-Aandroid.databinding.artifactType=APPLICATION',
+		'-Aandroid.databinding.printEncodedErrors=0',
+		'-Aandroid.databinding.minApi=19',
+		'-Aandroid.databinding.isTestVariant=0',
+		'-Aandroid.databinding.enableDebugLogs=0',
+		'-Aandroid.databinding.sdkDir=/home/vsalgado/Android/Sdk',
+		'-Aandroid.databinding.bindingBuildFolder=/home/vsalgado/Documents/github/android-boilerplate/app/build/intermediates/data-binding-compiler/release',
+		'-Aandroid.databinding.enableForTests=0',
+		'-Aandroid.databinding.modulePackage=com.example',
+		'-Aandroid.databinding.generationalFileOutDir=/home/vsalgado/Documents/github/android-boilerplate/app/build/intermediates/bundles/default/data-binding',
+		'-Aandroid.databinding.xmlOutDir=/home/vsalgado/Documents/github/android-boilerplate/app/build/intermediates/data-binding-info/release',
+	],
+	postprocess_classes_commands = [
+		'(read CLASSES_DIR && java -Dretrolambda.inputDir="${CLASSES_DIR}" -Dretrolambda.classpath="${COMPILATION_BOOTCLASSPATH}":"${COMPILATION_CLASSPATH}":"${CLASSES_DIR}" -jar .okbuck/cache/retrolambda/retrolambda-2.5.0.jar) <<<',
+	],
+	deps = [
+		'//.okbuck/cache:com.android.databinding.adapters-1.3.1.aar',
+		'//.okbuck/cache:com.android.databinding.baseLibrary-2.3.1.jar',
+		'//.okbuck/cache:com.android.databinding.library-1.3.1.aar',
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.cardview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.customtabs-25.0.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-annotations-25.3.1.jar',
+		'//.okbuck/cache:com.android.support.support-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v13-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.test.espresso.espresso-idling-resource-2.2.2.aar',
+		'//.okbuck/cache:com.android.support.transition-25.3.1.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.answers-1.3.12.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.beta-1.2.4.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-2.6.7.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-core-2.3.16.aar',
+		'//.okbuck/cache:com.facebook.android.facebook-android-sdk-4.18.0.aar',
+		'//.okbuck/cache:com.facebook.rebound.rebound-0.3.8.jar',
+		'//.okbuck/cache:com.github.siyamed.android-shape-imageview-0.9.3.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-base-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-basement-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-location-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-tasks-10.2.1.aar',
+		'//.okbuck/cache:com.google.code.findbugs.jsr305-3.0.1.jar',
+		'//.okbuck/cache:com.google.code.gson.gson-2.7.jar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-impl-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-common-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-core-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-iid-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-messaging-10.2.1.aar',
+		'//.okbuck/cache:com.jakewharton.butterknife-8.4.0.aar',
+		'//.okbuck/cache:com.jakewharton.butterknife-annotations-8.4.0.jar',
+		'//.okbuck/cache:com.parse.bolts.bolts-android-1.4.0.jar',
+		'//.okbuck/cache:com.parse.bolts.bolts-applinks-1.4.0.jar',
+		'//.okbuck/cache:com.parse.bolts.bolts-tasks-1.4.0.jar',
+		'//.okbuck/cache:com.squareup.leakcanary.leakcanary-android-no-op-1.5.aar',
+		'//.okbuck/cache:com.squareup.okhttp3.okhttp-3.5.0.jar',
+		'//.okbuck/cache:com.squareup.okio.okio-1.11.0.jar',
+		'//.okbuck/cache:com.squareup.picasso.picasso-2.5.2.jar',
+		'//.okbuck/cache:com.squareup.retrofit2.adapter-rxjava-2.1.0.jar',
+		'//.okbuck/cache:com.squareup.retrofit2.converter-gson-2.1.0.jar',
+		'//.okbuck/cache:com.squareup.retrofit2.retrofit-2.1.0.jar',
+		'//.okbuck/cache:de.psdev.licensesdialog.licensesdialog-1.8.1.aar',
+		'//.okbuck/cache:io.fabric.sdk.android.fabric-1.3.16.aar',
+		'//.okbuck/cache:io.reactivex.rxjava-1.1.5.jar',
+		'//.okbuck/cache:io.reactivex.rxjava2.rxandroid-2.0.1.aar',
+		'//.okbuck/cache:io.reactivex.rxjava2.rxjava-2.0.9.jar',
+		'//.okbuck/cache:org.greenrobot.eventbus-3.0.0.jar',
+		'//.okbuck/cache:org.jetbrains.annotations-13.0.jar',
+		'//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-1.1.1.jar',
+		'//.okbuck/cache:org.jetbrains.kotlin.kotlin-stdlib-jre7-1.1.1.jar',
+		'//.okbuck/cache:org.reactivestreams.reactive-streams-1.0.0.jar',
+		':build_config_release',
+		':res_release',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+genrule(
+	name = 'lint_release',
+	srcs = [
+		'src/main/java',
+		'src/main/res',
+	],
+	out = 'lint_release_out',
+	bash = '' \
+	'export ANDROID_LINT_JARS="$(location //.okbuck/cache:com.jakewharton.butterknife-8.4.0-lint.jar)"; ' \
+	'mkdir -p $OUT; ' \
+	'RUN_IN=`dirname $(location //.okbuck/gen/app/release:AndroidManifest.xml)`; ' \
+	'exec java ' \
+	'-Djava.awt.headless=true ' \
+	'-Xmx1024m ' \
+	'-classpath $(location //.okbuck/cache/lint:okbuck_lint) ' \
+	'com.android.tools.lint.Main ' \
+	'--classpath $(location :src_release) ' \
+	'--exitcode ' \
+	'--fullpath ' \
+	'--config $(location //.okbuck/cache/lint:app_lint.xml) ' \
+	'--xml "$OUT/lint-results.xml" ' \
+	'--html "$OUT/lint-results.html" ' \
+	'--sources src/main/java ' \
+	'--resources src/main/res ' \
+	'$RUN_IN ' \
+	'',
+)
+
+android_manifest(
+	name = 'manifest_release',
+	skeleton = '//.okbuck/gen/app/release:AndroidManifest.xml',
+	deps = [
+		'//.okbuck/cache:com.android.databinding.adapters-1.3.1.aar',
+		'//.okbuck/cache:com.android.databinding.library-1.3.1.aar',
+		'//.okbuck/cache:com.android.support.animated-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.appcompat-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.cardview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.customtabs-25.0.0.aar',
+		'//.okbuck/cache:com.android.support.design-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.recyclerview-v7-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-ui-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-core-utils-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-fragment-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-media-compat-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v13-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-v4-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.support-vector-drawable-25.3.1.aar',
+		'//.okbuck/cache:com.android.support.test.espresso.espresso-idling-resource-2.2.2.aar',
+		'//.okbuck/cache:com.android.support.transition-25.3.1.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.answers-1.3.12.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.beta-1.2.4.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-2.6.7.aar',
+		'//.okbuck/cache:com.crashlytics.sdk.android.crashlytics-core-2.3.16.aar',
+		'//.okbuck/cache:com.facebook.android.facebook-android-sdk-4.18.0.aar',
+		'//.okbuck/cache:com.github.siyamed.android-shape-imageview-0.9.3.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-base-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-basement-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-location-10.2.1.aar',
+		'//.okbuck/cache:com.google.android.gms.play-services-tasks-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-analytics-impl-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-common-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-core-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-iid-10.2.1.aar',
+		'//.okbuck/cache:com.google.firebase.firebase-messaging-10.2.1.aar',
+		'//.okbuck/cache:com.jakewharton.butterknife-8.4.0.aar',
+		'//.okbuck/cache:com.squareup.leakcanary.leakcanary-android-no-op-1.5.aar',
+		'//.okbuck/cache:de.psdev.licensesdialog.licensesdialog-1.8.1.aar',
+		'//.okbuck/cache:io.fabric.sdk.android.fabric-1.3.16.aar',
+		'//.okbuck/cache:io.reactivex.rxjava2.rxandroid-2.0.1.aar',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+
+android_binary(
+	name = 'bin_release',
+	manifest = ':manifest_release',
+	keystore = '//.okbuck/gen/app/release:app.keystore',
+	package_type = 'release',
+	android_sdk_proguard_config = 'none',
+	proguard_config = '//.okbuck/gen/app/release:proguard.pro',
+	manifest_entries = {
+		'placeholders': {
+			'applicationId': 'com.example',
+		},
+	},
+	deps = [
+		':res_release',
+		':src_release',
+	],
+	visibility = [
+		'PUBLIC',
+	],
+)
+

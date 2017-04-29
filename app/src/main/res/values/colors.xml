@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- main -->
+    <color name="primary">#616161</color>
+    <color name="primaryDark">#373737</color>
+    <color name="secondaryDark">#8e8e8e</color>
+    <color name="accent">#616161</color>
+
+    <color name="secondaryText">#E4E6E8</color>
+    <color name="dark_gray">#595959</color>
+    <color name="option_gray">#E0E0E0</color>
+    <color name="light_gray">#E9E9E9</color>
+    <color name="soft_gray">#F7F7F8</color>
+    <color name="red_opaque">#D9DB4437</color>
+    <color name="light_green">#7ADA90</color>
+    <color name="selected_grid_item">#4D2FA9E5</color>
+    <color name="action_blue">#29B3FF</color>
+    <color name="yellow">#4D1E2D</color>
+
+    <!-- tabs -->
+    <color name="tab_unselected">@color/accent</color>
+    <color name="tab_seletected">#E5E3E6</color>
+
+    <!-- pager component -->
+    <color name="pager_selected">#fff</color>
+    <color name="pager_nonselected">#5D6166</color>
+
+    <!-- text -->
+    <color name="text_title">#4B4B4B</color>
+    <color name="text_edit">#484848</color>
+    <color name="text_soft_dark">#484848</color>
+
+    <!-- components -->
+    <color name="edit_hint">#000</color>
+    <color name="image_blur">#aeffffff</color>
+</resources>
