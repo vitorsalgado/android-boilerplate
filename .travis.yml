@@ -51,6 +51,3 @@ before_script:
 
 script:
   - ./gradlew clean build check --stacktrace -x validateSigningRelease -x packageRelease
-
-after_success:
-  - ./gradlew jacocoTestReport coveralls
