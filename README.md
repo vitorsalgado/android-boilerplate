@@ -5,7 +5,7 @@
 [![API](https://img.shields.io/badge/API-19%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=19)
 
 Android boilerplate application.  
-The goal is to have a base from where projects should start with basic architecture, configurations and continuous integration already set.
+The goal is to have a base from where new projects can start with basic architecture, configurations and continuous integration already set.
 
 ## License
 This project is available under Apache Public License version 2.0. See [LICENSE](LICENSE).

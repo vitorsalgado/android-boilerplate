@@ -45,4 +45,4 @@ script:
   - ./gradlew clean build check --stacktrace -x validateSigningRelease -x packageRelease
 
 after_success:
-  - gradle jacocoTestReport coveralls
+  - ./gradlew jacocoTestReport coveralls

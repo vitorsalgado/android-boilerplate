@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.Pair;
 
-import com.example.AppDefaults;
 import com.example.data.net.facebook.dtos.FacebookAlbum;
 import com.example.data.net.facebook.dtos.FacebookAlbumPhotos;
 import com.example.data.net.facebook.dtos.FacebookPhoto;
