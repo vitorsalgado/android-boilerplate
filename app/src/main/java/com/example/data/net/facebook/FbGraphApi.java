@@ -110,7 +110,7 @@ public class FbGraphApi implements GraphApi {
 
     @Override
     public Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId) {
-        return getAlbumPhotos(albumId, AppDefaults.MAX_FACEBOOK_ALBUM_PHOTOS_PER_CALL);
+        return getAlbumPhotos(albumId, 100);
     }
 
     @Override
