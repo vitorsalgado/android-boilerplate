@@ -2,12 +2,12 @@ package com.example.data.net.facebook.token;
 
 import com.facebook.AccessToken;
 
-public class AccessTokenSdkProvider implements AccessTokenProvider {
-    private static AccessTokenProvider instance;
+public class FBSdkAccessTokenProvider implements FBAccessTokenProvider {
+    private static FBAccessTokenProvider instance;
 
-    public static AccessTokenProvider getInstance() {
+    public static FBAccessTokenProvider getInstance() {
         if (instance == null) {
-            instance = new AccessTokenSdkProvider();
+            instance = new FBSdkAccessTokenProvider();
         }
 
         return instance;

@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import com.example.data.managers.AuthenticationManager;
 import com.example.data.net.facebook.FbGraphApi;
 import com.example.data.net.facebook.GraphApi;
-import com.example.data.net.facebook.token.AccessTokenProvider;
-import com.example.data.net.facebook.token.AccessTokenSdkProvider;
+import com.example.data.net.facebook.token.FBAccessTokenProvider;
+import com.example.data.net.facebook.token.FBSdkAccessTokenProvider;
 import com.example.data.net.support.SimpleSupportApi;
 import com.example.data.net.support.SupportApi;
 import com.example.utils.FileUtils;
@@ -57,7 +57,7 @@ public class AppDeps {
         return null;
     }
 
-    public static AccessTokenProvider fbAccessTokenProvider() {
-        return AccessTokenSdkProvider.getInstance();
+    public static FBAccessTokenProvider fbAccessTokenProvider() {
+        return FBSdkAccessTokenProvider.getInstance();
     }
 }

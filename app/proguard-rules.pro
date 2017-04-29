@@ -1,3 +1,8 @@
+# Models, DTOs
+-keep class com.example.data.models.** { *; }
+-keep class com.example.net.api.dtos.** { *; }
+-keep class com.example.net.facebook.dtos.** { *; }
+
 # Keep our interfaces so they can be used by other ProGuard rules.
 # See http://sourceforge.net/p/proguard/bugs/466/
 -keep,allowobfuscation @interface com.facebook.common.internal.DoNotStrip
@@ -49,8 +54,6 @@
 
 -dontwarn retrofit.**
 -dontwarn retrofit.appengine.UrlFetchClient
--keep class com.example.data.models.** { *; }
--keep class com.example.net.facebook.dtos.** { *; }
 -keep class retrofit.** { *; }
 -keepclasseswithmembers class * {
     @retrofit.http.* <methods>;

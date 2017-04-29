@@ -13,7 +13,7 @@ import com.example.data.net.facebook.dtos.FacebookPhoto;
 import com.example.data.net.facebook.dtos.FacebookUser;
 import com.example.data.net.facebook.exceptions.GraphApiException;
 import com.example.data.net.facebook.exceptions.GraphApiTransientException;
-import com.example.data.net.facebook.token.AccessTokenProvider;
+import com.example.data.net.facebook.token.FBAccessTokenProvider;
 import com.example.data.net.facebook.utils.FbUtils;
 import com.example.data.net.facebook.utils.Fields;
 import com.example.data.net.support.SupportApi;
@@ -41,9 +41,9 @@ public class FbGraphApi implements GraphApi {
     private final long ATTEMPT_DELAY_IN_SECONDS = 2;
 
     private final SupportApi mSupportApi;
-    private final AccessTokenProvider mAccessTokenProvider;
+    private final FBAccessTokenProvider mAccessTokenProvider;
 
-    public static GraphApi getInstance(@NonNull SupportApi supportApi, @NonNull AccessTokenProvider accessTokenProvider) {
+    public static GraphApi getInstance(@NonNull SupportApi supportApi, @NonNull FBAccessTokenProvider accessTokenProvider) {
         if (instance == null) {
             instance = new FbGraphApi(supportApi, accessTokenProvider);
         }
@@ -51,7 +51,7 @@ public class FbGraphApi implements GraphApi {
         return instance;
     }
 
-    public FbGraphApi(@NonNull SupportApi supportApi, @NonNull AccessTokenProvider accessTokenProvider) {
+    public FbGraphApi(@NonNull SupportApi supportApi, @NonNull FBAccessTokenProvider accessTokenProvider) {
         mSupportApi = supportApi;
         mAccessTokenProvider = accessTokenProvider;
     }

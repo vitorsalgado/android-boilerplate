@@ -13,6 +13,13 @@ public class ApiError {
         this.traceID = traceID;
     }
 
+    public ApiError(String message) {
+        this.message = message;
+        this.code = "";
+        this.details = "";
+        this.traceID = "";
+    }
+
     public String getMessage() {
         return message;
     }
