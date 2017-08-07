@@ -29,6 +29,7 @@ public abstract class BaseHttpException extends RuntimeException {
 
         return apiError.getCode() + "\n" +
                 apiError.getMessage() + "\n" +
+                apiError.getTraceID() + "\n" +
                 (apiError.getDetails() == null ? "" : apiError.getDetails()) + "\n\n";
     }
 }
