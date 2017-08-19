@@ -8,18 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 
 import com.example.R;
 import com.example.databinding.MainActivityBinding;
 import com.example.features.BaseActivity;
 
-import butterknife.BindColor;
-import butterknife.ButterKnife;
-
 public class MainActivity extends BaseActivity implements TabLayout.OnTabSelectedListener {
-    @BindColor(R.color.tab_seletected) int mColorTabSelected;
-    @BindColor(R.color.tab_unselected) int mColorTabUnselected;
-
     MainActivityBinding mBinding;
     int mCurrentTab;
 
@@ -36,8 +31,6 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
-
-        ButterKnife.bind(this);
     }
 
     // TabLayout event handlers
@@ -47,12 +40,12 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
         mBinding.tabPager.setCurrentItem(tab.getPosition());
         mCurrentTab = tab.getPosition();
 
-        setTabColor(tab, mColorTabSelected);
+        setTabColor(tab, ContextCompat.getColor(this, R.color.tab_seletected));
     }
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-        setTabColor(tab, mColorTabUnselected);
+        setTabColor(tab, ContextCompat.getColor(this, R.color.tab_seletected));
     }
 
     @Override

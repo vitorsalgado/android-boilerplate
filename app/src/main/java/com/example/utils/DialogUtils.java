@@ -42,18 +42,18 @@ public final class DialogUtils {
                 .create();
     }
 
-    public static Dialog singleChoice(@NonNull Context context, String title, String[] options, DialogInterface.OnClickListener onClickListener) {
+    public static Dialog singleChoice(@NonNull Context context, @StringRes int title, String[] options, DialogInterface.OnClickListener onClickListener) {
         return new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setItems(options, onClickListener)
                 .create();
     }
 
-    public static Dialog simpleOk(Context context, String title, String message) {
+    public static Dialog simpleOk(Context context, @StringRes int title, @StringRes int message) {
         return simpleOk(context, title, message, null);
     }
 
-    public static Dialog simpleOk(Context context, String title, String message, AlertDialog.OnDismissListener onDismissListener) {
+    public static Dialog simpleOk(Context context, @StringRes int title, @StringRes int message, AlertDialog.OnDismissListener onDismissListener) {
         return new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)

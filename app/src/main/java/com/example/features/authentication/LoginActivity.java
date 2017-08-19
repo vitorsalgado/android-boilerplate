@@ -17,16 +17,9 @@ import com.example.features.main.MainActivity;
 import com.example.utils.ActivityUtils;
 import com.example.utils.DialogUtils;
 
-import butterknife.BindString;
-
 public class LoginActivity extends BaseActivity implements LoginView {
     private static final String TAG = "LoginActivity";
     private static final String EXTRA_ERROR_MESSAGE = "com.example.LoginActivity.ERROR_MESSAGE";
-
-    @BindString(R.string.login_dialog_failure_title) String mStrLoginErrorTitle;
-    @BindString(R.string.login_dialog_failure_message) String mStrLoginGeeneralError;
-    @BindString(R.string.login_error_unexpected_title) String mStrUnexpectedTitle;
-    @BindString(R.string.login_error_unexpected_description) String mStrUnexpectedDescription;
 
     private LoginPresenter mLoginPresenter;
     private LoginActivityBinding mBinding;
@@ -101,7 +94,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         Log.e(TAG, ex.getMessage(), ex);
 
         loaded();
-        DialogUtils.simpleOk(this, mStrLoginErrorTitle, mStrLoginGeeneralError).show();
+        DialogUtils.simpleOk(this, R.string.login_error_unexpected_title, R.string.login_error_unexpected_description).show();
     }
 
     @Override
