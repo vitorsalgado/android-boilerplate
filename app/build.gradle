@@ -144,6 +144,7 @@ dependencies {
     // Android Support Libraries
 
     api "com.android.support:support-annotations:$versions.supportLibrary"
+    api "com.android.support.constraint:constraint-layout:1.0.2"
     api("com.android.support:appcompat-v7:$versions.supportLibrary") {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
@@ -173,6 +174,7 @@ dependencies {
     // Facebook
     api "com.facebook.android:facebook-android-sdk:$versions.facebook"
     api "com.facebook.rebound:rebound:$versions.rebound"
+    api "com.facebook.fresco:fresco:$versions.fresco"
 
     // RxJava
     api "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
