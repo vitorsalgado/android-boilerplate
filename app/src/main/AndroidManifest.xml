@@ -42,7 +42,7 @@
         <!-- Services -->
 
         <service
-            android:name=".services.push.MessagingService"
+            android:name=".data.push.MessagingService"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
@@ -50,7 +50,7 @@
         </service>
 
         <service
-            android:name=".services.push.InstanceIdService"
+            android:name=".data.push.InstanceIdService"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>

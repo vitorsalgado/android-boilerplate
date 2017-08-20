@@ -1,13 +1,13 @@
 package com.example.data.net.facebook.dtos;
 
 public class FacebookPaging {
-    private FacebookCursor cursors;
+	private FacebookCursor cursors;
 
-    public FacebookPaging(FacebookCursor cursors) {
-        this.cursors = cursors;
-    }
+	public FacebookPaging(FacebookCursor cursors) {
+		this.cursors = cursors;
+	}
 
-    public FacebookCursor getCursors() {
-        return cursors;
-    }
+	public FacebookCursor getCursors() {
+		return cursors;
+	}
 }

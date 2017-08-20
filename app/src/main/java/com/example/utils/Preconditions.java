@@ -4,36 +4,36 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public class Preconditions {
-    @NonNull
-    public static <T> T checkNotNull(T reference) {
-        if (reference == null) {
-            throw new NullPointerException();
-        }
+	@NonNull
+	public static <T> T checkNotNull(T reference) {
+		if (reference == null) {
+			throw new NullPointerException();
+		}
 
-        return reference;
-    }
+		return reference;
+	}
 
-    @NonNull
-    public static <T> T checkNotNull(T reference, @Nullable Object errorMessage) {
-        if (reference == null) {
-            throw new NullPointerException(String.valueOf(errorMessage));
-        }
+	@NonNull
+	public static <T> T checkNotNull(T reference, @Nullable Object errorMessage) {
+		if (reference == null) {
+			throw new NullPointerException(String.valueOf(errorMessage));
+		}
 
-        return reference;
-    }
+		return reference;
+	}
 
-    @NonNull
-    public static String checkNotNullOrEmpty(String value, @Nullable String errorMessage) {
-        if (value == null || value.isEmpty()) {
-            throw new IllegalArgumentException(errorMessage);
-        }
+	@NonNull
+	public static String checkNotNullOrEmpty(String value, @Nullable String errorMessage) {
+		if (value == null || value.isEmpty()) {
+			throw new IllegalArgumentException(errorMessage);
+		}
 
-        return value;
-    }
+		return value;
+	}
 
-    public static void checkArgument(boolean expression, @Nullable Object errorMessage) {
-        if (!expression) {
-            throw new IllegalArgumentException(String.valueOf(errorMessage));
-        }
-    }
+	public static void checkArgument(boolean expression, @Nullable Object errorMessage) {
+		if (!expression) {
+			throw new IllegalArgumentException(String.valueOf(errorMessage));
+		}
+	}
 }

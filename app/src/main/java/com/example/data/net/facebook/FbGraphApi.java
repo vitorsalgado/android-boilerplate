@@ -26,183 +26,183 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.functions.Func1;
-import rx.functions.Func2;
+import io.reactivex.Observable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 
 public class FbGraphApi implements GraphApi {
-    private static final String TAG = "FbGraphApi";
-    private static GraphApi instance;
+	private static final String TAG = "FbGraphApi";
+	private static GraphApi instance;
 
-    private final String FIELDS = "fields";
-    private final String RESPONSE_LOCALE = "en_US";
-    private final int MAX_RETRY_ATTEMPTS = 2;
-    private final long ATTEMPT_DELAY_IN_SECONDS = 2;
+	private final String FIELDS = "fields";
+	private final String RESPONSE_LOCALE = "en_US";
+	private final int MAX_RETRY_ATTEMPTS = 2;
+	private final long ATTEMPT_DELAY_IN_SECONDS = 2;
 
-    private final SupportApi mSupportApi;
-    private final FBAccessTokenProvider mAccessTokenProvider;
+	private final SupportApi mSupportApi;
+	private final FBAccessTokenProvider mAccessTokenProvider;
 
-    public static GraphApi getInstance(@NonNull SupportApi supportApi, @NonNull FBAccessTokenProvider accessTokenProvider) {
-        if (instance == null) {
-            instance = new FbGraphApi(supportApi, accessTokenProvider);
-        }
+	public static GraphApi getInstance(@NonNull SupportApi supportApi, @NonNull FBAccessTokenProvider accessTokenProvider) {
+		if (instance == null) {
+			instance = new FbGraphApi(supportApi, accessTokenProvider);
+		}
 
-        return instance;
-    }
+		return instance;
+	}
 
-    public FbGraphApi(@NonNull SupportApi supportApi, @NonNull FBAccessTokenProvider accessTokenProvider) {
-        mSupportApi = supportApi;
-        mAccessTokenProvider = accessTokenProvider;
-    }
+	private FbGraphApi(@NonNull SupportApi supportApi, @NonNull FBAccessTokenProvider accessTokenProvider) {
+		mSupportApi = supportApi;
+		mAccessTokenProvider = accessTokenProvider;
+	}
 
-    @Override
-    public Observable<FacebookUser> me(@NonNull final String... fields) {
-        return Observable
-                .defer(() -> {
-                    GraphRequest request = GraphRequest.newMeRequest(mAccessTokenProvider.getCurrent(), (object, response) -> { });
+	@Override
+	public Observable<FacebookUser> me(@NonNull final String... fields) {
+		return Observable
+				.defer(() -> {
+					GraphRequest request = GraphRequest.newMeRequest(mAccessTokenProvider.getCurrent(), (object, response) -> {
+					});
 
-                    request.getParameters().putString(FIELDS, FbUtils.convert(fields));
-                    request.getParameters().putString("locale", RESPONSE_LOCALE);
+					request.getParameters().putString(FIELDS, FbUtils.convert(fields));
+					request.getParameters().putString("locale", RESPONSE_LOCALE);
 
-                    GraphResponse graphResponse = request.executeAndWait();
+					GraphResponse graphResponse = request.executeAndWait();
 
-                    if (graphResponse.getError() != null) {
-                        if (graphResponse.getError().getCategory() == FacebookRequestError.Category.TRANSIENT) {
-                            throw new GraphApiTransientException(graphResponse);
-                        }
+					if (graphResponse.getError() != null) {
+						if (graphResponse.getError().getCategory() == FacebookRequestError.Category.TRANSIENT) {
+							throw new GraphApiTransientException(graphResponse);
+						}
 
-                        throw new GraphApiException(graphResponse);
-                    }
+						throw new GraphApiException(graphResponse);
+					}
 
-                    return Observable.just(new Gson()
-                            .fromJson(String.valueOf(graphResponse.getJSONObject()), FacebookUser.class));
-                })
-                .retryWhen(retryWhenTransient());
-    }
+					return Observable.just(new Gson()
+							.fromJson(String.valueOf(graphResponse.getJSONObject()), FacebookUser.class));
+				})
+				.retryWhen(retryWhenTransient());
+	}
 
-    @Override
-    public Observable<FacebookAlbum> getAlbums() {
-        return Observable
-                .defer(() -> {
-                    GraphRequest request = GraphRequest.newMeRequest(mAccessTokenProvider.getCurrent(), (object, response) -> { });
-                    Bundle parameters = new Bundle();
+	@Override
+	public Observable<FacebookAlbum> getAlbums() {
+		return Observable
+				.defer(() -> {
+					GraphRequest request = GraphRequest.newMeRequest(mAccessTokenProvider.getCurrent(), (object, response) -> {
+					});
+					Bundle parameters = new Bundle();
 
-                    parameters.putString(FIELDS, "albums.limit(15){count,name,cover_photo,picture}");
-                    request.setParameters(parameters);
+					parameters.putString(FIELDS, "albums.limit(15){count,name,cover_photo,picture}");
+					request.setParameters(parameters);
 
-                    GraphResponse graphResponse = request.executeAndWait();
+					GraphResponse graphResponse = request.executeAndWait();
 
-                    if (graphResponse.getError() != null) {
-                        if (graphResponse.getError().getCategory() == FacebookRequestError.Category.TRANSIENT) {
-                            throw new GraphApiTransientException(graphResponse);
-                        }
+					if (graphResponse.getError() != null) {
+						if (graphResponse.getError().getCategory() == FacebookRequestError.Category.TRANSIENT) {
+							throw new GraphApiTransientException(graphResponse);
+						}
 
-                        throw new GraphApiException(graphResponse);
-                    }
+						throw new GraphApiException(graphResponse);
+					}
 
-                    FacebookUser user = new Gson().fromJson(String.valueOf(graphResponse.getJSONObject()), FacebookUser.class);
+					FacebookUser user = new Gson().fromJson(String.valueOf(graphResponse.getJSONObject()), FacebookUser.class);
 
-                    return Observable.just(user.getAlbums());
-                })
-                .retryWhen(retryWhenTransient());
-    }
+					return Observable.just(user.getAlbums());
+				})
+				.retryWhen(retryWhenTransient());
+	}
 
-    @Override
-    public Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId) {
-        return getAlbumPhotos(albumId, 100);
-    }
+	@Override
+	public Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId) {
+		return getAlbumPhotos(albumId, 100);
+	}
 
-    @Override
-    public Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId, int limit) {
-        return Observable
-                .defer(() -> {
-                    String graphPath = String.format("%s/photos", albumId);
-                    GraphRequest request = GraphRequest.newGraphPathRequest(mAccessTokenProvider.getCurrent(), graphPath, response -> { });
+	@Override
+	public Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId, int limit) {
+		return Observable
+				.defer(() -> {
+					String graphPath = String.format("%s/photos", albumId);
+					GraphRequest request = GraphRequest.newGraphPathRequest(mAccessTokenProvider.getCurrent(), graphPath, response -> {
+					});
 
-                    request.getParameters().putString(FIELDS, FbUtils.convert(new String[]{Fields.IMAGES}));
-                    request.getParameters().putInt("limit", limit);
-                    request.getParameters().putString("locale", RESPONSE_LOCALE);
+					request.getParameters().putString(FIELDS, FbUtils.convert(new String[]{Fields.IMAGES}));
+					request.getParameters().putInt("limit", limit);
+					request.getParameters().putString("locale", RESPONSE_LOCALE);
 
-                    GraphResponse graphResponse = request.executeAndWait();
+					GraphResponse graphResponse = request.executeAndWait();
 
-                    if (graphResponse.getError() != null) {
-                        if (graphResponse.getError().getCategory() == FacebookRequestError.Category.TRANSIENT) {
-                            throw new GraphApiTransientException(graphResponse);
-                        }
+					if (graphResponse.getError() != null) {
+						if (graphResponse.getError().getCategory() == FacebookRequestError.Category.TRANSIENT) {
+							throw new GraphApiTransientException(graphResponse);
+						}
 
-                        throw new GraphApiException(graphResponse);
-                    }
+						throw new GraphApiException(graphResponse);
+					}
 
-                    FacebookAlbumPhotos facebookAlbumPhotos = new Gson()
-                            .fromJson(String.valueOf(graphResponse.getJSONObject()), FacebookAlbumPhotos.class);
+					FacebookAlbumPhotos facebookAlbumPhotos = new Gson()
+							.fromJson(String.valueOf(graphResponse.getJSONObject()), FacebookAlbumPhotos.class);
 
-                    List<FacebookPhoto> facebookPhotos = new ArrayList<>();
+					List<FacebookPhoto> facebookPhotos = new ArrayList<>();
 
-                    if (facebookAlbumPhotos != null && facebookAlbumPhotos.getData() != null && !facebookAlbumPhotos.getData().isEmpty()) {
-                        for (FacebookPhoto facebookPhoto : facebookAlbumPhotos.getData()) {
-                            Collections.sort(facebookPhoto.getImages(),
-                                    (img1, img2) -> Integer.valueOf(img2.getWidth()).compareTo(img1.getWidth()));
+					if (facebookAlbumPhotos != null && facebookAlbumPhotos.getData() != null && !facebookAlbumPhotos.getData().isEmpty()) {
+						for (FacebookPhoto facebookPhoto : facebookAlbumPhotos.getData()) {
+							Collections.sort(facebookPhoto.getImages(),
+									(img1, img2) -> Integer.valueOf(img2.getWidth()).compareTo(img1.getWidth()));
 
-                            facebookPhotos.add(facebookPhoto);
-                        }
-                    }
+							facebookPhotos.add(facebookPhoto);
+						}
+					}
 
-                    return Observable.just(facebookPhotos);
-                })
-                .retryWhen(retryWhenTransient());
-    }
+					return Observable.just(facebookPhotos);
+				})
+				.retryWhen(retryWhenTransient());
+	}
 
-    @Override
-    public Observable<Bitmap> downloadLargestPhoto(@NonNull String photoId) {
-        return Observable
-                .defer(() -> {
-                    Log.d(TAG, photoId);
-                    String graphPath = String.format("/%s", photoId);
-                    GraphRequest request = GraphRequest.newGraphPathRequest(mAccessTokenProvider.getCurrent(), graphPath, response -> { });
+	@Override
+	public Observable<Bitmap> downloadLargestPhoto(@NonNull String photoId) {
+		return Observable
+				.defer(() -> {
+					Log.d(TAG, photoId);
+					String graphPath = String.format("/%s", photoId);
+					GraphRequest request = GraphRequest.newGraphPathRequest(mAccessTokenProvider.getCurrent(), graphPath, response -> {
+					});
 
-                    request.getParameters().putString(FIELDS, FbUtils.convert(new String[]{Fields.IMAGES}));
+					request.getParameters().putString(FIELDS, FbUtils.convert(new String[]{Fields.IMAGES}));
 
-                    GraphResponse graphResponse = request.executeAndWait();
+					GraphResponse graphResponse = request.executeAndWait();
 
-                    if (graphResponse.getError() != null) {
-                        if (graphResponse.getError().getCategory() == FacebookRequestError.Category.TRANSIENT) {
-                            throw new GraphApiTransientException(graphResponse);
-                        }
+					if (graphResponse.getError() != null) {
+						if (graphResponse.getError().getCategory() == FacebookRequestError.Category.TRANSIENT) {
+							throw new GraphApiTransientException(graphResponse);
+						}
 
-                        throw new GraphApiException(graphResponse);
-                    }
+						throw new GraphApiException(graphResponse);
+					}
 
-                    FacebookPhoto facebookPhoto = new Gson().fromJson(String.valueOf(graphResponse.getJSONObject()), FacebookPhoto.class);
+					FacebookPhoto facebookPhoto = new Gson().fromJson(String.valueOf(graphResponse.getJSONObject()), FacebookPhoto.class);
 
-                    Collections.sort(facebookPhoto.getImages(),
-                            (img1, img2) -> Integer.valueOf(img2.getWidth()).compareTo(img1.getWidth()));
+					Collections.sort(facebookPhoto.getImages(),
+							(img1, img2) -> Integer.valueOf(img2.getWidth()).compareTo(img1.getWidth()));
 
-                    return Observable.just(facebookPhoto);
-                })
-                .retryWhen(retryWhenTransient())
-                .map(facebookPhoto -> mSupportApi.downloadImage(facebookPhoto.getLargest().getSource()));
-    }
+					return Observable.just(facebookPhoto);
+				})
+				.retryWhen(retryWhenTransient())
+				.map(facebookPhoto -> mSupportApi.downloadImage(facebookPhoto.getLargest().getSource()));
+	}
 
-    @NonNull
-    private Func1<Observable<? extends Throwable>, Observable<?>> retryWhenTransient() {
-        return observable -> observable
-                .doOnError(throwable -> Log.e(TAG, throwable.getMessage(), throwable))
-                .zipWith(Observable.range(1, 3), new Func2<Throwable, Integer, Pair<Throwable, Integer>>() {
-                    @Override
-                    public Pair<Throwable, Integer> call(Throwable throwable, Integer integer) {
-                        return Pair.create(throwable, integer);
-                    }
-                }).flatMap((Func1<Pair<Throwable, Integer>, Observable<?>>) pair -> {
-                    if (!(pair.first instanceof GraphApiTransientException)) {
-                        return Observable.error(pair.first);
-                    }
+	@NonNull
+	private Function<Observable<? extends Throwable>, Observable<?>> retryWhenTransient() {
+		return observable -> observable
+				.doOnError(throwable -> Log.e(TAG, throwable.getMessage(), throwable))
+				.zipWith(Observable.range(1, 3), (BiFunction<Throwable, Integer, Pair<Throwable, Integer>>) Pair::create)
+				.flatMap((Function<Pair<Throwable, Integer>, Observable<?>>) pair -> {
+					if (!(pair.first instanceof GraphApiTransientException)) {
+						return Observable.error(pair.first);
+					}
 
-                    if (pair.second == MAX_RETRY_ATTEMPTS) {
-                        return Observable.error(pair.first);
-                    }
+					if (pair.second == MAX_RETRY_ATTEMPTS) {
+						return Observable.error(pair.first);
+					}
 
-                    return Observable.timer(ATTEMPT_DELAY_IN_SECONDS, TimeUnit.SECONDS);
-                });
-    }
+					return Observable.timer(ATTEMPT_DELAY_IN_SECONDS, TimeUnit.SECONDS);
+				});
+	}
 
 }

@@ -1,5 +1,6 @@
 package com.example;
 
-public interface AppDefaults {
-    String Channel = "android";
+public final class AppDefaults {
+	public static String Channel = "android";
+	public static String ClientId = "";
 }

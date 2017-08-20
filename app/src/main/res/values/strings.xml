@@ -2,6 +2,7 @@
     <string name="app_name">Android Boilerplate</string>
     <string name="app_share">Compartilhar o App</string>
     <string name="facebook_app_id">822968334426637</string>
+    <string name="version_with_code">Version: %1s (%2d)</string>
 
     <!-- login -->
     <string name="login_title">Login Title</string>

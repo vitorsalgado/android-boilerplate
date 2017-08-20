@@ -1,38 +1,48 @@
 package com.example.data.net.api.dtos;
 
+import java.util.List;
+
 public class ApiError {
-    private String message;
-    private String code;
-    private String details;
-    private String traceID;
+	private String message;
+	private String type;
+	private String code;
+	private String trace_id;
+	private List<Error> errors;
 
-    public ApiError(String message, String code, String details, String traceID) {
-        this.message = message;
-        this.code = code;
-        this.details = details;
-        this.traceID = traceID;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public ApiError(String message) {
-        this.message = message;
-        this.code = "";
-        this.details = "";
-        this.traceID = "";
-    }
+	public String getType() {
+		return type;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public String getTrace_id() {
+		return trace_id;
+	}
 
-    public String getDetails() {
-        return details;
-    }
+	public List<Error> getErrors() {
+		return errors;
+	}
 
-    public String getTraceID() {
-        return traceID;
-    }
+	public ApiError(String message) {
+		this.message = message;
+	}
+
+	class Error {
+		private String field;
+		private String message;
+
+		public String getField() {
+			return field;
+		}
+
+		public String getMessage() {
+			return message;
+		}
+	}
 }

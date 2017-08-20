@@ -12,45 +12,46 @@ import java.lang.ref.WeakReference;
 import io.fabric.sdk.android.Fabric;
 
 public class App extends Application {
-    static WeakReference<App> instance;
-    RefWatcher refWatcher;
+	static WeakReference<App> instance;
+	RefWatcher refWatcher;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+	@Override
+	public void onCreate() {
+		super.onCreate();
 
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
+		if (LeakCanary.isInAnalyzerProcess(this)) {
+			return;
+		}
 
-        AppDeps.init(this);
-        setUpCrashlytics();
+		AppDeps.setUp(this);
+		AppContext.setUp(this);
+		setUpCrashlytics();
 
-        refWatcher = setUpLeakCanary();
-        instance = new WeakReference<>(this);
-    }
+		refWatcher = setUpLeakCanary();
+		instance = new WeakReference<>(this);
+	}
 
-    public static Context getContext() {
-        return instance.get().getApplicationContext();
-    }
+	public static Context getContext() {
+		return instance.get().getApplicationContext();
+	}
 
-    public static App get(Context context) {
-        return (App) context.getApplicationContext();
-    }
+	public static App get(Context context) {
+		return (App) context.getApplicationContext();
+	}
 
-    public static RefWatcher getRefWatcher(Context context) {
-        return ((App) context.getApplicationContext()).refWatcher;
-    }
+	public static RefWatcher getRefWatcher(Context context) {
+		return ((App) context.getApplicationContext()).refWatcher;
+	}
 
-    protected void setUpCrashlytics() {
-        if (BuildConfig.DEBUG) {
-            return;
-        }
+	protected void setUpCrashlytics() {
+		if (BuildConfig.DEBUG) {
+			return;
+		}
 
-        Fabric.with(this, new Crashlytics());
-    }
+		Fabric.with(this, new Crashlytics());
+	}
 
-    protected RefWatcher setUpLeakCanary() {
-        return RefWatcher.DISABLED;
-    }
+	protected RefWatcher setUpLeakCanary() {
+		return RefWatcher.DISABLED;
+	}
 }

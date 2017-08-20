@@ -10,11 +10,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.BuildConfig;
 import com.example.R;
+import com.example.utils.ActivityUtils;
 import com.example.utils.DialogUtils;
 import com.example.utils.DimensionUtils;
 import com.facebook.rebound.BaseSpringSystem;
@@ -53,6 +56,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 		mSpringSystem.removeAllListeners();
 
 		super.onDestroy();
+	}
+
+	@Override
+	protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		if (BuildConfig.WATERMARK) {
+			final ViewGroup viewGroupParent = this.findViewById(android.R.id.content);
+			final ViewGroup viewGroup = (ViewGroup) viewGroupParent.getChildAt(0);
+
+			ActivityUtils.addWatermark(this, viewGroup, viewGroupParent);
+		}
 	}
 
 	// Toolbars

@@ -18,87 +18,87 @@ import com.example.utils.ActivityUtils;
 import com.example.utils.DialogUtils;
 
 public class LoginActivity extends BaseActivity implements LoginView {
-    private static final String TAG = "LoginActivity";
-    private static final String EXTRA_ERROR_MESSAGE = "com.example.LoginActivity.ERROR_MESSAGE";
+	private static final String TAG = "LoginActivity";
+	private static final String EXTRA_ERROR_MESSAGE = "com.example.LoginActivity.ERROR_MESSAGE";
 
-    private LoginPresenter mLoginPresenter;
-    private LoginActivityBinding mBinding;
-    private ImageView[] mPagination = new ImageView[3];
+	private LoginPresenter mLoginPresenter;
+	private LoginActivityBinding mBinding;
+	private ImageView[] mPagination = new ImageView[3];
 
-    public static Intent startLogin(@NonNull Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+	public static Intent startLogin(@NonNull Context context) {
+		Intent intent = new Intent(context, LoginActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        return intent;
-    }
+		return intent;
+	}
 
-    public static Intent startLoginWithError(@NonNull Context context, @NonNull String error) {
-        Intent intent = startLogin(context);
-        intent.putExtra(EXTRA_ERROR_MESSAGE, error);
+	public static Intent startLoginWithError(@NonNull Context context, @NonNull String error) {
+		Intent intent = startLogin(context);
+		intent.putExtra(EXTRA_ERROR_MESSAGE, error);
 
-        return intent;
-    }
+		return intent;
+	}
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.login_activity);
-        mLoginPresenter = new LoginPresenter(this, AppDeps.authenticationManager(), AppDeps.fbCallbackManager());
+		mBinding = DataBindingUtil.setContentView(this, R.layout.login_activity);
+		mLoginPresenter = new LoginPresenter(this, AppDeps.authenticationManager(), AppDeps.fbCallbackManager());
 
-        mLoginPresenter.start();
-        mBinding.facebookLogin.setOnClickListener(view -> mLoginPresenter.loginWithFacebook(this));
-        loaded();
-        ActivityUtils.createPager(this, mPagination, mBinding.pageIndicators, R.drawable.ic_selected_page_accent, R.drawable.ic_unselected_page_accent);
+		mLoginPresenter.start();
+		mBinding.facebookLogin.setOnClickListener(view -> mLoginPresenter.loginWithFacebook(this));
+		loaded();
+		ActivityUtils.createPager(this, mPagination, mBinding.pageIndicators, R.drawable.ic_selected_page_accent, R.drawable.ic_unselected_page_accent);
 
-        String mErrorMessage = getIntent().getStringExtra(EXTRA_ERROR_MESSAGE);
+		String mErrorMessage = getIntent().getStringExtra(EXTRA_ERROR_MESSAGE);
 
-        if (mErrorMessage != null) {
-            mLoginPresenter.logout();
-        }
-    }
+		if (mErrorMessage != null) {
+			mLoginPresenter.logout();
+		}
+	}
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mLoginPresenter.result(requestCode, resultCode, data);
-    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mLoginPresenter.result(requestCode, resultCode, data);
+	}
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		finish();
+	}
 
-    @Override
-    protected void onDestroy() {
-        mLoginPresenter.unsubscribe();
-        super.onDestroy();
-    }
+	@Override
+	protected void onDestroy() {
+		mLoginPresenter.unsubscribe();
+		super.onDestroy();
+	}
 
-    // LoginView implementation
+	// LoginView implementation
 
-    @Override
-    public void onLoginSuccess() {
-        loaded();
-        startActivity(MainActivity.newIntent(this));
-    }
+	@Override
+	public void onLoginSuccess() {
+		loaded();
+		startActivity(MainActivity.newIntent(this));
+	}
 
-    @Override
-    public void onLoginError(Throwable ex) {
-        Log.e(TAG, ex.getMessage(), ex);
+	@Override
+	public void onLoginError(Throwable ex) {
+		Log.e(TAG, ex.getMessage(), ex);
 
-        loaded();
-        DialogUtils.simpleOk(this, R.string.login_error_unexpected_title, R.string.login_error_unexpected_description).show();
-    }
+		loaded();
+		DialogUtils.simpleOk(this, R.string.login_error_unexpected_title, R.string.login_error_unexpected_description).show();
+	}
 
-    @Override
-    public void onLogout() {
+	@Override
+	public void onLogout() {
 
-    }
+	}
 }

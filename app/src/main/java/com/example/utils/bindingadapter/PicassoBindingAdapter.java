@@ -10,68 +10,68 @@ import com.squareup.picasso.RequestCreator;
 import java.io.File;
 
 public class PicassoBindingAdapter {
-    @BindingAdapter(value = {"imageUrl", "placeHolder"}, requireAll = false)
-    public static void setImageUrl(ImageView view, String url, int placeHolder) {
-        if (url == null) {
-            view.setImageDrawable(null);
-            return;
-        }
+	@BindingAdapter(value = {"imageUrl", "placeHolder"}, requireAll = false)
+	public static void setImageUrl(ImageView view, String url, int placeHolder) {
+		if (url == null) {
+			view.setImageDrawable(null);
+			return;
+		}
 
-        RequestCreator requestCreator = Picasso.with(view.getContext()).load(url);
+		RequestCreator requestCreator = Picasso.with(view.getContext()).load(url);
 
-        if (placeHolder != 0) {
-            requestCreator.placeholder(placeHolder);
-        }
+		if (placeHolder != 0) {
+			requestCreator.placeholder(placeHolder);
+		}
 
-        requestCreator.into(view);
-    }
+		requestCreator.into(view);
+	}
 
-    @BindingAdapter(value = {"imagePath", "placeHolder"}, requireAll = false)
-    public static void setImagePath(ImageView view, String path, int placeHolder) {
-        if (path == null) {
-            view.setImageDrawable(null);
-            return;
-        }
+	@BindingAdapter(value = {"imagePath", "placeHolder"}, requireAll = false)
+	public static void setImagePath(ImageView view, String path, int placeHolder) {
+		if (path == null) {
+			view.setImageDrawable(null);
+			return;
+		}
 
-        RequestCreator requestCreator = Picasso.with(view.getContext()).load(new File(view.getContext().getFilesDir(), path));
+		RequestCreator requestCreator = Picasso.with(view.getContext()).load(new File(view.getContext().getFilesDir(), path));
 
-        if (placeHolder != 0) {
-            requestCreator.placeholder(placeHolder);
-        }
+		if (placeHolder != 0) {
+			requestCreator.placeholder(placeHolder);
+		}
 
-        requestCreator.into(view);
-    }
+		requestCreator.into(view);
+	}
 
-    @BindingAdapter(value = {"circleImagePath", "placeHolder"}, requireAll = false)
-    public static void setCircleImagePath(ImageView view, String path, int placeHolder) {
-        if (path == null) {
-            view.setImageDrawable(null);
-            return;
-        }
+	@BindingAdapter(value = {"circleImagePath", "placeHolder"}, requireAll = false)
+	public static void setCircleImagePath(ImageView view, String path, int placeHolder) {
+		if (path == null) {
+			view.setImageDrawable(null);
+			return;
+		}
 
-        RequestCreator requestCreator = Picasso
-                .with(view.getContext())
-                .load(new File(view.getContext().getFilesDir(), path))
-                .transform(new CircleTransformation());
+		RequestCreator requestCreator = Picasso
+				.with(view.getContext())
+				.load(new File(view.getContext().getFilesDir(), path))
+				.transform(new CircleTransformation());
 
-        if (placeHolder != 0) {
-            requestCreator.placeholder(placeHolder);
-        }
+		if (placeHolder != 0) {
+			requestCreator.placeholder(placeHolder);
+		}
 
-        requestCreator.into(view);
-    }
+		requestCreator.into(view);
+	}
 
-    @BindingAdapter(value = {"roundedImageUrl"})
-    public static void setRoundedImageUrl(ImageView view, String url) {
-        if (url == null) {
-            view.setImageDrawable(null);
-            return;
-        }
+	@BindingAdapter(value = {"roundedImageUrl"})
+	public static void setRoundedImageUrl(ImageView view, String url) {
+		if (url == null) {
+			view.setImageDrawable(null);
+			return;
+		}
 
-        RequestCreator requestCreator = Picasso
-                .with(view.getContext())
-                .load(url);
+		RequestCreator requestCreator = Picasso
+				.with(view.getContext())
+				.load(url);
 
-        requestCreator.into(view);
-    }
+		requestCreator.into(view);
+	}
 }

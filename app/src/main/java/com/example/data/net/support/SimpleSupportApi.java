@@ -9,24 +9,24 @@ import java.io.InputStream;
 import java.net.URL;
 
 public class SimpleSupportApi implements SupportApi {
-    private static SupportApi instance;
+	private static SupportApi instance;
 
-    public static SupportApi getInstance() {
-        if (instance == null) {
-            instance = new SimpleSupportApi();
-        }
+	public static SupportApi getInstance() {
+		if (instance == null) {
+			instance = new SimpleSupportApi();
+		}
 
-        return instance;
-    }
+		return instance;
+	}
 
-    public Bitmap downloadImage(@NonNull String source) {
-        try {
-            URL url = new URL(source);
-            InputStream in = (InputStream) url.getContent();
+	public Bitmap downloadImage(@NonNull String source) {
+		try {
+			URL url = new URL(source);
+			InputStream in = (InputStream) url.getContent();
 
-            return BitmapFactory.decodeStream(in);
-        } catch (IOException e) {
-            throw new ImageDownloadFailureException(e);
-        }
-    }
+			return BitmapFactory.decodeStream(in);
+		} catch (IOException e) {
+			throw new ImageDownloadFailureException(e);
+		}
+	}
 }

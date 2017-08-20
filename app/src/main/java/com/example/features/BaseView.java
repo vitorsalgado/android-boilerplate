@@ -1,7 +1,7 @@
 package com.example.features;
 
 public interface BaseView {
-    void showLoading();
+	void showLoading();
 
-    void loaded();
+	void loaded();
 }

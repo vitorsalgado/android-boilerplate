@@ -1,6 +1,6 @@
 # Models, DTOs
 -keep class com.example.data.models.** { *; }
--keep class com.example.net.api.dtos.** { *; }
+-keep class com.example.net.mOAuthApi.dtos.** { *; }
 -keep class com.example.net.facebook.dtos.** { *; }
 
 # Keep our interfaces so they can be used by other ProGuard rules.

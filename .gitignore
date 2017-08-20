@@ -62,15 +62,23 @@ Icon
 Network Trash Folder
 Temporary Items
 
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
 # IDEs
 *.iml
 .idea/workspace.xml
 .idea/
 .project
-.vscode
+.vscode/
 
 # Project
 .buckd/
 .okbuck/
 .settings/
 buck-out/
+automated_tests/

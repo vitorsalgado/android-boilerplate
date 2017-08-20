@@ -4,5 +4,5 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 public interface SupportApi {
-    Bitmap downloadImage(@NonNull String source);
+	Bitmap downloadImage(@NonNull String source);
 }

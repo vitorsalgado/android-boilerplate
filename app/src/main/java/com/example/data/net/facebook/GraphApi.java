@@ -9,16 +9,16 @@ import com.example.data.net.facebook.dtos.FacebookUser;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public interface GraphApi {
-    Observable<FacebookUser> me(@NonNull final String... fields);
+	Observable<FacebookUser> me(@NonNull final String... fields);
 
-    Observable<FacebookAlbum> getAlbums();
+	Observable<FacebookAlbum> getAlbums();
 
-    Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId);
+	Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId);
 
-    Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId, int limit);
+	Observable<List<FacebookPhoto>> getAlbumPhotos(@NonNull final String albumId, int limit);
 
-    Observable<Bitmap> downloadLargestPhoto(@NonNull String photoId);
+	Observable<Bitmap> downloadLargestPhoto(@NonNull String photoId);
 }

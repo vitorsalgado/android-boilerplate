@@ -7,32 +7,32 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 public class AutoCompleteTextViewWithLoading extends AppCompatAutoCompleteTextView {
-    private ProgressBar mLoadingIndicator;
+	private ProgressBar mLoadingIndicator;
 
-    public AutoCompleteTextViewWithLoading(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+	public AutoCompleteTextViewWithLoading(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 
-    public void setLoadingIndicator(ProgressBar progressBar) {
-        mLoadingIndicator = progressBar;
-    }
+	public void setLoadingIndicator(ProgressBar progressBar) {
+		mLoadingIndicator = progressBar;
+	}
 
-    @Override
-    protected void performFiltering(CharSequence text, int keyCode) {
-        if (mLoadingIndicator != null) {
-            mLoadingIndicator.setVisibility(View.VISIBLE);
-        }
+	@Override
+	protected void performFiltering(CharSequence text, int keyCode) {
+		if (mLoadingIndicator != null) {
+			mLoadingIndicator.setVisibility(View.VISIBLE);
+		}
 
-        super.performFiltering(text, keyCode);
-    }
+		super.performFiltering(text, keyCode);
+	}
 
-    @Override
-    public void onFilterComplete(int count) {
-        if (mLoadingIndicator != null) {
-            mLoadingIndicator.setVisibility(View.GONE);
-        }
+	@Override
+	public void onFilterComplete(int count) {
+		if (mLoadingIndicator != null) {
+			mLoadingIndicator.setVisibility(View.GONE);
+		}
 
-        super.onFilterComplete(count);
-    }
+		super.onFilterComplete(count);
+	}
 
 }

@@ -8,21 +8,21 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    private final List<Fragment> mFragmentList;
+	private final List<Fragment> mFragmentList;
 
-    public ViewPagerAdapter(@NonNull FragmentManager fm, @NonNull List<Fragment> fragments) {
-        super(fm);
-        mFragmentList = fragments;
-    }
+	public ViewPagerAdapter(@NonNull FragmentManager fm, @NonNull List<Fragment> fragments) {
+		super(fm);
+		mFragmentList = fragments;
+	}
 
-    @Override
-    public Fragment getItem(int position) {
-        return mFragmentList.get(position);
-    }
+	@Override
+	public Fragment getItem(int position) {
+		return mFragmentList.get(position);
+	}
 
-    @Override
-    public int getCount() {
-        return mFragmentList.size();
-    }
+	@Override
+	public int getCount() {
+		return mFragmentList.size();
+	}
 
 }

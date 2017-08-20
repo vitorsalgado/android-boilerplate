@@ -10,41 +10,41 @@ import java.io.FileOutputStream;
 import static com.example.utils.Preconditions.checkNotNull;
 
 public class FileUtils {
-    private final Context mContext;
-    
-    public FileUtils(@NonNull Context context) {
-        mContext = checkNotNull(context, "context cannot be null.");
-    }
+	private final Context mContext;
 
-    public boolean exists(@NonNull String name) {
-        return new File(mContext.getFilesDir(), name).exists();
-    }
+	public FileUtils(@NonNull Context context) {
+		mContext = checkNotNull(context, "context cannot be null.");
+	}
 
-    public boolean delete(@NonNull String name) {
-        return new File(mContext.getFilesDir(), name).delete();
-    }
+	public boolean exists(@NonNull String name) {
+		return new File(mContext.getFilesDir(), name).exists();
+	}
 
-    public void storeImageIfNotExists(@NonNull Bitmap photo, @NonNull Bitmap.CompressFormat compressFormat, int quality, @NonNull String name) {
-        File file = new File(mContext.getFilesDir(), name);
+	public boolean delete(@NonNull String name) {
+		return new File(mContext.getFilesDir(), name).delete();
+	}
 
-        if (file.exists()) {
-            return;
-        }
+	public void storeImageIfNotExists(@NonNull Bitmap photo, @NonNull Bitmap.CompressFormat compressFormat, int quality, @NonNull String name) {
+		File file = new File(mContext.getFilesDir(), name);
 
-        storeImage(photo, compressFormat, quality, name);
-    }
+		if (file.exists()) {
+			return;
+		}
 
-    public void storeImage(@NonNull Bitmap photo, @NonNull Bitmap.CompressFormat compressFormat, int quality, @NonNull String name) {
-        FileOutputStream outputStream;
+		storeImage(photo, compressFormat, quality, name);
+	}
 
-        try {
-            outputStream = mContext.openFileOutput(name, Context.MODE_PRIVATE);
-            photo.compress(compressFormat, quality, outputStream);
+	public void storeImage(@NonNull Bitmap photo, @NonNull Bitmap.CompressFormat compressFormat, int quality, @NonNull String name) {
+		FileOutputStream outputStream;
 
-            outputStream.flush();
-            outputStream.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+		try {
+			outputStream = mContext.openFileOutput(name, Context.MODE_PRIVATE);
+			photo.compress(compressFormat, quality, outputStream);
+
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

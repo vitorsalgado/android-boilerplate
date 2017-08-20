@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.utils.espresso.EspressoIdlingResource;
 
 import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.TestOnly;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -19,71 +20,72 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.utils.Preconditions.checkNotNull;
 
 public abstract class BasePresenter<V extends BaseView> {
-    protected CompositeDisposable mCompositeSubscription = new CompositeDisposable();
-    protected Scheduler mBackScheduler = Schedulers.io();
-    protected Scheduler mUiScheduler = AndroidSchedulers.mainThread();
-    private V mView;
+	private CompositeDisposable mCompositeSubscription = new CompositeDisposable();
+	private Scheduler mBackScheduler = Schedulers.io();
+	private Scheduler mUiScheduler = AndroidSchedulers.mainThread();
+	private V mView;
 
-    protected BasePresenter(@NonNull V view) {
-        checkNotNull(view, "view cannot be null.");
-        mView = view;
-    }
+	protected BasePresenter(@NonNull V view) {
+		checkNotNull(view, "view cannot be null.");
+		mView = view;
+	}
 
-    public EventBus getEventBus() {
-        return EventBus.getDefault();
-    }
+	public void unsubscribe() {
+		if (getEventBus().isRegistered(this)) {
+			getEventBus().unregister(this);
+		}
 
-    public void unsubscribe() {
-        if (getEventBus().isRegistered(this)) {
-            getEventBus().unregister(this);
-        }
+		if (!mCompositeSubscription.isDisposed()) {
+			mCompositeSubscription.clear();
+		}
 
-        if (!mCompositeSubscription.isDisposed()) {
-            mCompositeSubscription.clear();
-        }
+		mView = null;
+	}
 
-        mView = null;
-    }
+	protected EventBus getEventBus() {
+		return EventBus.getDefault();
+	}
 
-    protected V getView() {
-        return mView;
-    }
+	protected V getView() {
+		return mView;
+	}
 
-    protected String getTag() {
-        return this.getClass().getSimpleName();
-    }
+	protected String getTag() {
+		return this.getClass().getSimpleName();
+	}
 
-    public <R> void subscribeOnIO(
-            @NonNull Observable<R> observable,
-            @NonNull Consumer<R> onNext) {
+	protected <R> void subscribeOnIO(
+			@NonNull Observable<R> observable,
+			@NonNull Consumer<R> onNext) {
 
-        EspressoIdlingResource.increment();
+		EspressoIdlingResource.increment();
 
-        mCompositeSubscription.add(observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(mUiScheduler)
-                .subscribe(onNext, ex -> Log.e(getTag(), ex.getMessage(), ex)));
-    }
+		mCompositeSubscription.add(observable
+				.subscribeOn(Schedulers.io())
+				.observeOn(mUiScheduler)
+				.subscribe(onNext, ex -> Log.e(getTag(), ex.getMessage(), ex)));
+	}
 
-    @SuppressWarnings("unchecked")
-    public <R> void subscribeOnIO(
-            @NonNull Observable<R> observable,
-            @NonNull DisposableObserver subscription) {
+	@SuppressWarnings("unchecked")
+	protected <R> void subscribeOnIO(
+			@NonNull Observable<R> observable,
+			@NonNull DisposableObserver subscription) {
 
-        EspressoIdlingResource.increment();
+		EspressoIdlingResource.increment();
 
-        mCompositeSubscription.add(observable
-                .subscribeOn(mBackScheduler)
-                .observeOn(mUiScheduler)
-                .subscribeWith(subscription));
-    }
+		mCompositeSubscription.add(observable
+				.subscribeOn(mBackScheduler)
+				.observeOn(mUiScheduler)
+				.subscribeWith(subscription));
+	}
 
-    @VisibleForTesting
-    void changeSchedulers(@NonNull Scheduler backScheduler, @NonNull Scheduler uiScheduler) {
-        checkNotNull(backScheduler, "backScheduler cannot be null.");
-        checkNotNull(uiScheduler, "uiScheduler cannot be null.");
+	@VisibleForTesting
+	@TestOnly
+	void changeSchedulers(@NonNull Scheduler backScheduler, @NonNull Scheduler uiScheduler) {
+		checkNotNull(backScheduler, "backScheduler cannot be null.");
+		checkNotNull(uiScheduler, "uiScheduler cannot be null.");
 
-        mBackScheduler = backScheduler;
-        mUiScheduler = uiScheduler;
-    }
+		mBackScheduler = backScheduler;
+		mUiScheduler = uiScheduler;
+	}
 }

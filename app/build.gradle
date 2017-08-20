@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'io.fabric'
 
@@ -21,6 +22,8 @@ android {
 
         proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+
+        buildConfigField 'Boolean', 'WATERMARK', 'false'
     }
 
     dataBinding {
@@ -57,8 +60,17 @@ android {
 
             signingConfig signingConfigs.debug
 
-            ext.betaDistributionGroupAliases = ""
-            ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes-qa.txt"
+            buildConfigField 'Boolean', 'WATERMARK', 'true'
+            buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
+        }
+
+        mocked {
+            versionNameSuffix ".mocked"
+
+            minifyEnabled true
+            useProguard true
+
+            signingConfig signingConfigs.debug
         }
 
         qa {
@@ -96,6 +108,10 @@ android {
     }
 
     testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+
         unitTests.returnDefaultValues = true
 
         unitTests.all {
@@ -106,7 +122,7 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/rxjava.properties'
+        // exclude 'META-INF/rxjava.properties'
     }
 
 }
@@ -119,7 +135,7 @@ dependencies {
     // Test Libraries
 
     testApi "junit:junit:$versions.junit"
-    testApi "org.mockito:mockito-all:$versions.mockito"
+    testApi "org.mockito:mockito-android:$versions.mockito"
     testApi "org.hamcrest:hamcrest-all:$versions.hamcrest"
     testApi "org.robolectric:robolectric:$versions.robolectric"
     androidTestApi "com.android.support.test:runner:$versions.testSupportLibrary"
@@ -171,10 +187,13 @@ dependencies {
         exclude module: 'retrofit'
         exclude module: 'gson'
     }
-    api("com.squareup.retrofit2:adapter-rxjava:$versions.retrofit") {
+    api("com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit") {
         exclude module: 'retrofit'
     }
     api "com.squareup.okhttp3:okhttp:$versions.okhttp"
+    api("com.squareup.okhttp3:logging-interceptor:$versions.okhttp") {
+        exclude module: 'okhttp'
+    }
 
     // Others
     api "org.greenrobot:eventbus:$versions.eventbus"
@@ -192,11 +211,9 @@ dependencies {
     testApi "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
     debugApi "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
     api("com.crashlytics.sdk.android:crashlytics:$versions.crashlytics") { transitive = true }
-    debugApi("com.squareup.okhttp3:logging-interceptor:$versions.okhttp") {
-        exclude module: 'okhttp'
-    }
     debugApi "com.facebook.stetho:stetho:$versions.stetho"
     debugApi "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
 tasks.matching { it instanceof Test }.all {

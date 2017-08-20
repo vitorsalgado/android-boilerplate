@@ -9,11 +9,11 @@ os:
 
 env:
   global:
-    - API=25
+    - API=26
     - TAG=google_apis
     - ABI=armeabi-v7a
     - QEMU_AUDIO_DRV=none
-    - ANDROID_HOME=/usr/local/android-sdk-24.0.2
+    - ANDROID_HOME=/usr/local/android-sdk-26.0.1
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - ADB_INSTALL_TIMEOUT=20
@@ -35,12 +35,12 @@ before_install:
 android:
   components:
     - tools
-    - build-tools-25.0.2
+    - build-tools-26.0.1
     - platform-tools
     - extra-android-m2repository
     - extra-google-android-support
 
-    - android-25
+    - android-26
     - sys-img-armeabi-v7a-android-25
 
 before_script:

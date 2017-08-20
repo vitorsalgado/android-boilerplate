@@ -7,43 +7,43 @@ import android.support.v4.app.Fragment;
 import com.example.utils.DevUtils;
 
 public class BaseFragment extends Fragment {
-    private BaseActivity mBaseActivity;
+	private BaseActivity mBaseActivity;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
 
-        if (context instanceof BaseActivity) {
-            mBaseActivity = (BaseActivity) context;
-        }
-    }
+		if (context instanceof BaseActivity) {
+			mBaseActivity = (BaseActivity) context;
+		}
+	}
 
-    protected BaseActivity getBaseActivity() {
-        return mBaseActivity;
-    }
+	protected BaseActivity getBaseActivity() {
+		return mBaseActivity;
+	}
 
-    @Override
-    public void onDestroy() {
-        if (BuildConfig.DEBUG) {
-            DevUtils.watchMemoryLeaks(getActivity(), this);
-        }
+	@Override
+	public void onDestroy() {
+		if (BuildConfig.DEBUG) {
+			DevUtils.watchMemoryLeaks(getActivity(), this);
+		}
 
-        super.onDestroy();
-    }
+		super.onDestroy();
+	}
 
-    protected String tag() {
-        return this.getClass().getSimpleName();
-    }
+	protected String tag() {
+		return this.getClass().getSimpleName();
+	}
 
-    public final void showLoading() {
-        if (this.mBaseActivity != null) {
-            this.mBaseActivity.showLoading();
-        }
-    }
+	public final void showLoading() {
+		if (this.mBaseActivity != null) {
+			this.mBaseActivity.showLoading();
+		}
+	}
 
-    public final void loaded() {
-        if (this.mBaseActivity != null) {
-            this.mBaseActivity.loaded();
-        }
-    }
+	public final void loaded() {
+		if (this.mBaseActivity != null) {
+			this.mBaseActivity.loaded();
+		}
+	}
 }

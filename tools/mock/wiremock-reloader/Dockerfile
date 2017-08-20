@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN npm i --production -q
+RUN npm i --production
 
 COPY . .
 
