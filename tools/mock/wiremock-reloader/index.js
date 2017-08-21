@@ -1,3 +1,5 @@
+'use strict';
+
 const Request = require('request-promise');
 const Chokidar = require('chokidar');
 const IP = require('ip');

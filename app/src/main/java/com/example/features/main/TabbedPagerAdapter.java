@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class TabbedPagerAdapter extends FragmentStatePagerAdapter {
 	private final List<Fragment> mFragmentList;
 
-	public ViewPagerAdapter(@NonNull FragmentManager fm, @NonNull List<Fragment> fragments) {
+	TabbedPagerAdapter(@NonNull FragmentManager fm, @NonNull List<Fragment> fragments) {
 		super(fm);
 		mFragmentList = fragments;
 	}

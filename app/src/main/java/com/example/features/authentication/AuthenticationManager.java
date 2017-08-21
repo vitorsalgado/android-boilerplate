@@ -13,16 +13,20 @@ import java.util.UUID;
 
 import io.reactivex.Observable;
 
+import static com.example.utils.Preconditions.checkNotNull;
+
 public class AuthenticationManager {
 	private final OAuthApi mOauthApi;
 	private final Api mApi;
 
 	public AuthenticationManager(@NonNull OAuthApi oAuthApi, @NonNull Api api) {
-		mOauthApi = oAuthApi;
-		mApi = api;
+		mOauthApi = checkNotNull(oAuthApi);
+		mApi = checkNotNull(api);
 	}
 
 	public Observable<TokenResponse> signIn(AccessToken facebookAccessToken) {
+		checkNotNull(facebookAccessToken);
+
 		String state = UUID.randomUUID().toString();
 
 		return mOauthApi.oauthToken(AppDefaults.ClientId, "facebook", state, facebookAccessToken.getToken(), null, null)

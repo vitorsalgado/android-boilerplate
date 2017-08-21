@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+
+gem 'calabash-common'
+gem 'calabash-android'
+gem 'calabash-cucumber', '0.20.4'
+gem 'blabla', '0.0.1'
+gem 'rcodetools', '0.8.5.0'

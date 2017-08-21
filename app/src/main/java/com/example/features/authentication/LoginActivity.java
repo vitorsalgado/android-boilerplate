@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.example.AppDeps;
 import com.example.R;
 import com.example.databinding.LoginActivityBinding;
 import com.example.features.BaseActivity;
 import com.example.features.main.MainActivity;
-import com.example.utils.ActivityUtils;
 import com.example.utils.DialogUtils;
 
 public class LoginActivity extends BaseActivity implements LoginView {
@@ -23,7 +21,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
 	private LoginPresenter mLoginPresenter;
 	private LoginActivityBinding mBinding;
-	private ImageView[] mPagination = new ImageView[3];
 
 	public static Intent startLogin(@NonNull Context context) {
 		Intent intent = new Intent(context, LoginActivity.class);
@@ -49,18 +46,12 @@ public class LoginActivity extends BaseActivity implements LoginView {
 		mLoginPresenter.start();
 		mBinding.facebookLogin.setOnClickListener(view -> mLoginPresenter.loginWithFacebook(this));
 		loaded();
-		ActivityUtils.createPager(this, mPagination, mBinding.pageIndicators, R.drawable.ic_selected_page_accent, R.drawable.ic_unselected_page_accent);
 
 		String mErrorMessage = getIntent().getStringExtra(EXTRA_ERROR_MESSAGE);
 
 		if (mErrorMessage != null) {
 			mLoginPresenter.logout();
 		}
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
 	}
 
 	@Override

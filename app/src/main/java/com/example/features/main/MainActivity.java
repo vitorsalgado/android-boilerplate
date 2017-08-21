@@ -11,13 +11,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.R;
 import com.example.databinding.MainActivityBinding;
 import com.example.features.BaseActivity;
 import com.example.features.authentication.LoginActivity;
+import com.example.features.profile.ProfileSummaryFragment;
 import com.example.utils.AppUtils;
 
 import java.util.Vector;
@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
 	MainActivityBinding mBinding;
 	MainPresenter mPresenter;
-	ViewPagerAdapter mViewPagerAdapter;
+	TabbedPagerAdapter mTabbedPagerAdapter;
 	int mCurrentTab = 0;
 	boolean mDoubleBackToExitPressedOnce = false;
 	Handler mDoubleBackHandler = new Handler();
@@ -52,8 +52,6 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 		if (AppUtils.checkPlayServices(this, REQUEST_CODE_RECOVER_PLAY_SERVICES)) {
 			mPresenter.checkAuthentication();
 		}
-
-		mBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
 	}
 
 	@Override
@@ -147,17 +145,27 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 	}
 
 	private void setLayout() {
-		setContentView(R.layout.main_activity);
+		mBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
 
 		Vector<Fragment> fragments = new Vector<>();
 
-		mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
+		fragments.add(Fragment.instantiate(this, ProfileSummaryFragment.class.getName()));
 
-		mBinding.tabPager.setAdapter(mViewPagerAdapter);
-		mBinding.tabPager.setOffscreenPageLimit(3);
+		mTabbedPagerAdapter = new TabbedPagerAdapter(getSupportFragmentManager(), fragments);
+
+		mBinding.tabPager.setAdapter(mTabbedPagerAdapter);
+		mBinding.tabPager.setOffscreenPageLimit(1);
 
 		mBinding.tablayoutMain.setupWithViewPager(mBinding.tabPager);
 		mBinding.tablayoutMain.setTabGravity(TabLayout.GRAVITY_FILL);
 		mBinding.tablayoutMain.addOnTabSelectedListener(this);
+
+		mBinding.tabPager.setCurrentItem(mCurrentTab);
+
+		setTabIcon(mBinding.tablayoutMain.getTabAt(0), R.drawable.ic_person);
+
+		setTabColor(mBinding.tablayoutMain.getTabAt(0), ContextCompat.getColor(this, R.color.tab_unselected));
+
+		setTabColor(mBinding.tablayoutMain.getTabAt(mCurrentTab), ContextCompat.getColor(this, R.color.tab_seletected));
 	}
 }

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-kapt'
 
 apply from: "$rootDir/tools/tools.gradle"
 
@@ -110,9 +111,8 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+            returnDefaultValues = true
         }
-
-        unitTests.returnDefaultValues = true
 
         unitTests.all {
             jacoco {
@@ -216,6 +216,7 @@ dependencies {
     debugApi "com.facebook.stetho:stetho:$versions.stetho"
     debugApi "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
     api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    kapt "com.android.databinding:compiler:$android_plugin_version"
 }
 
 tasks.matching { it instanceof Test }.all {

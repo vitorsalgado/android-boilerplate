@@ -2,9 +2,10 @@ package com.example;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 
 import com.crashlytics.android.Crashlytics;
-import com.squareup.leakcanary.LeakCanary;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.lang.ref.WeakReference;
@@ -19,13 +20,11 @@ public class App extends Application {
 	public void onCreate() {
 		super.onCreate();
 
-		if (LeakCanary.isInAnalyzerProcess(this)) {
-			return;
-		}
-
-		AppDeps.setUp(this);
+		AppDeps.setUp(new DepsProvider(this));
 		AppContext.setUp(this);
+
 		setUpCrashlytics();
+		setUpAnalytics();
 
 		refWatcher = setUpLeakCanary();
 		instance = new WeakReference<>(this);
@@ -53,5 +52,13 @@ public class App extends Application {
 
 	protected RefWatcher setUpLeakCanary() {
 		return RefWatcher.DISABLED;
+	}
+
+	protected void setUpAnalytics() {
+		if (BuildConfig.DEBUG) {
+			return;
+		}
+
+		FirebaseAnalytics.getInstance(getContext()).setAnalyticsCollectionEnabled(true);
 	}
 }
