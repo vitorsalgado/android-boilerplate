@@ -66,6 +66,18 @@ yarn-debug.log*
 yarn-error.log*
 .npm
 
+# Buck
+BUCK*
+.buckconfig
+.buckversion
+keystores/
+/buck-cache/
+/buck-out/
+/.buckconfig.local
+/.buckd
+/.nobuckcheck
+/.bucktestselectors
+
 # IDEs
 *.iml
 .idea/workspace.xml

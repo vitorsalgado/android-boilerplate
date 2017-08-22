@@ -16,12 +16,12 @@ android {
         minSdkVersion 19
         targetSdkVersion 26
 
-        versionCode 1000
-        versionName "1.0"
+        versionCode Integer.valueOf(file("$rootDir/VERSION_CODE").text)
+        versionName file("$rootDir/VERSION").text
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
         testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
 
         buildConfigField 'Boolean', 'WATERMARK', 'false'
@@ -29,6 +29,15 @@ android {
 
     dataBinding {
         enabled true
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'x86_64', 'arm64-v8a', 'armeabi-v7a'
+            universalApk false
+        }
     }
 
     signingConfigs {
@@ -72,6 +81,9 @@ android {
             useProguard true
 
             signingConfig signingConfigs.debug
+
+            buildConfigField 'Boolean', 'WATERMARK', 'true'
+            buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
         }
 
         qa {
@@ -84,6 +96,8 @@ android {
 
             ext.betaDistributionGroupAliases = "qa"
             ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes-qa.txt"
+
+            buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
         }
 
         release {
@@ -96,6 +110,8 @@ android {
 
             ext.betaDistributionGroupAliases = "beta"
             ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes.txt"
+
+            buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
         }
     }
 
@@ -130,8 +146,6 @@ android {
 final versions = rootProject.ext
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-
     // Test Libraries
 
     testApi "junit:junit:$versions.junit"
@@ -181,7 +195,6 @@ dependencies {
     api "io.reactivex.rxjava2:rxjava:$versions.rxJava"
 
     // Square Up Tools
-    api "com.squareup.picasso:picasso:$versions.picasso"
     api("com.squareup.retrofit2:retrofit:$versions.retrofit") {
         exclude module: 'okhttp'
     }

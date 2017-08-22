@@ -2,7 +2,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 
-def lintersDir = "$rootDir/tools/linters";
+def lintersDir = "$rootDir/tools/linters"
 def reportsDir = "$buildDir/reports"
 
 task checkstyle(type: Checkstyle) {

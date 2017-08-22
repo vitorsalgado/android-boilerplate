@@ -14,15 +14,13 @@ buildscript {
         classpath "com.google.gms:google-services:3.1.0"
         classpath "io.fabric.tools:gradle:$fabricGradle"
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.4'
-        classpath "com.uber:okbuck:0.20.5"
         classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.uber:okbuck:0.26.2'
     }
 
     System.properties['com.android.build.gradle.overrideVersionCheck'] = 'true'
 }
-
-apply plugin: 'com.uber.okbuck'
 
 ext {
     // support
@@ -40,7 +38,6 @@ ext {
     // main dependencies
     okhttp = '3.8.1'
     retrofit = '2.3.0'
-    picasso = '2.5.2'
     play = '11.2.0'
     firebase = '11.2.0'
     gson = '2.8.1'
@@ -68,6 +65,9 @@ allprojects {
     }
 }
 
+apply plugin: 'com.uber.okbuck'
+
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
@@ -76,4 +76,23 @@ task printBuildScriptClasspath {
     doLast {
         println project.buildscript.configurations.classpath.asPath
     }
+}
+
+okbuck {
+    buildToolVersion = '26.0.1'
+    target = 26
+    
+    intellij {
+        sources = true
+    }
+
+    test {
+        espresso = true
+        robolectric = true
+    }
+
+    wrapper {
+        watch += ["**/*.sq"]
+    }
+
 }

@@ -2,19 +2,9 @@ package com.example.utils.analytics;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
-public class FirebaseAnalyticsLifecycle implements Application.ActivityLifecycleCallbacks {
-	private final FirebaseAnalytics mFirebaseAnalytics;
-
-	public FirebaseAnalyticsLifecycle(@NonNull Context context) {
-		mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
-	}
-
+public class AnalyticsActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 	@Override
 	public void onActivityCreated(Activity activity, Bundle bundle) {
 
@@ -27,7 +17,9 @@ public class FirebaseAnalyticsLifecycle implements Application.ActivityLifecycle
 
 	@Override
 	public void onActivityResumed(Activity activity) {
-
+		if (activity instanceof TraceableScreen) {
+			AnalyticsUtils.trackView(activity, ((TraceableScreen) activity).getScreenName());
+		}
 	}
 
 	@Override

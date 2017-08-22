@@ -29,7 +29,7 @@ const onFileChange = (event, path) => {
 
     Request(options)
         .then(() => console.log('\x1b[32mWiremock mappings reseted!\x1b[0m'))
-        .catch(() => console.log('\x1b[31mWiremock is unavailable now!\x1b[0m'));
+        .catch(() => console.error('\x1b[31mWiremock is unavailable now!\x1b[0m'));
 };
 
 watcher

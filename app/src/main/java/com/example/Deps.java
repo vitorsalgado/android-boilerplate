@@ -21,8 +21,6 @@ public interface Deps {
 
 	OAuthApi oauthApi();
 
-	FileUtils fileUtils();
-
 	LoginManager fbLoginManager();
 
 	CallbackManager fbCallbackManager();

@@ -46,10 +46,6 @@ public class AppDeps {
 
 	// Libraries
 
-	public static FileUtils fileUtils() {
-		return mDeps.fileUtils();
-	}
-
 	public static LoginManager fbLoginManager() {
 		return mDeps.fbLoginManager();
 	}
