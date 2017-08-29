@@ -16,7 +16,6 @@ buildscript {
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.4'
         classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.uber:okbuck:0.26.2'
     }
 
     System.properties['com.android.build.gradle.overrideVersionCheck'] = 'true'
@@ -65,9 +64,6 @@ allprojects {
     }
 }
 
-apply plugin: 'com.uber.okbuck'
-
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
@@ -76,23 +72,4 @@ task printBuildScriptClasspath {
     doLast {
         println project.buildscript.configurations.classpath.asPath
     }
-}
-
-okbuck {
-    buildToolVersion = '26.0.1'
-    target = 26
-    
-    intellij {
-        sources = true
-    }
-
-    test {
-        espresso = true
-        robolectric = true
-    }
-
-    wrapper {
-        watch += ["**/*.sq"]
-    }
-
 }
