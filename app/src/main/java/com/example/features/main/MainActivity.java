@@ -19,6 +19,7 @@ import com.example.features.BaseActivity;
 import com.example.features.authentication.LoginActivity;
 import com.example.features.profile.ProfileSummaryFragment;
 import com.example.utils.AppUtils;
+import com.newrelic.agent.android.NewRelic;
 
 import java.util.Vector;
 
@@ -44,10 +45,10 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		setTheme(R.style.AppTheme);
 		super.onCreate(savedInstanceState);
 
 		mPresenter = new MainPresenter(this);
+		NewRelic.withApplicationToken(getString(R.string.app_newrelic_token)).start(this.getApplication());
 
 		if (AppUtils.checkPlayServices(this, REQUEST_CODE_RECOVER_PLAY_SERVICES)) {
 			mPresenter.checkAuthentication();
@@ -145,6 +146,7 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 	}
 
 	private void setLayout() {
+		setTheme(R.style.AppTheme);
 		mBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
 
 		Vector<Fragment> fragments = new Vector<>();

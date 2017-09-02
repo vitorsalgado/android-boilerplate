@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'newrelic'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'io.fabric'
@@ -71,7 +72,7 @@ android {
             signingConfig signingConfigs.debug
 
             buildConfigField 'Boolean', 'WATERMARK', 'true'
-            buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
+            buildConfigField 'String', 'API_URL', '"http://192.168.1.35:3001"'
             buildConfigField 'String', 'FLOWUP_KEY', '"351092fa5b3d422381b6661b13e2d8a7"'
         }
 
@@ -84,7 +85,7 @@ android {
             signingConfig signingConfigs.debug
 
             buildConfigField 'Boolean', 'WATERMARK', 'true'
-            buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
+            buildConfigField 'String', 'API_URL', '"http://192.168.1.35:3001"'
         }
 
         qa {
@@ -98,7 +99,7 @@ android {
             ext.betaDistributionGroupAliases = "qa"
             ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes-qa.txt"
 
-            buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
+            buildConfigField 'String', 'API_URL', '"http://192.168.1.35:3001"'
         }
 
         release {
@@ -112,7 +113,7 @@ android {
             ext.betaDistributionGroupAliases = "beta"
             ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes.txt"
 
-            buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
+            buildConfigField 'String', 'API_URL', '"http://192.168.1.35:3001"'
         }
     }
 
@@ -144,7 +145,6 @@ final versions = rootProject.ext
 
 dependencies {
     // Test Libraries
-
     testApi "junit:junit:$versions.junit"
     testApi "org.mockito:mockito-android:$versions.mockito"
     testApi "org.hamcrest:hamcrest-all:$versions.hamcrest"
@@ -153,7 +153,6 @@ dependencies {
     androidTestApi "com.linkedin.testbutler:test-butler-library:$versions.testButler"
 
     // Android Support Libraries
-
     api "com.android.support:support-annotations:$versions.supportLibrary"
     api "com.android.support.constraint:constraint-layout:1.0.2"
     api("com.android.support:appcompat-v7:$versions.supportLibrary") {
@@ -212,13 +211,11 @@ dependencies {
     api "org.greenrobot:eventbus:$versions.eventbus"
     api "com.android.support.test.espresso:espresso-idling-resource:$versions.espresso"
     api "de.psdev.licensesdialog:licensesdialog:$versions.licensesDialog"
-    api "com.github.siyamed:android-shape-imageview:$versions.shapeImageView"
     api("com.orhanobut:hawk:$versions.hawk") {
         exclude module: 'gson'
     }
 
     // Development and Support Libs
-
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
     qaApi "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
     testApi "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
@@ -228,8 +225,7 @@ dependencies {
     debugApi "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
     api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     kapt "com.android.databinding:compiler:$android_plugin_version"
-    debugApi("io.flowup:android-sdk:$versions.flowup") { exclude group: 'com.google.android.gms' }
-    testApi "io.flowup:android-sdk-no-op:$versions.flowup"
+    api "com.newrelic.agent.android:android-agent:5.14.0"
 }
 
 tasks.matching { it instanceof Test }.all {
