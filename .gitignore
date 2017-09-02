@@ -91,3 +91,5 @@ keystores/
 .settings/
 buck-out/
 .garbage/
+project.properties
+.env

@@ -14,6 +14,7 @@ env:
     - ABI=armeabi-v7a
     - QEMU_AUDIO_DRV=none
     - ANDROID_HOME=/usr/local/android-sdk-26.0.1
+    - ANDROID_ABI=armeabi-v7a
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
     - ADB_INSTALL_TIMEOUT=20
@@ -34,14 +35,17 @@ android:
     - platform-tools
     - extra-android-m2repository
     - extra-google-android-support
-
-    - android-26
-    - sys-img-armeabi-v7a-android-25
+    - addon-google_apis-google-$API
+    - extra-google-google_play_services
+    - android-$API
+    - sys-img-armeabi-v7a-android-$API
+    - sys-img-armeabi-v7a-google_apis-$API
+    - sys-img-armeabi-v7a-google_apis-$API
 
 before_script:
-  - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-26,sys-img-x86_64-android-26
+  - echo "y" | android update sdk -a --no-ui --filter armeabi-v7a
   - android list targets
-  - echo no | android create avd --force -n test -t android-26 --abi "no ABIs"
+  - echo no | android create avd --force -n test -t android-26 --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
