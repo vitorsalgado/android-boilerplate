@@ -24,7 +24,6 @@ This project has a basic structure for automated tests with Calabash and Cucumbe
 Check [Automated Tests documentation](/automated_tests/README.md) for more details.
 
 ### Code Analysis tools 
-
 The following code analysis tools are set up on this project:
 
 * [PMD](https://pmd.github.io/): It finds common programming flaws like unused variables, empty catch blocks, unnecessary object creation, and so forth. See [this project's PMD ruleset](tools/linters/pmd-ruleset.xml).
@@ -41,9 +40,6 @@ The following code analysis tools are set up on this project:
 ```
 ./gradlew checkstyle
 ```
-
-## Build Systems
-Both *Gradle* and *Buck* are configured in this project.
 
 ## License
 This project is available under Apache Public License version 2.0. See [LICENSE](LICENSE).
