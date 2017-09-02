@@ -230,6 +230,8 @@ dependencies {
     debugApi "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
     api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     kapt "com.android.databinding:compiler:$android_plugin_version"
+    debugApi "io.flowup:android-sdk:$versions.flowup"
+    testApi "io.flowup:android-sdk-no-op:$versions.flowup"
 }
 
 tasks.matching { it instanceof Test }.all {

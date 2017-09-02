@@ -50,6 +50,7 @@ ext {
     shapeImageView = '0.9.3@aar'
     crashlytics = '2.6.8@aar'
     hawk = '2.0.1'
+    flowup = '1.0.0'
 
     // utils
     leakCanary = '1.5.1'
