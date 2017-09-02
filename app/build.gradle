@@ -70,12 +70,9 @@ android {
 
             signingConfig signingConfigs.debug
 
-            Properties properties = new Properties()
-            properties.load(project.rootProject.file('project.properties').newDataInputStream())
-
             buildConfigField 'Boolean', 'WATERMARK', 'true'
             buildConfigField 'String', 'API_URL', '"http://192.168.1.34:3001"'
-            buildConfigField 'String', 'FLOWUP_KEY', properties.getProperty("FLOWUP_KEY")
+            buildConfigField 'String', 'FLOWUP_KEY', '"351092fa5b3d422381b6661b13e2d8a7"'
         }
 
         mocked {
