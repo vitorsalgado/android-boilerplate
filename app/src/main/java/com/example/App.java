@@ -7,6 +7,8 @@ import com.crashlytics.android.Crashlytics;
 import com.example.utils.analytics.AnalyticsActivityLifecycle;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.lang.ref.WeakReference;
@@ -26,6 +28,7 @@ public class App extends Application {
 
 		setUpCrashlytics();
 		setUpAnalytics();
+		setUpRemoteConfig();
 
 		Fresco.initialize(this);
 
@@ -65,5 +68,17 @@ public class App extends Application {
 		instance.get().registerActivityLifecycleCallbacks(new AnalyticsActivityLifecycle());
 
 		FirebaseAnalytics.getInstance(getContext()).setAnalyticsCollectionEnabled(true);
+	}
+
+	protected void setUpRemoteConfig() {
+		final FirebaseRemoteConfigSettings remoteConfigSettings =
+				new FirebaseRemoteConfigSettings
+						.Builder()
+						.setDeveloperModeEnabled(BuildConfig.DEBUG)
+						.build();
+
+		final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+
+		remoteConfig.setConfigSettings(remoteConfigSettings);
 	}
 }

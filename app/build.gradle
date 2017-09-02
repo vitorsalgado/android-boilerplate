@@ -180,6 +180,7 @@ dependencies {
     api "com.google.android.gms:play-services-location:$versions.play"
     api "com.google.firebase:firebase-core:$versions.firebase"
     api "com.google.firebase:firebase-messaging:$versions.firebase"
+    api "com.google.firebase:firebase-config:$versions.firebase"
     api "com.google.code.gson:gson:$versions.gson"
 
     // Facebook
