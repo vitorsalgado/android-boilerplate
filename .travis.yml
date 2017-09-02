@@ -43,7 +43,7 @@ android:
     - sys-img-armeabi-v7a-google_apis-$API
 
 before_script:
-  - echo "y" | android update sdk -a --no-ui --filter armeabi-v7a
+  - echo "y" | android update sdk -a --no-ui
   - android list targets
   - echo no | android create avd --force -n test -t android-26 --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
