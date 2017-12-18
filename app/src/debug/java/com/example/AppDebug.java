@@ -1,41 +1,68 @@
 package com.example;
 
-import com.crashlytics.android.Crashlytics;
-import com.facebook.FacebookSdk;
-import com.facebook.LoggingBehavior;
+import android.os.StrictMode;
+
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tspoon.traceur.Traceur;
 
-import io.fabric.sdk.android.Fabric;
+import br.com.vitorsalgado.androidstarter.android.trackers.ActivityLifecycleTracker;
+import br.com.vitorsalgado.androidstarter.android.trackers.FragmentLifecycleTracker;
+import br.com.vitorsalgado.androidstarter.android.trackers.FrescoCacheStatsTracker;
+import br.com.vitorsalgado.androidstarter.logger.CLog;
 
 public class AppDebug extends App {
 	@Override
 	public void onCreate() {
-		super.onCreate();
-
 		if (LeakCanary.isInAnalyzerProcess(this)) {
 			return;
 		}
 
-		FacebookSdk.setIsDebugEnabled(true);
-		FacebookSdk.addLoggingBehavior(LoggingBehavior.DEVELOPER_ERRORS);
+		super.onCreate();
 
 		Stetho.initializeWithDefaults(this);
+		trackActivitiesAndFragmentsLifecycle();
+		Traceur.enableLogging();
+
+		enableStrictMode();
 	}
 
 	@Override
-	protected RefWatcher setUpLeakCanary() {
-		return LeakCanary.refWatcher(this)
-				.buildAndInstall();
+	public void onTrimMemory(int level) {
+		super.onTrimMemory(level);
+		CLog.d("[ onTrimMemory ] " + level);
 	}
 
 	@Override
-	protected void setUpCrashlytics() {
-		if (BuildConfig.DEBUG) {
-			return;
-		}
+	protected RefWatcher enableLeakCanary() {
+		return LeakCanary.refWatcher(this).buildAndInstall();
+	}
 
-		Fabric.with(this, new Crashlytics());
+	private void enableStrictMode() {
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+			.detectAll()
+			.penaltyLog()
+			.penaltyDeath()
+			.build());
+
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+			.detectAll()
+			.penaltyLog()
+			.penaltyDeath()
+			.build());
+	}
+
+	@Override
+	protected void trackFresco(ImagePipelineConfig.Builder builder) {
+		builder.setImageCacheStatsTracker(new FrescoCacheStatsTracker());
+	}
+
+	private void trackActivitiesAndFragmentsLifecycle() {
+		final FragmentLifecycleTracker fragmentLifecycleTracker = new FragmentLifecycleTracker();
+		final ActivityLifecycleTracker activityLifecycleTracker = new ActivityLifecycleTracker(fragmentLifecycleTracker);
+
+		registerActivityLifecycleCallbacks(activityLifecycleTracker);
 	}
 }

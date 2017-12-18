@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+
+android {}
+
+final versions = rootProject.ext
+
+dependencies {
+    testImplementation "junit:junit:$versions.junit"
+}

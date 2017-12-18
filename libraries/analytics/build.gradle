@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+
+android {}
+
+final versions = rootProject.ext
+
+dependencies {
+    implementation "com.google.firebase:firebase-core:$versions.play"
+}

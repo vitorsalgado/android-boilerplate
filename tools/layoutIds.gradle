@@ -12,7 +12,6 @@ task layoutIds() {
         println "LayoutDir = $layoutDir"
 
         def files = new File(layoutDir).listFiles()
-        String viewsWithoutIDs
 
         files.each {
             println "\n${it.getName()}"

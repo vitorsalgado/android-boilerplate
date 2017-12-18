@@ -1,5 +1,6 @@
 package com.example.features.main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -7,51 +8,66 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.BuildConfig;
 import com.example.R;
 import com.example.databinding.MainActivityBinding;
-import com.example.features.BaseActivity;
-import com.example.features.authentication.LoginActivity;
-import com.example.features.profile.ProfileSummaryFragment;
-import com.example.utils.AppUtils;
-import com.newrelic.agent.android.NewRelic;
+import com.example.features.AbstractActivity;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends BaseActivity implements TabLayout.OnTabSelectedListener, MainView {
-	static final String CURRENT_TAB = "com.example.features.MainActivity.CURRENT_TAB";
-	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
+import br.com.vitorsalgado.androidstarter.android.ActivityUtils;
+import br.com.vitorsalgado.androidstarter.android.AppUtils;
+import dagger.android.AndroidInjection;
 
-	MainActivityBinding mBinding;
-	MainPresenter mPresenter;
-	TabbedPagerAdapter mTabbedPagerAdapter;
-	int mCurrentTab = 0;
-	boolean mDoubleBackToExitPressedOnce = false;
-	Handler mDoubleBackHandler = new Handler();
-	Runnable mExitRunnable = (() -> mDoubleBackToExitPressedOnce = false);
-	Toast mExitToast;
+public class MainActivity extends AbstractActivity implements TabLayout.OnTabSelectedListener {
+	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 9001;
+	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES_WITHOUT_CALLBACK = 9002;
+	private static final int REQUEST_CODE_WRITE_STORAGE_PERMISSION = 9003;
 
-	public static Intent newIntent(Context context) {
+	MainActivityBinding binding;
+
+	private int mCurrentTab = 0;
+	private boolean mDoubleBackToExitPressedOnce = false;
+	private Handler mDoubleBackHandler = new Handler();
+	private Runnable mExitRunnable = (() -> mDoubleBackToExitPressedOnce = false);
+	private Toast mExitToast;
+
+	public static Intent newIntent(@NonNull Context context) {
 		Intent intent = new Intent(context, MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
 		return intent;
 	}
 
+	//region Activity Events
+	@NonNull
+	@Override
+	protected View root() {
+		return binding.getRoot();
+	}
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		mPresenter = new MainPresenter(this);
-		NewRelic.withApplicationToken(getString(R.string.app_newrelic_token)).start(this.getApplication());
+		AndroidInjection.inject(this);
 
 		if (AppUtils.checkPlayServices(this, REQUEST_CODE_RECOVER_PLAY_SERVICES)) {
-			mPresenter.checkAuthentication();
+			checkAuthentication();
+		}
+
+		// We only need WRITE_EXTERNAL_STORAGE permission in debug mode
+		// to LeakCanary write leak information without problems
+		if (BuildConfig.DEBUG && !ActivityUtils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+			ActivityUtils.requestPermissionsSafely(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_STORAGE_PERMISSION);
 		}
 	}
 
@@ -69,23 +85,10 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 		}
 
 		mDoubleBackToExitPressedOnce = true;
-		mExitToast = Toast.makeText(this, R.string.common_double_back_to_exit, Toast.LENGTH_SHORT);
+		mExitToast = Toast.makeText(this, R.string.double_back_to_exit, Toast.LENGTH_SHORT);
 
 		mExitToast.show();
 		mDoubleBackHandler.postDelayed(mExitRunnable, 2000);
-	}
-
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(CURRENT_TAB, mCurrentTab);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		mCurrentTab = savedInstanceState == null ? 0 : savedInstanceState.getInt(CURRENT_TAB);
 	}
 
 	@Override
@@ -93,25 +96,16 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 		mDoubleBackHandler.removeCallbacks(mExitRunnable);
 		super.onDestroy();
 	}
+	//endregion
 
-	// MainView implementations
-
-	@Override
-	public void onAuthCheckResult(boolean isAuth) {
-		if (!isAuth) {
-			startActivity(LoginActivity.startLogin(this));
-			finish();
-			return;
-		}
-
+	private void checkAuthentication() {
 		setLayout();
 	}
 
-	// TabLayout event handlers
-
+	//region TabLayout Events
 	@Override
 	public void onTabSelected(TabLayout.Tab tab) {
-		mBinding.tabPager.setCurrentItem(tab.getPosition());
+		binding.tabPager.setCurrentItem(tab.getPosition());
 		mCurrentTab = tab.getPosition();
 
 		setTabColor(tab, ContextCompat.getColor(this, R.color.tab_seletected));
@@ -126,9 +120,9 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 	public void onTabReselected(TabLayout.Tab tab) {
 
 	}
+	//endregion
 
-	// Helper methods
-
+	//region Helpers
 	private void setTabIcon(TabLayout.Tab tab, @DrawableRes int icon) {
 		if (tab == null) {
 			return;
@@ -147,27 +141,28 @@ public class MainActivity extends BaseActivity implements TabLayout.OnTabSelecte
 
 	private void setLayout() {
 		setTheme(R.style.AppTheme);
-		mBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
+		binding = DataBindingUtil.setContentView(this, R.layout.main_activity);
 
-		Vector<Fragment> fragments = new Vector<>();
+		List<Fragment> fragments = new ArrayList<>();
+		// Here we add the fragments for tabbed navigation
+		ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragments);
+		binding.tabPager.setAdapter(viewPagerAdapter);
 
-		fragments.add(Fragment.instantiate(this, ProfileSummaryFragment.class.getName()));
+		// Offscreen limit according to total tabs
+		// binding.tabPager.setOffscreenPageLimit(<TOTAL_TABS>);
 
-		mTabbedPagerAdapter = new TabbedPagerAdapter(getSupportFragmentManager(), fragments);
+		binding.tablayoutMain.setupWithViewPager(binding.tabPager);
+		binding.tablayoutMain.setTabGravity(TabLayout.GRAVITY_FILL);
+		binding.tablayoutMain.addOnTabSelectedListener(this);
 
-		mBinding.tabPager.setAdapter(mTabbedPagerAdapter);
-		mBinding.tabPager.setOffscreenPageLimit(1);
+		binding.tabPager.setCurrentItem(mCurrentTab);
 
-		mBinding.tablayoutMain.setupWithViewPager(mBinding.tabPager);
-		mBinding.tablayoutMain.setTabGravity(TabLayout.GRAVITY_FILL);
-		mBinding.tablayoutMain.addOnTabSelectedListener(this);
+		// Adding tab icons
+		// setTabIcon(binding.tablayoutMain.getTabAt(0), <ICON_RESOURCE>);
 
-		mBinding.tabPager.setCurrentItem(mCurrentTab);
-
-		setTabIcon(mBinding.tablayoutMain.getTabAt(0), R.drawable.ic_person);
-
-		setTabColor(mBinding.tablayoutMain.getTabAt(0), ContextCompat.getColor(this, R.color.tab_unselected));
-
-		setTabColor(mBinding.tablayoutMain.getTabAt(mCurrentTab), ContextCompat.getColor(this, R.color.tab_seletected));
+		// Initializing tabs states
+		// setTabColor(binding.tablayoutMain.getTabAt(0), ContextCompat.getColor(this, R.color.tab_unselected));
+		// setTabColor(binding.tablayoutMain.getTabAt(mCurrentTab), ContextCompat.getColor(this, R.color.tab_seletected));
 	}
+	//endregion
 }

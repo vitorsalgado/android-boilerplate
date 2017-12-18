@@ -19,15 +19,15 @@ task findbugs(type: FindBugs) {
     effort = "max"
     reportLevel = "high"
     excludeFilter = new File("$lintersDir/findbugs-filter.xml")
-    classes = files("$project.rootDir/app/build/intermediates/classes")
+    classes = files("$project.buildDir/intermediates/classes")
 
     source 'src'
     include '**/*.java'
     exclude '**/gen/**'
 
     reports {
-        xml.enabled = true
-        html.enabled = false
+        xml.enabled = false
+        html.enabled = true
         xml { destination "$reportsDir/findbugs/findbugs.xml" }
         html { destination "$reportsDir/findbugs/findbugs.html" }
     }

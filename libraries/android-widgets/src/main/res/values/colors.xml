@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="thumbDark">@android:color/black</color>
+    <color name="thumbAccent">#7b63a0</color>
+    <color name="seekBar">#F7F7F8</color>
+</resources>

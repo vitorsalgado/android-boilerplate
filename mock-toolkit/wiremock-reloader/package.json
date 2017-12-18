@@ -13,7 +13,10 @@
   "dependencies": {
     "chokidar": "^1.7.0",
     "ip": "^1.1.5",
-    "request": "^2.81.0",
-    "request-promise": "^4.2.1"
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.5"
   }
 }

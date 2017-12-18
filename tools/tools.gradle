@@ -1,4 +1,2 @@
-apply from: "$rootDir/tools/test-butler.gradle"
-apply from: "$rootDir/tools/jacoco.gradle"
 apply from: "$rootDir/tools/linters.gradle"
 apply from: "$rootDir/tools/layoutIds.gradle"

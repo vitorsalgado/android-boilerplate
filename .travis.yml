@@ -2,7 +2,7 @@ language: android
 
 sudo: true
 
-jdk: oraclejdk8
+jdk: openjdk8
 
 os:
   - linux

@@ -1,1 +1,11 @@
-include ':app'
+include ':app',
+        ':libraries:test-utils',
+        ':libraries:uava',
+        ':libraries:graph-api',
+        ':libraries:api',
+        ':libraries:logger',
+        ':libraries:android-utils',
+        ':libraries:android-widgets',
+        ':libraries:analytics',
+        ':libraries:persistence',
+		':libraries:swiper'

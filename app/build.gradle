@@ -1,249 +1,228 @@
 apply plugin: 'com.android.application'
-apply plugin: 'newrelic'
-apply plugin: 'kotlin-android'
-apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'io.fabric'
-apply plugin: 'kotlin-kapt'
 
-apply from: "$rootDir/tools/tools.gradle"
+apply from: rootProject.file('tools/jacoco.gradle')
+apply from: rootProject.file('tools/linters.gradle')
+
+final app_name = 'Boilerplate'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+	defaultConfig {
+		applicationId "com.example"
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+		vectorDrawables.useSupportLibrary true
+	}
 
-    defaultConfig {
-        applicationId "com.example"
+	dexOptions {
+		preDexLibraries "true" != System.getenv("CI")
+		maxProcessCount 8
+	}
 
-        minSdkVersion 19
-        targetSdkVersion 26
+	aaptOptions {
+		cruncherEnabled false
+	}
 
-        versionCode Integer.valueOf(file("$rootDir/VERSION_CODE").text)
-        versionName file("$rootDir/VERSION").text
+	dataBinding {
+		enabled true
+	}
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+	signingConfigs {
+		debug {
+			keyAlias 'androiddebugkey'
+			keyPassword 'android'
+			storeFile file("$rootDir/distribution/debug.keystore")
+			storePassword 'android'
+		}
 
-        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
-        testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+		if (System.getenv("KEY_ALIAS") == null) {
+			release {}
+		} else {
+			release {
+				keyAlias System.getenv("KEY_ALIAS")
+				keyPassword System.getenv("KEY_PASSWORD")
+				storeFile file(System.getenv("KEYSTORE"))
+				storePassword System.getenv("KEYSTORE_PASSWORD")
+			}
+		}
+	}
 
-        buildConfigField 'Boolean', 'WATERMARK', 'false'
-    }
+	buildTypes {
+		debug {
+			versionNameSuffix ".debug"
+			minifyEnabled false
+			useProguard "true" == System.getenv("CI")
+			debuggable true
+			shrinkResources false
+			signingConfig signingConfigs.debug
 
-    dataBinding {
-        enabled true
-    }
+			ext.alwaysUpdateBuildId = false
 
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'x86', 'x86_64', 'arm64-v8a', 'armeabi-v7a'
-            universalApk false
-        }
-    }
+			testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
 
-    signingConfigs {
-        debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file("$rootDir/distribution/debug.keystore")
-            storePassword 'android'
-        }
+			testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
 
-        if (System.getenv("KEY_ALIAS") == null) {
-            release {}
-        } else {
-            release {
-                keyAlias System.getenv("KEY_ALIAS")
-                keyPassword System.getenv("KEY_PASSWORD")
-                storeFile file(System.getenv("KEYSTORE"))
-                storePassword System.getenv("KEYSTORE_PASSWORD")
-            }
-        }
-    }
+			resValue 'string', 'app_name', "1." + app_name + ".debug"
+		}
 
-    buildTypes {
-        debug {
-            versionNameSuffix ".debug"
+		release {
+			zipAlignEnabled true
+			shrinkResources true
+			minifyEnabled true
+			signingConfig signingConfigs.release
 
-            minifyEnabled true
-            useProguard true
-            testCoverageEnabled true
+			ext.betaDistributionGroupAliases = "release"
+			ext.betaDistributionNotifications = true
+			ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes.txt"
 
-            signingConfig signingConfigs.debug
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
+			consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            buildConfigField 'Boolean', 'WATERMARK', 'true'
-            buildConfigField 'String', 'API_URL', '"http://192.168.1.35:3001"'
-            buildConfigField 'String', 'FLOWUP_KEY', '"351092fa5b3d422381b6661b13e2d8a7"'
-        }
+			resValue 'string', 'app_name', app_name
+		}
+	}
 
-        mocked {
-            versionNameSuffix ".mocked"
+	testOptions {
+		unitTests {
+			includeAndroidResources = true
+			returnDefaultValues = true
+		}
+	}
 
-            minifyEnabled true
-            useProguard true
+	applicationVariants.all { variant ->
+		if (variant.buildType.name == "release") {
+			variant.mergedFlavor.versionCode = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim())
+			variant.mergedFlavor.versionName = file("$rootDir/VERSION").text
+		}
+	}
 
-            signingConfig signingConfigs.debug
+	packagingOptions {
+		exclude 'META-INF/LICENSE.txt'
+		exclude 'META-INF/NOTICE.txt'
+		exclude 'META-INF/rxjava.properties'
+	}
+}
 
-            buildConfigField 'Boolean', 'WATERMARK', 'true'
-            buildConfigField 'String', 'API_URL', '"http://192.168.1.35:3001"'
-        }
+tasks.matching { it instanceof Test }.all {
+	testLogging {
+		showExceptions true
+		showCauses true
+		showStackTraces true
 
-        qa {
-            versionNameSuffix ".qa"
+		events = ["failed", "passed", "skipped", "standardOut", "standardError"]
+	}
+}
 
-            minifyEnabled true
-            useProguard true
-
-            signingConfig signingConfigs.debug
-
-            ext.betaDistributionGroupAliases = "qa"
-            ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes-qa.txt"
-
-            buildConfigField 'String', 'API_URL', '"http://192.168.1.35:3001"'
-        }
-
-        release {
-            minifyEnabled true
-            useProguard true
-            zipAlignEnabled true
-            shrinkResources true
-
-            signingConfig signingConfigs.release
-
-            ext.betaDistributionGroupAliases = "beta"
-            ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes.txt"
-
-            buildConfigField 'String', 'API_URL', '"http://192.168.1.35:3001"'
-        }
-    }
-
-    lintOptions {
-        lintConfig file("lint.xml")
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-            returnDefaultValues = true
-        }
-
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
-    }
-
+jacoco {
+	toolVersion = "0.7.4+"
 }
 
 final versions = rootProject.ext
 
 dependencies {
-    // Test Libraries
-    testApi "junit:junit:$versions.junit"
-    testApi "org.mockito:mockito-android:$versions.mockito"
-    testApi "org.hamcrest:hamcrest-all:$versions.hamcrest"
-    testApi "org.robolectric:robolectric:$versions.robolectric"
-    androidTestApi "com.android.support.test:runner:$versions.testSupportLibrary"
-    androidTestApi "com.linkedin.testbutler:test-butler-library:$versions.testButler"
+	// ---------------------------------------------------------------------------------------------
+	// Project Libraries
+	// ---------------------------------------------------------------------------------------------
+	implementation project(':libraries:uava')
+	implementation project(':libraries:logger')
+	implementation project(':libraries:android-utils')
+	implementation project(':libraries:android-widgets')
+	implementation project(':libraries:analytics')
+	implementation project(':libraries:persistence')
+	implementation project(':libraries:swiper')
+	testImplementation project(':libraries:test-utils')
 
-    // Android Support Libraries
-    api "com.android.support:support-annotations:$versions.supportLibrary"
-    api "com.android.support.constraint:constraint-layout:1.0.2"
-    api("com.android.support:appcompat-v7:$versions.supportLibrary") {
-        exclude module: 'support-annotations'
-        exclude module: 'support-v4'
-    }
-    api("com.android.support:design:$versions.supportLibrary") {
-        exclude module: 'support-v4'
-        exclude module: 'appcompat-v7'
-        exclude module: 'recyclerview-v7'
-    }
-    api "com.android.support:support-v4:$versions.supportLibrary"
-    api "com.android.support:support-v13:$versions.supportLibrary"
-    api("com.android.support:recyclerview-v7:$versions.supportLibrary") {
-        exclude module: 'support-annotations'
-        exclude module: 'support-compat'
-        exclude module: 'support-core-ui'
-    }
-    api "com.android.support:cardview-v7:$versions.supportLibrary"
+	// ---------------------------------------------------------------------------------------------
+	// Dependencies
+	// ---------------------------------------------------------------------------------------------
+	implementation "com.android.support:support-annotations:$versions.supportLibrary"
+	implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
+	implementation("com.android.support:appcompat-v7:$versions.supportLibrary") {
+		exclude module: 'support-annotations'
+		exclude module: 'support-v4'
+		exclude module: 'cardview-v7'
+	}
+	implementation("com.android.support:design:$versions.supportLibrary") {
+		exclude module: 'support-v4'
+		exclude module: 'appcompat-v7'
+		exclude module: 'recyclerview-v7'
+		exclude module: 'cardview-v7'
+	}
+	implementation "com.android.support:support-v4:$versions.supportLibrary"
+	implementation "com.android.support:support-v13:$versions.supportLibrary"
+	implementation("com.android.support:recyclerview-v7:$versions.supportLibrary") {
+		exclude module: 'support-annotations'
+		exclude module: 'support-compat'
+		exclude module: 'support-core-ui'
+	}
+	implementation "com.google.firebase:firebase-crash:$versions.play"
+	implementation "com.google.firebase:firebase-core:$versions.play"
+	implementation "com.google.firebase:firebase-messaging:$versions.play"
+	implementation "com.google.firebase:firebase-config:$versions.play"
+	implementation "com.google.code.gson:gson:$versions.gson"
+	implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
+	implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
+	compile "com.google.dagger:dagger:$versions.dagger"
+	compile "com.google.dagger:dagger-android:$versions.dagger"
+	compile "com.google.dagger:dagger-android-support:$versions.dagger"
+	annotationProcessor "com.google.dagger:dagger-android-processor:$versions.dagger"
+	annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
+	implementation "de.psdev.licensesdialog:licensesdialog:$versions.licensesDialog"
+	implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
+	implementation "com.facebook.fresco:fresco:$versions.fresco"
 
-    // Libs
+	// ---------------------------------------------------------------------------------------------
+	// Development and Support Libs
+	// ---------------------------------------------------------------------------------------------
+	annotationProcessor "com.uber.nullaway:nullaway:$versions.nullaway"
+	implementation("com.crashlytics.sdk.android:crashlytics:$versions.crashlytics") {
+		transitive = true
+	}
+	releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
+	testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
+	debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
+	debugImplementation "com.facebook.stetho:stetho:$versions.stetho"
+	debugImplementation "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
+	debugImplementation "com.tspoon.traceur:traceur:$versions.traceur"
+	debugImplementation("com.squareup.okhttp3:logging-interceptor:$versions.okhttp") {
+		exclude module: 'okhttp'
+	}
+	errorprone "com.google.errorprone:error_prone_core:$versions.errorprone"
 
-    // Google
-    api "com.google.android.gms:play-services-location:$versions.play"
-    api "com.google.firebase:firebase-core:$versions.firebase"
-    api "com.google.firebase:firebase-messaging:$versions.firebase"
-    api "com.google.firebase:firebase-config:$versions.firebase"
-    api "com.google.code.gson:gson:$versions.gson"
+	// ---------------------------------------------------------------------------------------------
+	// Test Libs
+	// ---------------------------------------------------------------------------------------------
+	testImplementation "junit:junit:$versions.junit"
+	testImplementation "org.mockito:mockito-core:$versions.mockito"
+	testImplementation "org.hamcrest:hamcrest-all:$versions.hamcrest"
+	testImplementation "org.robolectric:robolectric:$versions.robolectric"
+	testImplementation "br.com.concretesolutions:requestmatcher:$versions.requestmatcher"
+	testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
+	testImplementation "com.jayway.jsonpath:json-path-assert:$versions.jsonpathassert"
+	testImplementation "com.google.code.gson:gson:$versions.gson"
 
-    // Facebook
-    api "com.facebook.android:facebook-android-sdk:$versions.facebook"
-    api "com.facebook.rebound:rebound:$versions.rebound"
-    api "com.facebook.fresco:fresco:$versions.fresco"
-
-    // RxJava
-    api "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
-    api "io.reactivex.rxjava2:rxjava:$versions.rxJava"
-
-    // Square Up Tools
-    api("com.squareup.retrofit2:retrofit:$versions.retrofit") {
-        exclude module: 'okhttp'
-    }
-    api("com.squareup.retrofit2:converter-gson:$versions.retrofit") {
-        exclude module: 'retrofit'
-        exclude module: 'gson'
-    }
-    api("com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit") {
-        exclude module: 'retrofit'
-    }
-    api "com.squareup.okhttp3:okhttp:$versions.okhttp"
-    api("com.squareup.okhttp3:logging-interceptor:$versions.okhttp") {
-        exclude module: 'okhttp'
-    }
-
-    // Others
-    api "org.greenrobot:eventbus:$versions.eventbus"
-    api "com.android.support.test.espresso:espresso-idling-resource:$versions.espresso"
-    api "de.psdev.licensesdialog:licensesdialog:$versions.licensesDialog"
-    api("com.orhanobut:hawk:$versions.hawk") {
-        exclude module: 'gson'
-    }
-
-    // Development and Support Libs
-    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
-    qaApi "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
-    testApi "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
-    debugApi "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
-    api("com.crashlytics.sdk.android:crashlytics:$versions.crashlytics") { transitive = true }
-    debugApi "com.facebook.stetho:stetho:$versions.stetho"
-    debugApi "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
-    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    kapt "com.android.databinding:compiler:$android_plugin_version"
-    api "com.newrelic.agent.android:android-agent:5.14.0"
-}
-
-tasks.matching { it instanceof Test }.all {
-    testLogging.events = ["failed", "passed", "skipped"]
+	androidTestImplementation "junit:junit:$versions.junit"
+	androidTestImplementation "org.mockito:mockito-android:$versions.mockito"
+	androidTestImplementation "com.android.support.test:runner:$versions.testSupportLibrary"
+	androidTestImplementation "com.android.support.test:rules:$versions.testSupportLibrary"
+	androidTestImplementation "com.android.support.test.espresso:espresso-core:$versions.espresso"
+	androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$versions.espresso"
+	androidTestImplementation "com.android.support.test.espresso:espresso-intents:$versions.espresso"
+	androidTestImplementation "com.android.support.test.espresso:espresso-web:$versions.espresso"
+	androidTestImplementation "com.linkedin.testbutler:test-butler-library:$versions.testButler"
 }
 
 configurations.all {
-    resolutionStrategy {
-        force "org.hamcrest:hamcrest-core:$versions.hamcrest"
-        force "com.google.code.findbugs:jsr305:3.0.1"
-    }
+	resolutionStrategy {
+		force "org.hamcrest:hamcrest-core:$versions.hamcrest"
+		force "com.google.code.findbugs:jsr305:$versions.googlefindbugs"
+	}
 
-    resolutionStrategy.eachDependency { details ->
-        if (details.requested.group == 'com.android.support'
-                && !details.requested.name.contains('multidex')) {
-            details.useVersion "$versions.supportLibrary"
-        }
-    }
+	resolutionStrategy.eachDependency { details ->
+		if (details.requested.group == 'com.android.support'
+			&& !details.requested.name.contains('multidex')) {
+			details.useVersion "$versions.supportLibrary"
+		}
+	}
 }
 
 apply plugin: 'com.google.gms.google-services'

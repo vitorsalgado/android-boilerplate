@@ -1,12 +1,21 @@
 SHELL := /bin/bash
 PROJECT := $(shell basename $$(pwd))
 
+build:
+	./gradlew clean build --info -x validateSigningRelease -x packageRelease -x testRelease
+
+infer:
+	infer -- ./gradlew clean build --project-cache-dir=$WERCKER_CACHE_DIR -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x findBugs -x pmd
+
+mock:
+	docker-compose -f ./docker-compose-mock.yml up
+
 increment-build-version:
 	read LASTNUM < VERSION_CODE;	\
 	NEWNUM=$$(($$LASTNUM + 1));		\
-	echo "$$NEWNUM" > VERSION_CODE
-
-build: increment-build-version
+	echo "$$NEWNUM" > VERSION_CODE; \
+	chmod +x ./tools/sanitize.sh;   \
+	./tools/sanitize.sh;
 
 gitsemver:
 	@SUDO=$$([ $$(id -u) != 0 ] && echo sudo) && \
@@ -20,3 +29,5 @@ latest-version:
 
 next:
 	git semver $(version)
+
+.PHONY: build

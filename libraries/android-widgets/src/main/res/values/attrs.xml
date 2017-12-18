@@ -1,0 +1,11 @@
+<resources>
+    <declare-styleable name="RangeSeekBar">
+        <attr name="absoluteMinValue" format="integer|float" />
+        <attr name="absoluteMaxValue" format="integer|float" />
+        <attr name="singleThumb" format="boolean" />
+        <attr name="activeSeekColor" format="color" />
+        <attr name="defaultSeekColor" format="color" />
+        <attr name="defaultColor" format="color" />
+        <attr name="thumb" format="reference" />
+    </declare-styleable>
+</resources>

@@ -1,77 +1,107 @@
 package com.example;
 
+import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
+import android.content.ComponentCallbacks2;
+import android.support.annotation.NonNull;
 
-import com.example.utils.analytics.AnalyticsActivityLifecycle;
+import com.example.config.AnalyticsConfig;
+import com.example.config.CrashlyticsConfig;
+import com.example.config.FrescoConfig;
+import com.example.config.RemoteConfig;
+import com.example.di.DaggerAppComponent;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.leakcanary.RefWatcher;
 
-import java.lang.ref.WeakReference;
+import javax.inject.Inject;
 
-public class App extends Application {
-	static WeakReference<App> instance;
-	RefWatcher refWatcher;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+
+public class App extends Application implements HasActivityInjector {
+	public static final String SHARED_PREFERENCES = "com.example.shared_prefs";
+	public static final String DATABASE = "com.example.database";
+
+	@SuppressWarnings("NullAway.Init")
+	protected static App instance;
+	
+	@SuppressWarnings("NullAway.Init")
+	protected static RefWatcher refWatcher;
+
+	@NonNull
+	public static App getInstance() {
+		return instance;
+	}
+
+	@Inject
+	DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 
-		AppDeps.setUp(new DepsProvider());
-		AppContext.setUp(this);
+		final ImagePipelineConfig.Builder fresco = FrescoConfig.setupFresco(this);
 
-		setUpCrashlytics();
-		setUpAnalytics();
-		setUpRemoteConfig();
+		setupDependenciesManager();
+		trackFresco(fresco);
+		Fresco.initialize(this, fresco.build());
+		FirebaseApp.initializeApp(this);
+		FirebaseCrash.setCrashCollectionEnabled(!BuildConfig.DEBUG);
 
-		Fresco.initialize(this);
+		CrashlyticsConfig.setup(this);
+		RemoteConfig.setup();
+		AnalyticsConfig.setup(this);
 
-		refWatcher = setUpLeakCanary();
-		instance = new WeakReference<>(this);
+		refWatcher = enableLeakCanary();
+		instance = this;
 	}
 
-	public static Context getContext() {
-		return instance.get().getApplicationContext();
+	@Override
+	public void onTrimMemory(int level) {
+		super.onTrimMemory(level);
+
+		switch (level) {
+			case ComponentCallbacks2.TRIM_MEMORY_COMPLETE:
+			case ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW:
+			case ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL:
+			case ComponentCallbacks2.TRIM_MEMORY_BACKGROUND:
+			case ComponentCallbacks2.TRIM_MEMORY_MODERATE:
+			case ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE:
+			case ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN:
+				if (!Fresco.hasBeenInitialized()) {
+					return;
+				}
+
+				Fresco.getImagePipeline().clearMemoryCaches();
+				break;
+		}
 	}
 
-	public static App get(Context context) {
-		return (App) context.getApplicationContext();
+	@Override
+	public AndroidInjector<Activity> activityInjector() {
+		return dispatchingAndroidInjector;
 	}
 
-	public static RefWatcher getRefWatcher(Context context) {
-		return ((App) context.getApplicationContext()).refWatcher;
+	public static RefWatcher getRefWatcher() {
+		return refWatcher;
 	}
 
-	protected void setUpCrashlytics() {
-
+	protected void setupDependenciesManager() {
+		DaggerAppComponent.builder()
+			.application(this)
+			.build()
+			.inject(this);
 	}
 
-	protected RefWatcher setUpLeakCanary() {
+	protected RefWatcher enableLeakCanary() {
 		return RefWatcher.DISABLED;
 	}
 
-	protected void setUpAnalytics() {
-		if (BuildConfig.DEBUG) {
-			return;
-		}
-
-		instance.get().registerActivityLifecycleCallbacks(new AnalyticsActivityLifecycle());
-
-		FirebaseAnalytics.getInstance(getContext()).setAnalyticsCollectionEnabled(true);
-	}
-
-	protected void setUpRemoteConfig() {
-		final FirebaseRemoteConfigSettings remoteConfigSettings =
-				new FirebaseRemoteConfigSettings
-						.Builder()
-						.setDeveloperModeEnabled(BuildConfig.DEBUG)
-						.build();
-
-		final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
-
-		remoteConfig.setConfigSettings(remoteConfigSettings);
+	protected void trackFresco(ImagePipelineConfig.Builder builder) {
+		// DebugApp should override and properly implement this
 	}
 }

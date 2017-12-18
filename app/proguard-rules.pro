@@ -1,11 +1,31 @@
-# Models, DTOs
--keep class com.example.data.models.** { *; }
--keep class com.example.net.mOAuthApi.dtos.** { *; }
--keep class com.example.net.facebook.dtos.** { *; }
+# Add project specific ProGuard rules here.
+# You can control the set of applied configuration files using the
+# proguardFiles setting in build.gradle.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+
+# Uncomment this to preserve the line number information for
+# debugging stack traces.
+#-keepattributes SourceFile,LineNumberTable
+
+# If you keep the line number information, uncomment this to
+# hide the original source file name.
+#-renamesourcefileattribute SourceFile
 
 # Keep our interfaces so they can be used by other ProGuard rules.
 # See http://sourceforge.net/p/proguard/bugs/466/
 -keep,allowobfuscation @interface com.facebook.common.internal.DoNotStrip
+
+-dontwarn android.databinding.**
+-keep class android.databinding.** { *; }
 
 # Do not strip any method/class that is annotated with @DoNotStrip
 -keep @com.facebook.common.internal.DoNotStrip class *
@@ -24,12 +44,6 @@
 -dontwarn javax.annotation.**
 -dontwarn com.android.volley.toolbox.**
 -dontwarn com.facebook.infer.**
-
--dontwarn kotlin.**
-
--assumenosideeffects class kotlin.jvm.internal.Intrinsics {
-    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
-}
 
 -dontnote retrofit2.Platform
 -dontnote retrofit2.Platform$IOS$MainThreadExecutor
@@ -59,32 +73,17 @@
     @retrofit.http.* <methods>;
 }
 
-# Retain generated class which implement Unbinder.
--keep public class * implements butterknife.Unbinder { public <init>(...); }
-
-# Prevent obfuscation of types which use ButterKnife annotations since the simple name
-# is used to reflectively look up the generated ViewBinding.
--keep class butterknife.*
--keepclasseswithmembernames class * { @butterknife.* <methods>; }
--keepclasseswithmembernames class * { @butterknife.* <fields>; }
-
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-    long producerIndex;
-    long consumerIndex;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode producerNode;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
 }
 
--keepclassmembers class ** {
-    @org.greenrobot.eventbus.Subscribe <methods>;
+-assumenosideeffects class br.com.caicara.android.logger.CLog {
+    public static void d(...);
+    public static void w(...);
+    public static void e(...);
 }
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
-
-# NewRelic
--keep class com.newrelic.** { *; }
--dontwarn com.newrelic.**
--keepattributes Exceptions, Signature, InnerClasses, LineNumberTable

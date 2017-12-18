@@ -1,55 +1,14 @@
 <resources>
-    <string name="app_name">Android Boilerplate</string>
-    <string name="app_share">Compartilhar o App</string>
-    <string name="facebook_app_id">822968334426637</string>
-    <string name="app_newrelic_token">AA868c44c695fb94c29a1c6931f9ee71b4e947ee52</string>
-    <string name="version_with_code">Versão: %1s (%2d)</string>
+	<!-- application -->
+	<string name="facebook_app_id">822968334426637</string>
+	<string name="account_type">com.example</string>
 
-    <!-- login -->
-    <string name="login_title">Login Title</string>
-    <string name="login_background_desc">Plano de fundo</string>
-    <string name="login_button_facebook">Entrar com o Facebook</string>
-    <string name="login_dialog_failure_title">Falha no login</string>
-    <string name="login_terms_and_conditions">Ao continuar, você concorda com nossos termos de serviço e políticas de privacidade</string>
-    <string name="login_dialog_failure_message">Estamos com problemas para efetuar seu login. Há alguns possíveis motivos para isso: \n\n- Não há nenhuma conexão com a internet no momento. \n\n- Suas informações de login foram alteradas no Facebook.</string>
-    <string name="login_error_unexpected_title">Ops … :(</string>
-    <string name="login_error_unexpected_description">Desculpe, encontramos um problema inesperado. Por favor efetue o login novamente.</string>
+	<!-- common -->
+	<string name="double_back_to_exit">Clique em VOLTAR mais uma vez para sair</string>
+	<string name="about">Sobre</string>
+	<string name="version">Versão</string>
+	<string name="version_description">Versão %s</string>
 
-    <!-- common -->
-    <string name="dialog_action_ok">OK</string>
-    <string name="dialog_error_title">Erro</string>
-    <string name="dialog_loading">Carregando</string>
-    <string name="image_profile_description">Perfil</string>
-    <string name="common_save">Salvar</string>
-    <string name="common_share">Compartilhar</string>
-    <string name="common_logout">Sair</string>
-    <string name="common_close">Fechar</string>
-    <string name="common_settings">Configurações</string>
-    <string name="common_edit_profile">Editar Perfil</string>
-    <string name="common_propmt_discard_data">Tem certeza de que deseja descartar as alterações?</string>
-    <string name="common_discard">Descartar</string>
-    <string name="common_keep_editing">Continuar Editando</string>
-    <string name="common_gender_male_plural">Homens</string>
-    <string name="common_gender_female_plural">Mulheres</string>
-    <string name="common_gender_nonbinary_plural">Não binárias</string>
-    <string name="common_gender_male">Masculino</string>
-    <string name="common_gender_female">Feminino</string>
-    <string name="common_gender_nonbinary">Não binário</string>
-    <string name="common_activate">Ativar</string>
-    <string name="common_action_acitivate_location">Ative sua localização</string>
-    <string name="common_no_location">Serviço de localização desativado.</string>
-    <string name="common_exit">Sair</string>
-    <string name="common_cancel">Cancelar</string>
-    <string name="common_double_back_to_exit">Clique em VOLTAR mais uma vez para sair</string>
-    <string name="common_date_format">dd/MM/yyy</string>
-    <string name="common_time_format">HH:mm</string>
-    <string name="common_datetime_format">dd/MM/yyyy HH:mm</string>
-    <string name="common_default_description">Foto</string>
-
-    <!-- error -->
-    <string name="error_required_field">Campo obrigatório</string>
-    <string name="error_no_interner_connnection">Rede indisponível :( \nVerifique sua conexão de dados e tente novamente.</string>
-    <string name="error_no_gender_interest_selected">Informe quem você gostaria de encontrar.</string>
-    <string name="warning_description">Erro</string>
-    <string name="error_no_google_play">É necessário ativar o Goole Play Service para o correto funcionamento do aplicativo.</string>
+	<!-- errors -->
+	<string name="error_no_internet_connection">Rede indisponível :( \nVerifique sua conexão de dados e tente novamente.</string>
 </resources>

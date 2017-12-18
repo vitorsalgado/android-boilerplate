@@ -1,0 +1,29 @@
+apply plugin: 'com.android.library'
+
+final versions = rootProject.ext
+
+android {
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    implementation project(':libraries:android-utils')
+
+    // Android Support Libraries
+    implementation "com.android.support:support-annotations:$versions.supportLibrary"
+    implementation "com.android.support.constraint:constraint-layout:$versions.constraintLayout"
+    implementation("com.android.support:appcompat-v7:$versions.supportLibrary") {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+        exclude module: 'cardview-v7'
+    }
+    implementation("com.android.support:design:$versions.supportLibrary") {
+        exclude module: 'support-v4'
+        exclude module: 'appcompat-v7'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'cardview-v7'
+    }
+    implementation "com.android.support:support-v13:$versions.supportLibrary"
+}

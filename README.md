@@ -1,15 +1,15 @@
 # Android Boilerplate  
 [![Build Status](https://travis-ci.org/vitorsalgado/android-boilerplate.svg?branch=master)](https://travis-ci.org/vitorsalgado/android-boilerplate)
 [![Build Status](https://www.bitrise.io/app/4378da5487d8cf4e/status.svg?token=-n9uMzyOntb1uztJ-SeTqA&branch=master)](https://www.bitrise.io/app/4378da5487d8cf4e)
-[![Coverage Status](https://coveralls.io/repos/github/vitorsalgado/android-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/vitorsalgado/android-boilerplate?branch=master)
 [![Code Climate](https://codeclimate.com/github/vitorsalgado/android-boilerplate/badges/gpa.svg)](https://codeclimate.com/github/vitorsalgado/android-boilerplate)
+[![API](https://img.shields.io/badge/API-19%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=19) 
 
 Android boilerplate application.  
 The goal is to have a base from where new projects can start with basic architecture, configurations and continuous integration already set.  
 This project contains several tools and different languages all working together to build a nice development environment.  
 Continue reading below for more details.
 
-## Mock API
+## API Mock
 This project comes with a Mock Server already set. The mock tool was built on top of was built on top of [WireMock](http://wiremock.org/) and 
 the reloader that comes together uses *Node.js* to watch file changes and restart WireMock.
 This makes development easier as developers become more independent of backend services.  

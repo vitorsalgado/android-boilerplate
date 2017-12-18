@@ -12,7 +12,6 @@ const watcher = Chokidar.watch(WIREMOCK_DATA, { ignored: /[/\\]\./, persistent: 
 const exec = require('child_process').exec;
 
 const onFileChange = (event, path) => {
-
     const valid = path && path.length > 5 && path.substr(path.length - 5) === '.json';
 
     if (!valid) {
@@ -21,13 +20,7 @@ const onFileChange = (event, path) => {
 
     console.log('\x1b[33mFile change detected. Reseting Wiremock mappings ...\x1b[0m');
 
-    const options = {
-        url: `http://${WIREMOCK_HOST}:${WIREMOCK_PORT}/__admin/mappings/reset`,
-        method: 'POST',
-        json: true
-    };
-
-    Request(options)
+    Request.post(`http://${WIREMOCK_HOST}:${WIREMOCK_PORT}/__admin/mappings/reset`)
         .then(() => console.log('\x1b[32mWiremock mappings reseted!\x1b[0m'))
         .catch(() => console.error('\x1b[31mWiremock is unavailable now!\x1b[0m'));
 };
@@ -37,4 +30,4 @@ watcher
     .on('change', (path) => onFileChange('change', path))
     .on('unlink', (path) => onFileChange('unlink', path));
 
-console.log(`\x1b[32mWiremock Reloader ready.\nChange your API Base Uri to: http://${IP.address()}\x1b[0m`);
+console.log(`\x1b[32mWiremock Reloader ready.\nChange your API Base Uri to: http://${IP.address()}:${WIREMOCK_PORT}\x1b[0m`);
