@@ -50,6 +50,14 @@
 				android:textColor="@android:color/white"
 				android:textSize="18sp"
 				app:layout_constraintTop_toBottomOf="@id/versionLabel" />
+
+			<TextView
+				android:id="@+id/licensesLabel"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dp"
+				android:text="@string/licenses_label"
+				app:layout_constraintTop_toBottomOf="@id/appVersion" />
 		</android.support.constraint.ConstraintLayout>
 	</android.support.constraint.ConstraintLayout>
 </layout>

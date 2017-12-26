@@ -1,4 +1,4 @@
-package com.example.features;
+package com.example.interactions;
 
 import android.support.compat.BuildConfig;
 import android.support.v4.app.Fragment;

@@ -12,7 +12,6 @@ buildscript {
 		classpath 'com.android.tools.build:gradle:3.0.1'
 		classpath "com.google.gms:google-services:3.1.0"
 		classpath "io.fabric.tools:gradle:$fabricGradle"
-		classpath "net.ltgt.gradle:gradle-errorprone-plugin:0.0.13"
 	}
 
 	System.properties['com.android.build.gradle.overrideVersionCheck'] = 'true'
@@ -37,7 +36,7 @@ ext {
 	// main dependencies
 	okhttp = '3.9.0'
 	retrofit = '2.3.0'
-	play = '11.6.2'
+	play = '11.8.0'
 	gson = '2.8.2'
 	fresco = '1.5.0'
 	rxAndroid = '2.0.1'
@@ -61,18 +60,7 @@ allprojects {
 }
 
 subprojects {
-	apply plugin: 'net.ltgt.errorprone'
-
 	afterEvaluate { Project project ->
-		tasks.withType(JavaCompile) {
-			options.compilerArgs.addAll([
-				"-XepOpt:NullAway:AnnotatedPackages=com.example,br.com.vitorsalgado",
-				"-XepOpt:NullAway:KnownInitializers=android.app.Activity.onCreate,android.app.Application.onCreate",
-				"-XepOpt:NullAway:ExcludedFieldAnnotations=javax.inject.Inject",
-				"-XepOpt:NullAway:UnannotatedSubPackages=com.example.databinding,br.com.vitorsalgado.androidstarter.databinding"
-			])
-		}
-
 		if (project.findProperty('android')) {
 			android {
 				compileOptions {

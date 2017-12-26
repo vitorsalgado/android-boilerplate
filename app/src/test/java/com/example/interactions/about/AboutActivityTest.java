@@ -1,4 +1,4 @@
-package com.example.features.about;
+package com.example.interactions.about;
 
 import com.example.BaseRobotTest;
 import com.example.TestApp;

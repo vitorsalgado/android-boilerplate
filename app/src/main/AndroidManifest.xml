@@ -41,7 +41,7 @@
 
 		<!-- Main -->
 		<activity
-			android:name=".features.main.MainActivity"
+			android:name=".interactions.main.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/AppTheme.Launcher">
 			<intent-filter>
@@ -52,7 +52,7 @@
 
 		<!-- About -->
 		<activity
-			android:name=".features.about.AboutActivity"
+			android:name=".interactions.about.AboutActivity"
 			android:label="@string/about"
 			android:launchMode="singleTop"
 			android:screenOrientation="portrait" />

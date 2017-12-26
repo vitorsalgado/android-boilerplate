@@ -9,11 +9,11 @@ os:
 
 env:
   global:
-    - API=26
+    - API=27
     - TAG=google_apis
     - ABI=armeabi-v7a
     - QEMU_AUDIO_DRV=none
-    - ANDROID_HOME=/usr/local/android-sdk-26.0.1
+    - ANDROID_HOME=/usr/local/android-sdk-27.0.1
     - ANDROID_ABI=google_apis/x86
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
@@ -31,7 +31,7 @@ cache:
 android:
   components:
     - tools
-    - build-tools-26.0.1
+    - build-tools-27.0.1
     - platform-tools
     - extra-android-m2repository
     - extra-google-android-support
@@ -44,12 +44,7 @@ android:
 
 before_script:
   - android list sdk --extended --no-ui --all
-  - echo "y" | android update sdk -a --no-ui --filter sys-img-x86-google_apis-26,sys-img-x86-google_apis_playstore-26
-  - android list targets
-  - echo no | android create avd --force -n test -t android-26 --abi $ANDROID_ABI
-  # - emulator -avd test -no-skin -no-audio -no-window &
-  # - android-wait-for-emulator
-  # - adb shell input keyevent 82 &
+  - echo "y" | android update sdk -a --no-ui --filter sys-img-x86-google_apis-26,sys-img-x86-google_apis_playstore-27
 
 script:
   - ./gradlew :app:assembleDebug

@@ -186,7 +186,6 @@ dependencies {
 	debugImplementation("com.squareup.okhttp3:logging-interceptor:$versions.okhttp") {
 		exclude module: 'okhttp'
 	}
-	errorprone "com.google.errorprone:error_prone_core:$versions.errorprone"
 
 	// ---------------------------------------------------------------------------------------------
 	// Test Libs

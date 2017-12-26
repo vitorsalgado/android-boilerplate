@@ -1,4 +1,4 @@
-package com.example.features;
+package com.example.interactions;
 
 import android.app.Dialog;
 import android.support.annotation.NonNull;

@@ -8,6 +8,7 @@
 	<string name="about">Sobre</string>
 	<string name="version">Versão</string>
 	<string name="version_description">Versão %s</string>
+	<string name="licenses_label">Licenças de Software Código Aberto</string>
 
 	<!-- errors -->
 	<string name="error_no_internet_connection">Rede indisponível :( \nVerifique sua conexão de dados e tente novamente.</string>

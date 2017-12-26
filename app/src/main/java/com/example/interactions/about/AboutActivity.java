@@ -1,4 +1,4 @@
-package com.example.features.about;
+package com.example.interactions.about;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.example.R;
 import com.example.databinding.AboutActivityBinding;
-import com.example.features.AbstractActivity;
+import com.example.interactions.AbstractActivity;
 
 import br.com.vitorsalgado.androidstarter.android.AppUtils;
 

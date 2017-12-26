@@ -1,4 +1,4 @@
-package com.example.features.about;
+package com.example.interactions.about;
 
 public class AboutInteractor {
 	interface Navigator {
