@@ -57,6 +57,12 @@
 			android:launchMode="singleTop"
 			android:screenOrientation="portrait" />
 
+		<!-- WebView -->
+		<activity
+			android:name=".interactions.WebViewActivity"
+			android:launchMode="singleTop"
+			android:screenOrientation="portrait" />
+
 		<!-- Services -->
 		<!-- ##################################################################################  -->
 

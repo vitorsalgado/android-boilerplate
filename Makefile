@@ -1,14 +1,25 @@
-SHELL := /bin/bash
-PROJECT := $(shell basename $$(pwd))
+#######################################
+# build recipes
+#######################################
 
 build:
 	./gradlew clean build --info -x validateSigningRelease -x packageRelease -x testRelease
 
 infer:
-	infer -- ./gradlew clean build --project-cache-dir=$WERCKER_CACHE_DIR -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x findBugs -x pmd
+	infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x findBugs -x pmd
+
+redex:
+	redex ./app/build/outputs/apk/app-debug.apk -o app-debug-final.apk --sign -s ./distribution/debug.keystore -a androiddebugkey -p android
 
 mock:
 	docker-compose -f ./docker-compose-mock.yml up
+
+
+
+
+#######################################
+# versioning
+#######################################
 
 increment-build-version:
 	read LASTNUM < VERSION_CODE;	\
@@ -29,5 +40,3 @@ latest-version:
 
 next:
 	git semver $(version)
-
-.PHONY: build

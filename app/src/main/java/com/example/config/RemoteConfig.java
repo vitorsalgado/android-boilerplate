@@ -12,8 +12,8 @@ public final class RemoteConfig {
 				.setDeveloperModeEnabled(BuildConfig.DEBUG)
 				.build();
 
-		final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
-
-		remoteConfig.setConfigSettings(remoteConfigSettings);
+		FirebaseRemoteConfig
+			.getInstance()
+			.setConfigSettings(remoteConfigSettings);
 	}
 }

@@ -18,9 +18,9 @@ cache:
 
 android:
   components:
-    - tools
     - android-27
     - build-tools-27.0.1
+    - tools
     - platform-tools
     - extra-android-m2repository
     - extra-google-m2repository
@@ -28,4 +28,5 @@ android:
     - extra-google-google_play_services
 
 script:
-  - ./gradlew :app:assembleDebug
+  - make
+  - make infer

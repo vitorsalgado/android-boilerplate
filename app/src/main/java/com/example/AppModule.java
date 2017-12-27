@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 
 import javax.inject.Singleton;
 
+import br.com.vitorsalgado.androidstarter.persistence.DbHelper;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -40,5 +41,11 @@ class AppModule {
 	@Singleton
 	OkHttpClient.Builder provideOkBuilder() {
 		return PerBuildComponentProvider.getInstance().okHttpBuilder();
+	}
+
+	@Provides
+	@Singleton
+	DbHelper provideDbHelper(@NonNull Context context) {
+		return new DbHelper(context, App.DATABASE, BuildConfig.DEBUG);
 	}
 }

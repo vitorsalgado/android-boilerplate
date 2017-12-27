@@ -128,7 +128,6 @@ dependencies {
 	implementation project(':libraries:android-widgets')
 	implementation project(':libraries:analytics')
 	implementation project(':libraries:persistence')
-	implementation project(':libraries:swiper')
 	testImplementation project(':libraries:test-utils')
 
 	// ---------------------------------------------------------------------------------------------
