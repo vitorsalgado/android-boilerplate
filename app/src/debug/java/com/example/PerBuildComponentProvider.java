@@ -1,4 +1,4 @@
-package com.example.di;
+package com.example;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 

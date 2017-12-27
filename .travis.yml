@@ -7,13 +7,6 @@ jdk: openjdk8
 os:
   - linux
 
-env:
-  global:
-    - API=27
-    - ANDROID_HOME=/usr/local/android-sdk-linux
-    - TOOLS=${ANDROID_HOME}/tools
-    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
-
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -26,7 +19,7 @@ cache:
 android:
   components:
     - tools
-    - android-$API
+    - android-27
     - build-tools-27.0.1
     - platform-tools
     - extra-android-m2repository

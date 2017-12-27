@@ -1,8 +1,6 @@
-package com.example.di;
+package com.example;
 
 import android.app.Application;
-
-import com.example.App;
 
 import javax.inject.Singleton;
 
