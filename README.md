@@ -19,10 +19,6 @@ Check [Mock API documentation](/mock-toolkit/README.md) for more details.
 This project integrates a combination of unit tests, automated tests and code analysis tools. 
 All analysis tools are located on folder `tools/linters`.  
 
-### Calabash Automated Tests
-This project has a basic structure for automated tests with Calabash and Cucumber, located on folder `automated/tests`.  
-Check [Automated Tests documentation](/automated_tests/README.md) for more details.
-
 ### Code Analysis tools 
 The following code analysis tools are set up on this project:
 

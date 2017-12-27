@@ -26,10 +26,7 @@ public class App extends Application implements HasActivityInjector {
 	public static final String SHARED_PREFERENCES = "com.example.shared_prefs";
 	public static final String DATABASE = "com.example.database";
 
-	@SuppressWarnings("NullAway.Init")
 	protected static App instance;
-	
-	@SuppressWarnings("NullAway.Init")
 	protected static RefWatcher refWatcher;
 
 	@NonNull
@@ -91,7 +88,8 @@ public class App extends Application implements HasActivityInjector {
 	}
 
 	protected void setupDependenciesManager() {
-		DaggerAppComponent.builder()
+		DaggerAppComponent
+			.builder()
 			.application(this)
 			.build()
 			.inject(this);

@@ -26,7 +26,6 @@ import java.util.List;
 
 import br.com.vitorsalgado.androidstarter.android.ActivityUtils;
 import br.com.vitorsalgado.androidstarter.android.AppUtils;
-import dagger.android.AndroidInjection;
 
 public class MainActivity extends AbstractActivity implements TabLayout.OnTabSelectedListener {
 	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 9001;
@@ -58,7 +57,6 @@ public class MainActivity extends AbstractActivity implements TabLayout.OnTabSel
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AndroidInjection.inject(this);
 
 		if (AppUtils.checkPlayServices(this, REQUEST_CODE_RECOVER_PLAY_SERVICES)) {
 			checkAuthentication();

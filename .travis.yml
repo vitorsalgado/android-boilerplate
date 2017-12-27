@@ -10,14 +10,9 @@ os:
 env:
   global:
     - API=27
-    - TAG=google_apis
-    - ABI=armeabi-v7a
-    - QEMU_AUDIO_DRV=none
-    - ANDROID_HOME=/usr/local/android-sdk-27.0.1
-    - ANDROID_ABI=google_apis/x86
+    - ANDROID_HOME=/usr/local/android-sdk-linux
     - TOOLS=${ANDROID_HOME}/tools
     - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
-    - ADB_INSTALL_TIMEOUT=20
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -31,20 +26,13 @@ cache:
 android:
   components:
     - tools
+    - android-$API
     - build-tools-27.0.1
     - platform-tools
     - extra-android-m2repository
+    - extra-google-m2repository
     - extra-google-android-support
-    - addon-google_apis-google-$API
     - extra-google-google_play_services
-    - android-$API
-    - sys-img-armeabi-v7a-android-$API
-    - sys-img-armeabi-v7a-google_apis-$API
-    - sys-img-armeabi-v7a-google_apis-$API
-
-before_script:
-  - android list sdk --extended --no-ui --all
-  - echo "y" | android update sdk -a --no-ui --filter sys-img-x86-google_apis-26,sys-img-x86-google_apis_playstore-27
 
 script:
   - ./gradlew :app:assembleDebug
