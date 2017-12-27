@@ -1,4 +1,4 @@
-package com.example.di;
+package com.example;
 
 import okhttp3.OkHttpClient;
 

@@ -9,7 +9,6 @@ import com.example.config.AnalyticsConfig;
 import com.example.config.CrashlyticsConfig;
 import com.example.config.FrescoConfig;
 import com.example.config.RemoteConfig;
-import com.example.di.DaggerAppComponent;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.google.firebase.FirebaseApp;
