@@ -6,9 +6,17 @@ import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.example.interactions.authentication.LoginActivity;
+
+import java.util.UUID;
+
+import com.example.api.Api;
+import com.example.api.dtos.OAuthResponse;
 
 import static android.accounts.AccountManager.KEY_BOOLEAN_RESULT;
 import static com.example.authenticator.AuthConstants.ACCOUNT_AUTHTOKEN_TYPE;
@@ -18,12 +26,12 @@ import static com.example.authenticator.AuthConstants.ACCOUNT_REFRESHTOKEN;
 public class AccountAuthenticator extends AbstractAccountAuthenticator {
 	private static final String TAG = AccountAuthenticator.class.getSimpleName();
 	private final Context context;
-	//private final Api openApi;
+	private final Api api;
 
-	AccountAuthenticator(Context context) {
+	AccountAuthenticator(Context context, Api api) {
 		super(context);
 		this.context = context;
-		//this.openApi = openApi;
+		this.api = api;
 	}
 
 	@Override
@@ -33,14 +41,14 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
 	@Override
 	public Bundle addAccount(AccountAuthenticatorResponse accountAuthenticatorResponse, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-//		final Intent intent = LoginActivity.newClearIntent(context);
-//
-//		intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, accountType);
-//		intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, accountAuthenticatorResponse);
-//		intent.putExtra(ACCOUNT_AUTHTOKEN_TYPE, authTokenType);
+		final Intent intent = LoginActivity.newClearIntent(context);
+
+		intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, accountType);
+		intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, accountAuthenticatorResponse);
+		intent.putExtra(ACCOUNT_AUTHTOKEN_TYPE, authTokenType);
 
 		final Bundle bundle = new Bundle();
-//		bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+		bundle.putParcelable(AccountManager.KEY_INTENT, intent);
 
 		return bundle;
 	}
@@ -71,35 +79,37 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 		if (TextUtils.isEmpty(authToken) || TextUtils.isEmpty(refreshToken)) {
 			accountManager.invalidateAuthToken(account.type, authToken);
 
-//			final Intent intent = LoginActivity.newClearIntent(context);
-//
-//			intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
-//			intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, account.type);
-//			intent.putExtra(ACCOUNT_AUTHTOKEN_TYPE, authTokenType);
-//
-//			bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+			final Intent intent = LoginActivity.newClearIntent(context);
+
+			intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
+			intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+			intent.putExtra(ACCOUNT_AUTHTOKEN_TYPE, authTokenType);
+
+			bundle.putParcelable(AccountManager.KEY_INTENT, intent);
 
 			return bundle;
 		}
 
 		String exp = accountManager.getUserData(account, ACCOUNT_EXPIRESIN);
 		long expiresIn = Long.parseLong(exp);
-//		OAuthResponseDto token;
-//
-//		if (AuthUtils.isAccessTokenExpired(expiresIn)) {
-//			String state = UUID.randomUUID().toString();
-//			token = openApi.refreshToken("", state, authToken, refreshToken).blockingFirst();
-//
-//			if (!state.equals(token.getState())) {
-//				throw new IllegalStateException("state informed does not match the one returned from server response!");
-//			}
-//
-//			authToken = token.getAccessToken();
-//
-//			accountManager.setAuthToken(account, authTokenType, authToken);
-//			accountManager.setUserData(account, ACCOUNT_REFRESHTOKEN, token.getRefreshToken());
-//			accountManager.setUserData(account, ACCOUNT_EXPIRESIN, String.valueOf(token.getExpiresIn()));
-//		}
+		OAuthResponse oauth;
+
+		if (AuthUtils.isAccessTokenExpired(expiresIn)) {
+			String state = UUID.randomUUID().toString();
+			oauth = api.refreshToken("", state, authToken, refreshToken)
+				.blockingFirst()
+				.getBody();
+
+			if (!state.equals(oauth.getState())) {
+				throw new IllegalStateException("state informed does not match the one returned from server response!");
+			}
+
+			authToken = oauth.getAccessToken();
+
+			accountManager.setAuthToken(account, authTokenType, authToken);
+			accountManager.setUserData(account, ACCOUNT_REFRESHTOKEN, oauth.getRefreshToken());
+			accountManager.setUserData(account, ACCOUNT_EXPIRESIN, String.valueOf(oauth.getExpiresIn()));
+		}
 
 		bundle.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
 		bundle.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);

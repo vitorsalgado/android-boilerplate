@@ -1,6 +1,6 @@
 package com.example.interactions;
 
-import br.com.vitorsalgado.androidstarter.uava.interfaces.RetryCallback;
+import com.example.uava.interfaces.RetryCallback;
 
 public interface AbstractView {
 	void showLoading();

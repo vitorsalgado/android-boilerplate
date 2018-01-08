@@ -1,0 +1,35 @@
+final cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+
+tasks.withType(JavaCompile) {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+
+	configure(options) {
+		encoding = "utf-8"
+		incremental = true
+		fork = true
+	}
+}
+
+tasks.withType(Test) {
+	if (!project.hasProperty("createReports")) {
+		reports.html.enabled = false
+		reports.junitXml.enabled = false
+	}
+
+	testLogging {
+		exceptionFormat "full"
+		showExceptions true
+		showCauses true
+		showStackTraces true
+		maxParallelForks cores
+		forkEvery 10
+		events = ["failed", "passed", "skipped", "standardOut", "standardError"]
+	}
+}
+
+tasks.withType(JavaForkOptions) {
+	jvmArgs "-XX:+UseCompressedOops"
+	jvmArgs "-Djava.awt.headless=true"
+	jvmArgs "-Dapple.awt.UIElement=true"
+}

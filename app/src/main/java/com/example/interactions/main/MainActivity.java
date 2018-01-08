@@ -1,6 +1,5 @@
 package com.example.interactions.main;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -16,16 +15,13 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.BuildConfig;
 import com.example.R;
+import com.example.android.AppUtils;
 import com.example.databinding.MainActivityBinding;
 import com.example.interactions.AbstractActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.vitorsalgado.androidstarter.android.ActivityUtils;
-import br.com.vitorsalgado.androidstarter.android.AppUtils;
 
 public class MainActivity extends AbstractActivity implements TabLayout.OnTabSelectedListener {
 	private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 9001;
@@ -64,9 +60,9 @@ public class MainActivity extends AbstractActivity implements TabLayout.OnTabSel
 
 		// We only need WRITE_EXTERNAL_STORAGE permission in debug mode
 		// to LeakCanary write leak information without problems
-		if (BuildConfig.DEBUG && !ActivityUtils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-			ActivityUtils.requestPermissionsSafely(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_STORAGE_PERMISSION);
-		}
+		// if (BuildConfig.DEBUG && !ActivityUtils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+		//	ActivityUtils.requestPermissionsSafely(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_STORAGE_PERMISSION);
+		// }
 	}
 
 	@Override

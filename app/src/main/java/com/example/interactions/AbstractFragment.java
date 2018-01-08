@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import com.example.App;
 import com.squareup.leakcanary.RefWatcher;
 
-import br.com.vitorsalgado.androidstarter.uava.interfaces.RetryCallback;
+import com.example.uava.interfaces.RetryCallback;
 
 public class AbstractFragment extends Fragment implements AbstractView {
 	@Override

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example"
-    android:installLocation="auto">
+	xmlns:tools="http://schemas.android.com/tools"
+	package="com.example"
+	android:installLocation="auto">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <application
-        android:name=".AppDebug"
-        android:allowBackup="false"
-        tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:name,android:allowBackup" />
+	<application
+		android:name=".DebugApp"
+		android:allowBackup="false"
+		tools:ignore="GoogleAppIndexingWarning"
+		tools:replace="android:name,android:allowBackup" />
 </manifest>

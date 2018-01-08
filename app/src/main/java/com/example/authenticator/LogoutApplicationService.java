@@ -19,7 +19,7 @@ public class LogoutApplicationService implements LogoutService {
 	private final SharedPreferences sharedPreferences;
 
 	@Inject
-	public LogoutApplicationService(
+	LogoutApplicationService(
 		@NonNull Context context,
 		@NonNull SharedPreferences sharedPreferences) {
 		this.context = context;

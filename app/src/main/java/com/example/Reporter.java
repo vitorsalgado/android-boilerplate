@@ -3,7 +3,7 @@ package com.example;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.crash.FirebaseCrash;
 
-import br.com.vitorsalgado.androidstarter.logger.CLog;
+import com.example.logger.CLog;
 import io.fabric.sdk.android.Fabric;
 
 public final class Reporter {

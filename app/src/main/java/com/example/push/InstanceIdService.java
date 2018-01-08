@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import br.com.vitorsalgado.androidstarter.logger.CLog;
+import com.example.logger.CLog;
 
 public class InstanceIdService extends FirebaseInstanceIdService {
 	@Override

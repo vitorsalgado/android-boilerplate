@@ -13,8 +13,7 @@ public abstract class BaseRobotTest {
 
 	@Before
 	public void baseSetUp() {
-		String serverURL = server.url("/").toString();
-		System.out.println(String.format("Server URL: %s", serverURL));
+		server.url("/");
 	}
 
 	@After

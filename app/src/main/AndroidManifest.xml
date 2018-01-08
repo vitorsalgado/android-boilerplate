@@ -2,11 +2,14 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	package="com.example">
 
+
+	<!-- Permissions -->
+	<!-- ######################################################################################  -->
+
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
-
 	<uses-permission
 		android:name="android.permission.MANAGE_ACCOUNTS"
 		android:maxSdkVersion="22" />
@@ -17,6 +20,11 @@
 		android:name="android.permission.AUTHENTICATE_ACCOUNTS"
 		android:maxSdkVersion="22" />
 
+
+	<!-- App -->
+	<!-- Begin application configuration section -->
+	<!-- ####################################################################################### -->
+
 	<application
 		android:name=".App"
 		android:allowBackup="false"
@@ -25,16 +33,17 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 
+
 		<!-- Meta -->
 		<!-- ##################################################################################  -->
 
 		<meta-data
 			android:name="io.fabric.ApiKey"
 			android:value="d01d5909031246ac34bcd7283652fce59c445a0b" />
-
 		<meta-data
 			android:name="com.facebook.sdk.ApplicationId"
 			android:value="@string/facebook_app_id" />
+
 
 		<!-- Activities -->
 		<!-- ##################################################################################  -->
@@ -49,19 +58,24 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-
+		<!-- Authentication -->
+		<activity
+			android:name=".interactions.authentication.LoginActivity"
+			android:label="@string/login_title"
+			android:launchMode="singleTask"
+			android:screenOrientation="portrait" />
 		<!-- About -->
 		<activity
 			android:name=".interactions.about.AboutActivity"
 			android:label="@string/about"
 			android:launchMode="singleTop"
 			android:screenOrientation="portrait" />
-
 		<!-- WebView -->
 		<activity
 			android:name=".interactions.WebViewActivity"
 			android:launchMode="singleTop"
 			android:screenOrientation="portrait" />
+
 
 		<!-- Services -->
 		<!-- ##################################################################################  -->
@@ -81,7 +95,6 @@
 				<action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
 			</intent-filter>
 		</service>
-
 		<!-- Authenticator -->
 		<service
 			android:name=".authenticator.AccountAuthenticatorService"

@@ -29,4 +29,3 @@ android:
 
 script:
   - make
-  - make infer

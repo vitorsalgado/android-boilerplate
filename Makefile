@@ -1,6 +1,5 @@
-#######################################
 # build recipes
-#######################################
+# ##################################################################################################
 
 build:
 	./gradlew clean build --info -x validateSigningRelease -x packageRelease -x testRelease
@@ -8,8 +7,28 @@ build:
 infer:
 	infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x findBugs -x pmd
 
-redex:
+redex-debug:
 	redex ./app/build/outputs/apk/app-debug.apk -o app-debug-final.apk --sign -s ./distribution/debug.keystore -a androiddebugkey -p android
+
+
+
+
+# test recipes
+# ##################################################################################################
+
+full-coverage:
+	./gradlew fullCoverageReport && \
+	echo "JaCoCo Coverage Report" && \
+	echo file://$$(pwd)/app/build/reports/jacoco/fullCoverageReport/html/index.html
+
+check-security:
+	./gradlew dependencyCheckAnalyze --info
+
+
+
+
+# mocks
+# ##################################################################################################
 
 mock:
 	docker-compose -f ./docker-compose-mock.yml up
@@ -17,9 +36,8 @@ mock:
 
 
 
-#######################################
 # versioning
-#######################################
+# ##################################################################################################
 
 increment-build-version:
 	read LASTNUM < VERSION_CODE;	\
@@ -40,3 +58,8 @@ latest-version:
 
 next:
 	git semver $(version)
+
+
+
+
+.PHONY: build

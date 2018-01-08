@@ -8,9 +8,14 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
+
 import javax.inject.Singleton;
 
-import br.com.vitorsalgado.androidstarter.persistence.DbHelper;
+import com.example.api.Api;
+import com.example.api.ApiBuilder;
+import com.example.api.Config;
+import com.example.persistence.DbHelper;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -47,5 +52,11 @@ class AppModule {
 	@Singleton
 	DbHelper provideDbHelper(@NonNull Context context) {
 		return new DbHelper(context, App.DATABASE, BuildConfig.DEBUG);
+	}
+
+	@Provides
+	@Singleton
+	Api provideApi(@NonNull OkHttpClient.Builder okBuilder, @NonNull Gson gson) {
+		return ApiBuilder.build(okBuilder, gson, new Config("", new File(""), "", 100));
 	}
 }

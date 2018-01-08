@@ -1,5 +1,4 @@
 include ':app',
-        ':libraries:test-utils',
         ':libraries:uava',
         ':libraries:graph-api',
         ':libraries:api',

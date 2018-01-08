@@ -44,6 +44,7 @@
 -dontwarn javax.annotation.**
 -dontwarn com.android.volley.toolbox.**
 -dontwarn com.facebook.infer.**
+-dontwarn com.google.errorprone.annotations.*
 
 -dontnote retrofit2.Platform
 -dontnote retrofit2.Platform$IOS$MainThreadExecutor
@@ -82,7 +83,7 @@
     public static int e(...);
 }
 
--assumenosideeffects class br.com.caicara.android.logger.CLog {
+-assumenosideeffects class br.com.vitorsalgado.android.logger.CLog {
     public static void d(...);
     public static void w(...);
     public static void e(...);

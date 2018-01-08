@@ -52,12 +52,21 @@
 				app:layout_constraintTop_toBottomOf="@id/versionLabel" />
 
 			<TextView
-				android:id="@+id/licensesLabel"
+				android:id="@+id/licenses"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="20dp"
-				android:text="@string/licenses_label"
+				android:text="@string/licenses_description"
 				app:layout_constraintTop_toBottomOf="@id/appVersion" />
+
+			<TextView
+				android:id="@+id/viewLicenses"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp"
+				android:text="@string/licenses"
+				android:textColor="@android:color/white"
+				app:layout_constraintTop_toBottomOf="@id/licenses" />
 		</android.support.constraint.ConstraintLayout>
 	</android.support.constraint.ConstraintLayout>
 </layout>

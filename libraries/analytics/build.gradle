@@ -5,5 +5,5 @@ android {}
 final versions = rootProject.ext
 
 dependencies {
-    implementation "com.google.firebase:firebase-core:$versions.play"
+	implementation "com.google.firebase:firebase-core:$versions.play"
 }

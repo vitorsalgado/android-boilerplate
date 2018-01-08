@@ -1,0 +1,21 @@
+ext.exclusions = [
+	// Android
+	'**/R.class',
+	'**/R$*.class',
+	'**/Manifest*.*',
+	'**/BuildConfig.*',
+
+	// Android databinding
+	'**/*databinding/*',
+	'**/BR.*',
+
+	// Dagger
+	'**/*Dagger*.*',
+	'**/Dagger*Component.class',
+	'**/Dagger*Component$Builder.class',
+	'**/*Module.*',
+	'**/*MembersInjector*.*',
+	'**/*_MembersInjector.class',
+	'**/*_Factory.*',
+	'**/*Module_*Factory.class',
+	'**/*_Provide*Factory*.*']

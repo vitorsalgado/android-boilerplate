@@ -1,21 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
-apply from: rootProject.file('tools/jacoco.gradle')
-apply from: rootProject.file('tools/linters.gradle')
-
 final app_name = 'Boilerplate'
+final cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 
 android {
 	defaultConfig {
 		applicationId "com.example"
-		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+		testInstrumentationRunner "com.example.InstrumentationRunner"
 		vectorDrawables.useSupportLibrary true
 	}
 
 	dexOptions {
+		javaMaxHeapSize "2g"
 		preDexLibraries "true" != System.getenv("CI")
-		maxProcessCount 8
+		maxProcessCount cores
 	}
 
 	aaptOptions {
@@ -24,6 +23,12 @@ android {
 
 	dataBinding {
 		enabled true
+	}
+
+	lintOptions {
+		checkAllWarnings true
+		warningsAsErrors true
+		lintConfig file("$rootDir/lint.xml")
 	}
 
 	signingConfigs {
@@ -40,7 +45,7 @@ android {
 			release {
 				keyAlias System.getenv("KEY_ALIAS")
 				keyPassword System.getenv("KEY_PASSWORD")
-				storeFile file(System.getenv("KEYSTORE"))
+				storeFile file(System.getenv("KEYSTORE_FILE"))
 				storePassword System.getenv("KEYSTORE_PASSWORD")
 			}
 		}
@@ -56,12 +61,14 @@ android {
 			signingConfig signingConfigs.debug
 
 			ext.alwaysUpdateBuildId = false
+			ext.enableCrashlytics = false
 
 			testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
 
 			testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
 
 			resValue 'string', 'app_name', "1." + app_name + ".debug"
+			resValue 'string', 'API_URI', "http://localhost:3000"
 		}
 
 		release {
@@ -78,6 +85,7 @@ android {
 			consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
 			resValue 'string', 'app_name', app_name
+			resValue 'string', 'API_URI', "http://api.prod"
 		}
 	}
 
@@ -94,26 +102,26 @@ android {
 			variant.mergedFlavor.versionName = file("$rootDir/VERSION").text
 		}
 	}
-
-	packagingOptions {
-		exclude 'META-INF/LICENSE.txt'
-		exclude 'META-INF/NOTICE.txt'
-		exclude 'META-INF/rxjava.properties'
-	}
 }
 
 tasks.matching { it instanceof Test }.all {
+	if (!project.hasProperty("createReports")) {
+		reports.html.enabled = false
+		reports.junitXml.enabled = false
+	}
+
 	testLogging {
 		showExceptions true
 		showCauses true
 		showStackTraces true
-
+		maxParallelForks cores
+		forkEvery 10
 		events = ["failed", "passed", "skipped", "standardOut", "standardError"]
 	}
 }
 
 jacoco {
-	toolVersion = "0.7.4+"
+	toolVersion = "0.7.9"
 }
 
 final versions = rootProject.ext
@@ -123,12 +131,12 @@ dependencies {
 	// Project Libraries
 	// ---------------------------------------------------------------------------------------------
 	implementation project(':libraries:uava')
+	implementation project(':libraries:api')
 	implementation project(':libraries:logger')
 	implementation project(':libraries:android-utils')
 	implementation project(':libraries:android-widgets')
 	implementation project(':libraries:analytics')
 	implementation project(':libraries:persistence')
-	testImplementation project(':libraries:test-utils')
 
 	// ---------------------------------------------------------------------------------------------
 	// Dependencies
@@ -160,9 +168,8 @@ dependencies {
 	implementation "com.google.code.gson:gson:$versions.gson"
 	implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
 	implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
-	compile "com.google.dagger:dagger:$versions.dagger"
-	compile "com.google.dagger:dagger-android:$versions.dagger"
-	compile "com.google.dagger:dagger-android-support:$versions.dagger"
+	implementation "com.google.dagger:dagger-android:$versions.dagger"
+	implementation "com.google.dagger:dagger-android-support:$versions.dagger"
 	annotationProcessor "com.google.dagger:dagger-android-processor:$versions.dagger"
 	annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
 	implementation "de.psdev.licensesdialog:licensesdialog:$versions.licensesDialog"

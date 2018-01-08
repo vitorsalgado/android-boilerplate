@@ -10,10 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.R;
+import com.example.android.AppUtils;
 import com.example.databinding.AboutActivityBinding;
 import com.example.interactions.AbstractActivity;
 
-import br.com.vitorsalgado.androidstarter.android.AppUtils;
+import de.psdev.licensesdialog.LicensesDialog;
 
 public class AboutActivity extends AbstractActivity {
 	AboutActivityBinding binding;
@@ -38,6 +39,15 @@ public class AboutActivity extends AbstractActivity {
 		setUpToolBar(binding.toolbar, getString(R.string.about));
 
 		binding.appVersion.setText(AppUtils.getVersionName(getApplicationContext()));
+
+		binding.viewLicenses.setOnClickListener(view ->
+			new LicensesDialog.Builder(this)
+				.setNotices(R.raw.notices)
+				.setIncludeOwnLicense(true)
+				.setTitle(R.string.licenses)
+				.setCloseText(R.string.close)
+				.build()
+				.show());
 	}
 
 	@Override

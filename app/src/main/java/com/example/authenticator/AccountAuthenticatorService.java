@@ -6,10 +6,13 @@ import android.os.IBinder;
 
 import java.util.Objects;
 
+import com.example.api.Api;
+
 import static android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT;
 
 public class AccountAuthenticatorService extends Service {
 	private AccountAuthenticator authenticator = null;
+	Api api;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -22,10 +25,15 @@ public class AccountAuthenticatorService extends Service {
 
 	private AccountAuthenticator getAuthenticator() {
 		if (authenticator == null) {
-			authenticator = new AccountAuthenticator(this);
+			authenticator = new AccountAuthenticator(this, api);
 		}
 
 		return authenticator;
+	}
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
 	}
 
 	@Override

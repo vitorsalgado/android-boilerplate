@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.example.BuildConfig;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import br.com.vitorsalgado.androidstarter.analytics.AnalyticsActivityLifecycle;
+import com.example.analytics.AnalyticsActivityLifecycle;
 
 public final class AnalyticsConfig {
 	public static void setup(@NonNull Application application) {
