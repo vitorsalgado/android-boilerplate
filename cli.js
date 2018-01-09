@@ -17,7 +17,6 @@ Inquirer.prompt(
 		{
 			type: 'input',
 			name: 'package',
-			default: 'br.com.test',
 			message: 'What\'s the project package name?',
 			validate: (input) => !!input && input.indexOf('.') >= 0 && input !== 'com.example'
 		}
@@ -56,7 +55,7 @@ Inquirer.prompt(
 		];
 
 		roots.forEach(async (root) =>
-			languages.forEach(async (language) => {
+			languages.forEach(async (language) =>
 				FileSystem
 					.readdirSync(`${root}/src`)
 					.forEach(async (src) => {
@@ -75,17 +74,18 @@ Inquirer.prompt(
 						}
 
 						await cmd(`cd ${root}/src/${src}/java && mkdir -p ${folders}`);
-						await cmd(`cp -a ${root}/src/${src}/${language}/com/example/**/** ${root}/src/${src}/${language}/${folders}/`);
+						await cmd(`mv ${root}/src/${src}/${language}/com/example/* ${root}/src/${src}/${language}/${folders}/`);
 
 						readDirRecursively(`${root}/`, filters)
 							.map((file) => Object.create({content: FileSystem.readFileSync(file), file}))
 							.map(({content, file}) => Object.create({content: content.toString(), file}))
-							.map(({content, file}) => Object.create({content: content.replace(/com\.example/, pkg), file}))
+							.map(({content, file}) => Object.create({
+								content: content.replace(/com\.example/, pkg),
+								file
+							}))
 							.forEach(({content, file}) => FileSystem.writeFileSync(file, content));
-					})
-			}));
+					})))
 	});
-
 
 const cmd = (command, opts) =>
 	new Promise((resolve, reject) =>
