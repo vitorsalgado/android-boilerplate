@@ -75,15 +75,12 @@ Inquirer.prompt(
 						}
 
 						await cmd(`cd ${root}/src/${src}/java && mkdir -p ${folders}`);
-						await cmd(`cp -a ${root}/src/${src}/${language}/com/example/ ${root}/src/${src}/${language}/${folders}/`);
+						await cmd(`cp -a ${root}/src/${src}/${language}/com/example/**/** ${root}/src/${src}/${language}/${folders}/`);
 
 						readDirRecursively(`${root}/`, filters)
 							.map((file) => Object.create({content: FileSystem.readFileSync(file), file}))
 							.map(({content, file}) => Object.create({content: content.toString(), file}))
-							.map(({content, file}) => Object.create({
-								content: content.replace(/com\.example/, pkg),
-								file
-							}))
+							.map(({content, file}) => Object.create({content: content.replace(/com\.example/, pkg), file}))
 							.forEach(({content, file}) => FileSystem.writeFileSync(file, content));
 					})
 			}));
