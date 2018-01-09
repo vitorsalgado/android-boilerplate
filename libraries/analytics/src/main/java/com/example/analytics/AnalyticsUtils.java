@@ -1,4 +1,4 @@
-package br.com.test.analytics;
+package com.example.analytics;
 
 import android.app.Activity;
 import android.content.Context;

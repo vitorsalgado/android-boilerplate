@@ -1,4 +1,4 @@
-package br.com.test.analytics;
+package com.example.analytics;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

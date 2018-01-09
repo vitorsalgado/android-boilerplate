@@ -2,8 +2,9 @@ apply plugin: 'com.android.library'
 
 android {}
 
-final versions = rootProject.ext
+final versions = rootProject.ext.versions
 
 dependencies {
 	implementation "com.google.firebase:firebase-core:$versions.play"
+	implementation "com.android.support:support-annotations:$versions.supportLibrary"
 }

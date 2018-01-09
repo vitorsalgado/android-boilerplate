@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 final app_name = 'Boilerplate'
-final cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 
 android {
 	defaultConfig {
@@ -13,8 +12,8 @@ android {
 
 	dexOptions {
 		javaMaxHeapSize "2g"
-		preDexLibraries "true" != System.getenv("CI")
-		maxProcessCount cores
+		preDexLibraries !rootProject.ext.isCI
+		maxProcessCount rootProject.ext.cores
 	}
 
 	aaptOptions {
@@ -55,7 +54,7 @@ android {
 		debug {
 			versionNameSuffix ".debug"
 			minifyEnabled false
-			useProguard "true" == System.getenv("CI")
+			useProguard rootProject.ext.isCI
 			debuggable true
 			shrinkResources false
 			signingConfig signingConfigs.debug
@@ -114,7 +113,7 @@ tasks.matching { it instanceof Test }.all {
 		showExceptions true
 		showCauses true
 		showStackTraces true
-		maxParallelForks cores
+		maxParallelForks rootProject.ext.cores
 		forkEvery 10
 		events = ["failed", "passed", "skipped", "standardOut", "standardError"]
 	}
@@ -124,7 +123,7 @@ jacoco {
 	toolVersion = "0.7.9"
 }
 
-final versions = rootProject.ext
+final versions = rootProject.ext.versions
 
 dependencies {
 	// ---------------------------------------------------------------------------------------------

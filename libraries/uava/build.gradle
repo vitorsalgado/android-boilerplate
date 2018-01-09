@@ -1,7 +1,7 @@
 apply plugin: 'idea'
 apply plugin: 'java-library'
 
-final versions = rootProject.ext
+final versions = rootProject.ext.versions
 
 dependencies {
 	implementation "com.android.support:support-annotations:$versions.supportLibrary"

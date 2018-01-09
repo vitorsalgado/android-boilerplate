@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {}
 
-final versions = rootProject.ext
+final versions = rootProject.ext.versions
 
 dependencies {
     implementation project(':libraries:uava')
