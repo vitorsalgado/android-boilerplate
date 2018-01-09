@@ -1,0 +1,25 @@
+{
+  "name": "android-boilerplate",
+  "version": "1.0.0",
+  "description": "CLI tool",
+  "main": "cli.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitorsalgado/android-boilerplate.git"
+  },
+  "author": "Vitor Hugo Salgado <vsalgadopb@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/vitorsalgado/android-boilerplate/issues"
+  },
+  "homepage": "https://github.com/vitorsalgado/android-boilerplate#readme",
+  "dependencies": {
+    "inquirer": "^5.0.0"
+  }
+}

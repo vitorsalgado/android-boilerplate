@@ -1,4 +1,4 @@
-package com.example.analytics;
+package br.com.test.analytics;
 
 import android.support.annotation.NonNull;
 
