@@ -29,7 +29,6 @@ Inquirer.prompt(
 		let pwd = await cmd('pwd');
 		pwd = pwd.toString().replace('\n', '');
 
-		// Change app build.gradle
 		const appBuildPath = `${pwd}/app/build.gradle`;
 		const appBuild = FileSystem.readFileSync(appBuildPath).toString();
 		const changedAppBuild = appBuild.replace(/final app_name = 'Boilerplate'/, `final app_name = '${project}'`);
