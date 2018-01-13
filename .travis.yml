@@ -16,6 +16,9 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 
+before_install:
+  - yes | sdkmanager --licenses
+
 android:
   components:
     - android-27
@@ -28,5 +31,4 @@ android:
     - extra-google-google_play_services
 
 script:
-  - echo y && android update sdk --all --no-ui --filter extra-android-m2repository
   - ./gradlew clean build --info
