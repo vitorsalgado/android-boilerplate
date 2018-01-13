@@ -10,11 +10,14 @@ LEVEL := info
 
 build:
 	clear && \
-	./gradlew clean build --info -x validateSigningRelease -x packageRelease -x testRelease
+	./gradlew clean build --$(LEVEL) -x validateSigningRelease -x packageRelease -x testRelease
+
+build-all:
+	./gradlew clean build --$(LEVEL)
 
 infer:
 	clear && \
-	infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x pmd
+	infer -- ./gradlew clean build --$(LEVEL) -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x pmd
 
 infer-docker:
 	clear && \
@@ -38,6 +41,9 @@ redex-debug:
 # quality recipes
 # ##################################################################################################
 
+checkstyle:
+	./gradlew checkstyle --$(LEVEL)
+
 pmd:
 	./gradlew pmd --$(LEVEL)
 
@@ -49,7 +55,7 @@ full-coverage:
 
 check-security:
 	clear && \
-	./gradlew dependencyCheckAnalyze --info
+	./gradlew dependencyCheckAnalyze --$(LEVEL)
 
 
 
@@ -85,6 +91,24 @@ latest-version:
 
 next:
 	git semver $(version)
+
+
+
+
+# git utilities
+# ##################################################################################################
+
+# @parameter - b - name of new branch
+new-branch:
+	git checkout -b $(b) && \
+	git push origin $(b) && \
+	git branch --set-upstream-to origin/$(b) $(b)
+
+# @parameter - m - commit message
+cp:
+	git add --all && \
+	git commit -m "$(m)" && \
+	git push
 
 
 

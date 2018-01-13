@@ -28,4 +28,5 @@ android:
     - extra-google-google_play_services
 
 script:
-  - ./gradlew clean build --info -x validateSigningRelease -x packageRelease -x testRelease
+  - echo y && android update sdk --all --no-ui --filter extra-android-m2repository
+  - ./gradlew clean build --info
