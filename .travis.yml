@@ -28,4 +28,4 @@ android:
     - extra-google-google_play_services
 
 script:
-  - make
+  - ./gradlew clean build --info -x validateSigningRelease -x packageRelease -x testRelease
