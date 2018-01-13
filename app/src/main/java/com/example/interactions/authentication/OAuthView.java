@@ -1,8 +1,8 @@
 package com.example.interactions.authentication;
 
-import com.example.interactions.AbstractView;
+import com.example.interactions.PresenterView;
 
-public interface OAuthView extends AbstractView {
+public interface OAuthView extends PresenterView {
 	void showService(LoginServiceConfiguration oauthConfig);
 
 	void close();

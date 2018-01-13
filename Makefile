@@ -1,27 +1,54 @@
+PROJECT := com.example
+PROJECT_TEST := $(PROJECT).test
+CONTEXT := $$(pwd)
+LEVEL := info
+
+
+
 # build recipes
 # ##################################################################################################
 
 build:
+	clear && \
 	./gradlew clean build --info -x validateSigningRelease -x packageRelease -x testRelease
 
 infer:
-	infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x findBugs -x pmd
+	clear && \
+	infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x pmd
+
+infer-docker:
+	clear && \
+	docker rm -f $(PROJECT_TEST) || true && \
+	docker build --build-arg ANDROID_HOME=${ANDROID_HOME} -t $(PROJECT_TEST) . && \
+	docker run -d -e "ANDROID_HOME=${ANDROID_HOME}" -v $(CONTEXT):/usr/app -v ${ANDROID_HOME}:${ANDROID_HOME} -v ${HOME}/.gradle:/root/.gradle --name $(PROJECT_TEST) -it $(PROJECT_TEST) /bin/bash && \
+	docker exec -it $(PROJECT_TEST) script /dev/null -c "infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x pmd"
+
+
+
+# apk recipes
+# ##################################################################################################
 
 redex-debug:
+	clear && \
 	redex ./app/build/outputs/apk/app-debug.apk -o app-debug-final.apk --sign -s ./distribution/debug.keystore -a androiddebugkey -p android
 
 
 
 
-# test recipes
+# quality recipes
 # ##################################################################################################
 
+pmd:
+	./gradlew pmd --$(LEVEL)
+
 full-coverage:
+	clear && \
 	./gradlew fullCoverageReport && \
 	echo "JaCoCo Coverage Report" && \
 	echo file://$$(pwd)/app/build/reports/jacoco/fullCoverageReport/html/index.html
 
 check-security:
+	clear && \
 	./gradlew dependencyCheckAnalyze --info
 
 
@@ -58,6 +85,17 @@ latest-version:
 
 next:
 	git semver $(version)
+
+
+
+
+# refactorer
+# ##################################################################################################
+
+new-project:
+	docker rm -f $(PROJECT_TEST).cli || true && \
+	docker build -t $(PROJECT_TEST).cli -f Dockerfile.cli . && \
+	docker run --rm -v $(CONTEXT):/usr/app --name $(PROJECT_TEST).cli -t $(PROJECT_TEST).cli
 
 
 

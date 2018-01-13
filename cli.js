@@ -35,22 +35,21 @@ Inquirer.prompt(
 
 		FileSystem.writeFileSync(appBuildPath, changedAppBuild);
 
-		const libraries = `${pwd}/libraries`;
+		const libraries = `${pwd}`;
 		const roots = [
 			`${pwd}/app`,
 			`${libraries}/analytics`,
 			`${libraries}/android-utils`,
-			`${libraries}/android-widgets`,
 			`${libraries}/api`,
 			`${libraries}/graph-api`,
 			`${libraries}/logger`,
-			`${libraries}/persistence`,
-			`${libraries}/swiper`,
+			`${libraries}/interactors`,
 			`${libraries}/uava`
 		];
 		const languages = [
 			'java',
-			'kotlin'
+			'kotlin',
+			'scala'
 		];
 
 		roots.forEach(async (root) =>
@@ -76,13 +75,13 @@ Inquirer.prompt(
 						await cmd(`mv ${root}/src/${src}/${language}/com/example/* ${root}/src/${src}/${language}/${folders}/`);
 
 						readDirRecursively(`${root}/`, filters)
-							.map((file) => Object.create({content: FileSystem.readFileSync(file), file}))
-							.map(({content, file}) => Object.create({content: content.toString(), file}))
-							.map(({content, file}) => Object.create({
+							.map((file) => Object.create({ content: FileSystem.readFileSync(file), file }))
+							.map(({ content, file }) => Object.create({ content: content.toString(), file }))
+							.map(({ content, file }) => Object.create({
 								content: content.replace(/com\.example/, pkg),
 								file
 							}))
-							.forEach(({content, file}) => FileSystem.writeFileSync(file, content));
+							.forEach(({ content, file }) => FileSystem.writeFileSync(file, content));
 					})))
 	});
 
@@ -120,6 +119,8 @@ const exclusions = (file) =>
 
 const filters = (file) =>
 	file.indexOf('.java') >= 0 ||
+	file.indexOf('.kotlin') >= 0 ||
+	file.indexOf('.scala') >= 0 ||
 	file.indexOf('.feature') >= 0 ||
 	file.indexOf('.gradle') >= 0 ||
 	file.indexOf('.xml') >= 0;

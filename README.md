@@ -26,11 +26,6 @@ The following code analysis tools are set up on this project:
 ./gradlew pmd
 ```
 
-* [Findbugs](http://findbugs.sourceforge.net/): This tool uses static analysis to find bugs in Java code. Unlike PMD, it uses compiled Java bytecode instead of source code.
-```
-./gradlew findbugs
-```
-
 * [Checkstyle](http://checkstyle.sourceforge.net/): It ensures that the code style follows the guidelines. See our [checkstyle config file](tools/linters/checkstyle.xml).
 ```
 ./gradlew checkstyle

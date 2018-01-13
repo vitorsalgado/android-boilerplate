@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.R;
-import com.example.android.AppUtils;
+import com.example.android.utils.AppUtils;
 import com.example.databinding.AboutActivityBinding;
 import com.example.interactions.AbstractActivity;
 

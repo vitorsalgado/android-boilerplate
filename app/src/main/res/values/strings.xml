@@ -7,6 +7,7 @@
 	<string name="login_title">Login</string>
 
 	<!-- common -->
+	<string name="error">Erro</string>
 	<string name="double_back_to_exit">Clique em VOLTAR mais uma vez para sair</string>
 	<string name="about">Sobre</string>
 	<string name="version">Versão</string>

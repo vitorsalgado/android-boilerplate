@@ -8,7 +8,7 @@ import com.squareup.leakcanary.RefWatcher;
 
 import com.example.uava.interfaces.RetryCallback;
 
-public class AbstractFragment extends Fragment implements AbstractView {
+public class AbstractFragment extends Fragment implements PresenterView {
 	@Override
 	public void onDestroy() {
 		if (BuildConfig.DEBUG) {

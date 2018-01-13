@@ -1,11 +1,12 @@
 apply from: rootProject.file('tools/predex.gradle')
+
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "com.github.kt3k.coveralls"
 
 buildscript {
 	apply from: rootProject.file('versions.gradle')
 
-	ext.fabricGradle = '1.22.1'
+	ext.fabricGradle = '1.25.1'
 
 	addRepos(repositories)
 
@@ -27,11 +28,9 @@ allprojects {
 }
 
 subprojects { subproject ->
-	if (subproject.name != "libraries") {
-		apply plugin: 'jacoco'
-		apply from: rootProject.file('tools/linters.gradle')
-		apply from: rootProject.file('tools/jacoco.gradle')
-	}
+	apply plugin: 'jacoco'
+	apply from: rootProject.file('tools/jacoco.gradle')
+	apply from: rootProject.file('tools/linters.gradle')
 
 	afterEvaluate { Project project ->
 		if (project.findProperty('android')) {
@@ -71,5 +70,5 @@ task wrapper(type: Wrapper) {
 }
 
 coveralls {
-	jacocoReportPath "$rootProject/app/build/reports/jacoco/fullCoverageReport/fullCoverageReport.xml"
+	jacocoReportPath "$rootDir/app/build/reports/jacoco/fullCoverageReport/fullCoverageReport.xml"
 }

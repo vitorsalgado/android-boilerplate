@@ -21,7 +21,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
-public class App extends Application implements HasActivityInjector {
+public abstract class App extends Application implements HasActivityInjector {
 	public static final String SHARED_PREFERENCES = "com.example.shared_prefs";
 	public static final String DATABASE = "com.example.database";
 

@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.example.App;
 import com.example.R;
-import com.example.interactions.AbstractPresenter;
+import com.example.interactions.ViewPresenter;
 
-class OAuthPresenter extends AbstractPresenter<OAuthView> {
+class OAuthPresenter extends ViewPresenter<OAuthView> {
 	OAuthPresenter(@NonNull OAuthView view) {
 		super(view);
 	}

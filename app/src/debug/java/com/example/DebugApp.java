@@ -2,10 +2,10 @@ package com.example;
 
 import android.os.StrictMode;
 
-import com.example.android.trackers.ActivityLifecycleTracker;
-import com.example.android.trackers.FragmentLifecycleTracker;
-import com.example.android.trackers.FrescoCacheStatsTracker;
 import com.example.logger.CLog;
+import com.example.trackers.ActivityLifecycleTracker;
+import com.example.trackers.FragmentLifecycleTracker;
+import com.example.trackers.FrescoCacheStatsTracker;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
@@ -21,7 +21,12 @@ public class DebugApp extends App {
 
 		super.onCreate();
 
-		Stetho.initializeWithDefaults(this);
+		Stetho.initialize(
+			Stetho.newInitializerBuilder(this)
+				.enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+				.enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+				.build());
+
 		trackActivitiesAndFragmentsLifecycle();
 		Traceur.enableLogging();
 

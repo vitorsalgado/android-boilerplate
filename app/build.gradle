@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
+apply from: "$rootDir/tools/layoutIds.gradle"
+apply from: "$rootDir/tools/test-butler.gradle"
+
 final app_name = 'Boilerplate'
 
 android {
@@ -27,6 +30,7 @@ android {
 	lintOptions {
 		checkAllWarnings true
 		warningsAsErrors true
+		abortOnError false
 		lintConfig file("$rootDir/lint.xml")
 	}
 
@@ -67,7 +71,7 @@ android {
 			testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
 
 			resValue 'string', 'app_name', "1." + app_name + ".debug"
-			resValue 'string', 'API_URI', "http://localhost:3000"
+			buildConfigField 'String', 'API_URI', '"http://localhost:3000"'
 		}
 
 		release {
@@ -84,7 +88,7 @@ android {
 			consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
 			resValue 'string', 'app_name', app_name
-			resValue 'string', 'API_URI', "http://api.prod"
+			buildConfigField 'String', 'API_URI', '"http://api.prod"'
 		}
 	}
 
@@ -103,22 +107,6 @@ android {
 	}
 }
 
-tasks.matching { it instanceof Test }.all {
-	if (!project.hasProperty("createReports")) {
-		reports.html.enabled = false
-		reports.junitXml.enabled = false
-	}
-
-	testLogging {
-		showExceptions true
-		showCauses true
-		showStackTraces true
-		maxParallelForks rootProject.ext.cores
-		forkEvery 10
-		events = ["failed", "passed", "skipped", "standardOut", "standardError"]
-	}
-}
-
 jacoco {
 	toolVersion = "0.7.9"
 }
@@ -129,13 +117,12 @@ dependencies {
 	// ---------------------------------------------------------------------------------------------
 	// Project Libraries
 	// ---------------------------------------------------------------------------------------------
-	implementation project(':libraries:uava')
-	implementation project(':libraries:api')
-	implementation project(':libraries:logger')
-	implementation project(':libraries:android-utils')
-	implementation project(':libraries:android-widgets')
-	implementation project(':libraries:analytics')
-	implementation project(':libraries:persistence')
+	implementation project(':uava')
+	implementation project(':api')
+	implementation project(':logger')
+	implementation project(':android-utils')
+	implementation project(':analytics')
+	implementation project(':interactors')
 
 	// ---------------------------------------------------------------------------------------------
 	// Dependencies
@@ -178,7 +165,6 @@ dependencies {
 	// ---------------------------------------------------------------------------------------------
 	// Development and Support Libs
 	// ---------------------------------------------------------------------------------------------
-	annotationProcessor "com.uber.nullaway:nullaway:$versions.nullaway"
 	implementation("com.crashlytics.sdk.android:crashlytics:$versions.crashlytics") {
 		transitive = true
 	}

@@ -1,10 +1,8 @@
 include ':app',
-        ':libraries:uava',
-        ':libraries:graph-api',
-        ':libraries:api',
-        ':libraries:logger',
-        ':libraries:android-utils',
-        ':libraries:android-widgets',
-        ':libraries:analytics',
-        ':libraries:persistence',
-		':libraries:swiper'
+        ':uava',
+        ':graph-api',
+        ':api',
+        ':logger',
+		':interactors',
+		':android-utils',
+        ':analytics'

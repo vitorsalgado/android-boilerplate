@@ -1,12 +1,10 @@
 {
-  "name": "android-boilerplate",
+  "name": "android-boilerplate-cli",
   "version": "1.0.0",
-  "description": "CLI tool",
+  "description": "CLI tool to refactor Java packages and replace application name from XML layout files and gradle scripts",
   "main": "cli.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
+    "start": "node cli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

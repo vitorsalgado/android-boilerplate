@@ -7,6 +7,6 @@
 	<color name="accent">#616161</color>
 
 	<!-- tabs -->
-	<color name="tab_unselected">@color/accent</color>
+	<!--<color name="tab_unselected">@color/accent</color>-->
 	<color name="tab_seletected">#E5E3E6</color>
 </resources>

@@ -13,8 +13,8 @@ import android.view.View;
 
 import com.example.R;
 import com.example.Reporter;
-
-import com.example.android.AppUtils;
+import com.example.android.utils.AppUtils;
+import com.example.android.utils.DialogUtils;
 import com.example.uava.interfaces.RetryCallback;
 
 public abstract class AbstractActivity extends AppCompatActivity {
@@ -25,6 +25,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
 	protected abstract View root();
 
 	//region Activity Events
+
 	@Override
 	protected void onResume() {
 		if (!AppUtils.hasNetworkConnection(getApplicationContext())) {
@@ -36,18 +37,20 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-		//DialogUtils.dismiss(progressDialog);
+		DialogUtils.dismiss(progressDialog);
 		super.onBackPressed();
 	}
 
 	@Override
 	protected void onDestroy() {
-		//DialogUtils.dismiss(progressDialog);
+		DialogUtils.dismiss(progressDialog);
 		super.onDestroy();
 	}
+
 	//endregion
 
 	//region Common Components Setup
+
 	protected void setUpToolBar(@NonNull Toolbar toolBar) {
 		setUpToolBar(toolBar, "");
 	}
@@ -70,38 +73,41 @@ public abstract class AbstractActivity extends AppCompatActivity {
 	protected int getUnexpectedErrorMessage() {
 		return 0;
 	}
+
 	//endregion
 
 	//region Common Presenter View Events
+
 	public void showLoading() {
-//		progressDialog = DialogUtils.loading(this, R.style.TransparentProgressDialog, R.color.accent);
-//		progressDialog.show();
+		progressDialog = DialogUtils.loading(this, R.style.TransparentProgressDialog, R.color.accent);
+		progressDialog.show();
 	}
 
 	public void loaded() {
-		//DialogUtils.dismiss(progressDialog);
+		DialogUtils.dismiss(progressDialog);
 	}
 
 	public void error(Throwable throwable) {
 		Reporter.report(throwable);
-//
-//		DialogUtils.dismiss(progressDialog);
-//		DialogUtils.simpleOk(this, R.string.error, getUnexpectedErrorMessage());
+
+		DialogUtils.dismiss(progressDialog);
+		DialogUtils.simpleOk(this, R.string.error, getUnexpectedErrorMessage());
 	}
 
 	public void errorWithRetry(Throwable throwable, RetryCallback retryAction) {
 		Reporter.report(throwable);
-//
-//		DialogUtils.dismiss(progressDialog);
-//
-//		DialogUtils.retry(this,
-//				getUnexpectedErrorMessage(),
-//				(dialog, which) -> {
-//					retryAction.retry();
-//					dialog.dismiss();
-//				},
-//				(dialog, which) -> dialog.dismiss())
-//				.show();
+
+		DialogUtils.dismiss(progressDialog);
+
+		DialogUtils.retry(this,
+			getUnexpectedErrorMessage(),
+			(dialog, which) -> {
+				retryAction.retry();
+				dialog.dismiss();
+			},
+			(dialog, which) -> dialog.dismiss())
+			.show();
 	}
+
 	//endregion
 }

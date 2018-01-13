@@ -3,7 +3,7 @@ ext.versions = [:]
 def versions = [:]
 // support
 versions.supportLibrary = '27.0.2'
-versions.testSupportLibrary = '0.5'
+versions.testSupportLibrary = '1.0.1'
 versions.constraintLayout = '1.0.2'
 
 // test dependencies
@@ -21,21 +21,23 @@ versions.okhttp = '3.9.0'
 versions.retrofit = '2.3.0'
 versions.play = '11.8.0'
 versions.gson = '2.8.2'
-versions.fresco = '1.5.0'
+versions.fresco = '1.7.1'
 versions.rxAndroid = '2.0.1'
-versions.rxJava = '2.1.6'
-versions.sqlbrite = '2.0.0'
+versions.rxJava = '2.1.8'
+versions.sqlbrite = '3.1.0'
 versions.licensesDialog = '1.8.3'
-versions.crashlytics = '2.7.1@aar'
+versions.crashlytics = '2.8.0@aar'
 versions.traceur = '1.0.1'
-versions.dagger = '2.12'
+versions.dagger = '2.14.1'
+
+// architecture components
+versions.supportSqlite = '1.0.0'
+versions.supportSqliteFramework = '1.0.0'
 
 // utils
 versions.leakCanary = '1.5.4'
 versions.stetho = '1.5.0'
 versions.googlefindbugs = '3.0.1'
-versions.errorprone = '2.1.3'
-versions.nullaway = '0.2.0'
 
 def build_versions = [:]
 build_versions.min_sdk = 19
@@ -46,12 +48,11 @@ ext.build_versions = build_versions
 ext.versions = versions
 
 static def addRepos(RepositoryHandler handler) {
+	handler.mavenCentral()
+	handler.google()
 	handler.jcenter()
-	handler.maven { url 'https://maven.google.com' }
 	handler.maven { url 'https://maven.fabric.io/public' }
 	handler.maven { url "https://plugins.gradle.org/m2/" }
-	handler.mavenCentral()
-	handler.mavenLocal()
 	handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 

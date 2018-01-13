@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.R;
-import com.example.android.AppUtils;
+import com.example.android.utils.AppUtils;
 import com.example.databinding.MainActivityBinding;
 import com.example.interactions.AbstractActivity;
 

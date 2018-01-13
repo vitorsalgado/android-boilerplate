@@ -1,0 +1,10 @@
+FROM node:8.9.4
+
+WORKDIR /usr/app
+VOLUME /usr/app
+
+COPY package.json package-lock.json ./
+
+RUN npm install --production
+
+CMD node cli

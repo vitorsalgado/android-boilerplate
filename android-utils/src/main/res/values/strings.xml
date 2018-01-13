@@ -1,0 +1,9 @@
+<resources>
+	<!-- common -->
+	<string name="dialog_action_ok">OK</string>
+	<string name="common_cancel">Cancelar</string>
+	<string name="common_retry">Tentar novamente</string>
+	<string name="common_prompt_discard_data">Tem certeza de que deseja descartar as alterações?</string>
+	<string name="common_discard">Descartar</string>
+	<string name="common_keep_editing">Continuar Editando</string>
+</resources>

@@ -1,78 +1,55 @@
-apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
-apply plugin: 'pmd'
-
-apply from: rootProject.file('tools/exclusions.gradle')
-
 def lintersDir = "$rootDir/tools/linters"
-def reportsDir = "$buildDir/reports"
-
-pmd {
-	toolVersion = "5.8.1"
-}
-
-checkstyle {
-	toolVersion "8.4"
-}
-
-findbugs {
-	toolVersion "3.0.1"
-}
-
-task checkstyle(type: Checkstyle) {
-	group "Linters"
-	configFile file("$lintersDir/checkstyle.xml")
-	showViolations true
-
-	source "src/main/java"
-	classpath = files()
-}
-
-task findbugs(type: FindBugs, dependsOn: file("$project.buildDir/intermediates/classes").exists() ? "assembleDebug" : "assemble") {
-	group "Linters"
-	ignoreFailures = false
-	effort = "max"
-	reportLevel = "high"
-	excludeFilter = new File("$lintersDir/findbugs-filter.xml")
-
-	source 'src'
-	include '**/*.java'
-	exclude '**/gen/**'
-
-	reports {
-		xml.enabled = false
-		html.enabled = true
-		xml.setDestination(file("$reportsDir/findbugs/findbugs.xml"))
-		html.setDestination(file("$reportsDir/findbugs/findbugs.html"))
-	}
-
-	classpath = files()
-	classes = (file("$project.buildDir/intermediates/classes/debug").exists()
-		? fileTree(dir: "$project.buildDir/intermediates/classes/debug", excludes: exclusions)
-		: fileTree(dir: "$project.buildDir/classes", excludes: exclusions))
-}
-
-task pmd(type: Pmd) {
-	group "Linters"
-	ruleSetFiles = files("$lintersDir/pmd-ruleset.xml")
-	ruleSets = []
-
-	source 'src'
-	include '**/*.java'
-	exclude '**/gen/**'
-
-	reports {
-		xml.enabled = false
-		html.enabled = true
-		xml.setDestination(file("$reportsDir/pmd/pmd.xml"))
-		html.setDestination(file("$reportsDir/pmd/pmd.html"))
-	}
-}
+def reportsDir = "$rootDir/reports"
 
 afterEvaluate { project ->
+	apply plugin: 'pmd'
+	apply from: rootProject.file('tools/exclusions.gradle')
+
+	pmd {
+		toolVersion = "5.8.1"
+	}
+
+	task pmd(type: Pmd) {
+		group "QA"
+		ruleSetFiles = files("$lintersDir/pmd-ruleset.xml")
+		ruleSets = []
+
+		source 'src/main/java'
+		include '**/*.java'
+		exclude '**/gen/**'
+
+		reports {
+			xml.enabled = false
+			html.enabled = true
+			xml.setDestination(file("$reportsDir/pmd/pmd.xml"))
+			html.setDestination(file("$reportsDir/pmd/index.html"))
+		}
+	}
+
+	if (project.findProperty('android')) {
+		apply plugin: 'checkstyle'
+
+		checkstyle {
+			toolVersion "8.4"
+		}
+
+		task checkstyle(type: Checkstyle) {
+			group "Linters"
+			configFile file("$lintersDir/checkstyle.xml")
+			showViolations true
+
+			source "src/main/java"
+			classpath = files()
+		}
+	}
+
 	def task = tasks.findByName("check")
 
 	if (task != null) {
-		task.dependsOn("pmd", "findbugs", "checkstyle")
+		if (project.findProperty('android')) {
+			task.dependsOn("pmd", "checkstyle")
+		} else {
+			task.dependsOn("pmd")
+		}
 	}
 }

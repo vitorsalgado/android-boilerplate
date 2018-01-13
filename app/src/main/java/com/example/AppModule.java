@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.example.api.Api;
+import com.example.api.ApiBuilder;
+import com.example.api.Config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,10 +15,6 @@ import java.io.File;
 
 import javax.inject.Singleton;
 
-import com.example.api.Api;
-import com.example.api.ApiBuilder;
-import com.example.api.Config;
-import com.example.persistence.DbHelper;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -50,13 +49,11 @@ class AppModule {
 
 	@Provides
 	@Singleton
-	DbHelper provideDbHelper(@NonNull Context context) {
-		return new DbHelper(context, App.DATABASE, BuildConfig.DEBUG);
-	}
-
-	@Provides
-	@Singleton
 	Api provideApi(@NonNull OkHttpClient.Builder okBuilder, @NonNull Gson gson) {
-		return ApiBuilder.build(okBuilder, gson, new Config("", new File(""), "", 100));
+		String uri = BuildConfig.API_URI;
+		String cache = "com.example.network.cache";
+		Config config = new Config(uri, new File(cache), cache, 100 * 1024 * 1024);
+
+		return ApiBuilder.build(okBuilder, gson, config);
 	}
 }
