@@ -30,7 +30,6 @@ android {
 	lintOptions {
 		checkAllWarnings true
 		warningsAsErrors true
-		abortOnError false
 		lintConfig file("$rootDir/lint.xml")
 	}
 
