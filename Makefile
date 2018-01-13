@@ -119,7 +119,7 @@ cp:
 new-project:
 	docker rm -f $(PROJECT_TEST).cli || true && \
 	docker build -t $(PROJECT_TEST).cli -f Dockerfile.cli . && \
-	docker run --rm -v $(CONTEXT):/usr/app --name $(PROJECT_TEST).cli -t $(PROJECT_TEST).cli
+	docker run --rm -v $(CONTEXT):/usr/app/android --name $(PROJECT_TEST).cli -it $(PROJECT_TEST).cli
 
 
 

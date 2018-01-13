@@ -83,7 +83,7 @@
     public static int e(...);
 }
 
--assumenosideeffects class br.com.vitorsalgado.android.logger.CLog {
+-assumenosideeffects class com.example.logger.CLog {
     public static void d(...);
     public static void w(...);
     public static void e(...);

@@ -35,16 +35,16 @@ Inquirer.prompt(
 
 		FileSystem.writeFileSync(appBuildPath, changedAppBuild);
 
-		const libraries = `${pwd}`;
-		const roots = [
-			`${pwd}/app`,
-			`${libraries}/analytics`,
-			`${libraries}/android-utils`,
-			`${libraries}/api`,
-			`${libraries}/graph-api`,
-			`${libraries}/logger`,
-			`${libraries}/interactors`,
-			`${libraries}/uava`
+		const root = `${pwd}`;
+		const libraries = [
+			`${root}/app`,
+			`${root}/analytics`,
+			`${root}/android-utils`,
+			`${root}/api`,
+			`${root}/graph-api`,
+			`${root}/logger`,
+			`${root}/interactors`,
+			`${root}/uava`
 		];
 		const languages = [
 			'java',
@@ -52,13 +52,13 @@ Inquirer.prompt(
 			'scala'
 		];
 
-		roots.forEach(async (root) =>
+		libraries.forEach(async (library) =>
 			languages.forEach(async (language) =>
 				FileSystem
-					.readdirSync(`${root}/src`)
+					.readdirSync(`${library}/src`)
 					.forEach(async (src) => {
 						try {
-							const dirs = FileSystem.readdirSync(`${root}/src/${src}/${language}`);
+							const dirs = FileSystem.readdirSync(`${library}/src/${src}/${language}`);
 
 							if (dirs.length === 0) {
 								return;
@@ -71,14 +71,15 @@ Inquirer.prompt(
 							return;
 						}
 
-						await cmd(`cd ${root}/src/${src}/java && mkdir -p ${folders}`);
-						await cmd(`mv ${root}/src/${src}/${language}/com/example/* ${root}/src/${src}/${language}/${folders}/`);
+						await cmd(`rm -rf ${library}/src/${src}/${language}/com`)
+						await cmd(`cd ${library}/src/${src}/java && mkdir -p ${folders}`);
+						await cmd(`mv ${library}/src/${src}/${language}/com/example/* ${library}/src/${src}/${language}/${folders}/`);
 
-						readDirRecursively(`${root}/`, filters)
+						readDirRecursively(`${library}/`, filters)
 							.map((file) => Object.create({ content: FileSystem.readFileSync(file), file }))
 							.map(({ content, file }) => Object.create({ content: content.toString(), file }))
 							.map(({ content, file }) => Object.create({
-								content: content.replace(/com\.example/, pkg),
+								content: content.split('com.example').join(pkg),
 								file
 							}))
 							.forEach(({ content, file }) => FileSystem.writeFileSync(file, content));

@@ -1,9 +1,9 @@
 FROM node:8.9.4
 
 WORKDIR /usr/app
-VOLUME /usr/app
+VOLUME /usr/app/android
 
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json cli.js ./
 
 RUN npm install --production
 

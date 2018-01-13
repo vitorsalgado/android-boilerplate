@@ -1,22 +1,12 @@
 {
-  "name": "android-boilerplate-cli",
+  "name": "com.example.cli",
   "version": "1.0.0",
   "description": "CLI tool to refactor Java packages and replace application name from XML layout files and gradle scripts",
   "main": "cli.js",
   "scripts": {
-    "start": "node cli",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node cli"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vitorsalgado/android-boilerplate.git"
-  },
-  "author": "Vitor Hugo Salgado <vsalgadopb@gmail.com>",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/vitorsalgado/android-boilerplate/issues"
-  },
-  "homepage": "https://github.com/vitorsalgado/android-boilerplate#readme",
   "dependencies": {
     "inquirer": "^5.0.0"
   }
