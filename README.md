@@ -31,5 +31,19 @@ The following code analysis tools are set up on this project:
 ./gradlew checkstyle
 ```
 
+* [SonarQube](https://www.sonarqube.org/): Continuous code inspection tool.
+```
+Required environment variables:
+SONARQUBE_ORG=<YOUR_SONARQUBE_ORGANIZATION_KEY>
+SONARQUBE_TOKEN=<YOUR_GENERATED_SONARQUBE_TOKEN>
+
+make sonar
+```
+
+* [OWASP Dependency Check](https://github.com/jeremylong/DependencyCheck): Detects publicly disclosed vulnerabilities in application dependencies.
+```
+make check-security
+```
+
 ## License
 This project is available under Apache Public License version 2.0. See [LICENSE](LICENSE).
