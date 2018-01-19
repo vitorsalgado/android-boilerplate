@@ -2,6 +2,7 @@ apply from: rootProject.file('tools/predex.gradle')
 
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "com.github.kt3k.coveralls"
+apply plugin: "org.sonarqube"
 
 buildscript {
 	apply from: rootProject.file('versions.gradle')
@@ -16,6 +17,7 @@ buildscript {
 		classpath "io.fabric.tools:gradle:$fabricGradle"
 		classpath "org.owasp:dependency-check-gradle:2.1.1"
 		classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1"
+		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1"
 	}
 }
 

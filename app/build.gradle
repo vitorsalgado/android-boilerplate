@@ -146,6 +146,8 @@ dependencies {
 		exclude module: 'support-compat'
 		exclude module: 'support-core-ui'
 	}
+	implementation "android.arch.lifecycle:extensions:$versions.arch"
+	annotationProcessor "android.arch.lifecycle:compiler:$versions.arch"
 	implementation "com.google.firebase:firebase-crash:$versions.play"
 	implementation "com.google.firebase:firebase-core:$versions.play"
 	implementation "com.google.firebase:firebase-messaging:$versions.play"
@@ -167,6 +169,7 @@ dependencies {
 	implementation("com.crashlytics.sdk.android:crashlytics:$versions.crashlytics") {
 		transitive = true
 	}
+	debugImplementation "nl.littlerobots.rxlint:rxlint:$versions.rxlint"
 	releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
 	testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
 	debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"

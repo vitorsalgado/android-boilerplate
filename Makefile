@@ -57,6 +57,12 @@ check-security:
 	clear && \
 	./gradlew dependencyCheckAnalyze --$(LEVEL)
 
+sonar:
+	./gradlew sonarqube \
+    	-Dsonar.host.url=https://sonarcloud.io \
+		-Dsonar.organization=${SONARQUBE_ORG} \
+		-Dsonar.login=${SONARQUBE_TOKEN}
+
 
 
 

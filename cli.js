@@ -33,7 +33,17 @@ Inquirer.prompt(
 		const appBuild = FileSystem.readFileSync(appBuildPath).toString();
 		const changedAppBuild = appBuild.replace(/final app_name = 'Boilerplate'/, `final app_name = '${project}'`);
 
+		const makefilePath = `${pwd}/Makefile`;
+		const makefile = FileSystem.readFileSync(makefilePath).toString();
+		const changedMakefile = makefile.split('com.example').join(pkg);
+
+		const packageJSONPath = `${pwd}/package.json`;
+		const packageJSON = FileSystem.readFileSync(packageJSONPath).toString();
+		const changedPackageJSON = packageJSON.split('com.example').join(pkg);
+
 		FileSystem.writeFileSync(appBuildPath, changedAppBuild);
+		FileSystem.writeFileSync(makefilePath, changedMakefile);
+		FileSystem.writeFileSync(packageJSONPath, changedPackageJSON);
 
 		const root = `${pwd}`;
 		const libraries = [
