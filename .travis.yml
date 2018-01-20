@@ -7,6 +7,9 @@ jdk: openjdk8
 os:
   - linux
 
+services:
+  - docker
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -34,7 +37,8 @@ android:
     - extra-google-google_play_services
 
 script:
-  - ./gradlew clean build --info
+  - make build-all
+  - make infer-docker-ci
 
 after_success:
   - ./gradlew sonarqube -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=${SONARQUBE_ORG} -Dsonar.login=${SONARQUBE_TOKEN}

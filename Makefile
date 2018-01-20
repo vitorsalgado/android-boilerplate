@@ -26,6 +26,13 @@ infer-docker:
 	docker run -d -e "ANDROID_HOME=${ANDROID_HOME}" -v $(CONTEXT):/usr/app -v ${ANDROID_HOME}:${ANDROID_HOME} -v ${HOME}/.gradle:/root/.gradle --name $(PROJECT_TEST) -it $(PROJECT_TEST) /bin/bash && \
 	docker exec -it $(PROJECT_TEST) script /dev/null -c "infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x pmd"
 
+infer-docker-ci:
+	clear && \
+	docker rm -f $(PROJECT_TEST) || true && \
+	docker build --build-arg ANDROID_HOME=${ANDROID_HOME} -t $(PROJECT_TEST) . && \
+	docker run -d -e "ANDROID_HOME=${ANDROID_HOME}" -v $(CONTEXT):/usr/app -v ${ANDROID_HOME}:${ANDROID_HOME} -v ${HOME}/.gradle:/root/.gradle --name $(PROJECT_TEST) -it $(PROJECT_TEST) /bin/bash && \
+	docker exec -it $(PROJECT_TEST) script /dev/null -c "infer -- ./gradlew clean build --$(LEVEL)"
+
 print-reports-paths:
 	echo "Unit Test Report" && \
 	echo file://$(CONTEXT)/app/build/reports/tests/testDebugUnitTest/index.html && \

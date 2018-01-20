@@ -26,7 +26,7 @@ public class ClockTimePickerDialog extends DialogFragment implements TimePickerD
 		void onTimeSelected(SelectedTime selectedTime);
 	}
 
-	@Nullable
+	@NonNull
 	private ClockTimePickerListener clockTimePickerListener;
 
 	@NonNull

@@ -26,7 +26,7 @@ public class CalendarDatePickerDialog extends DialogFragment implements DatePick
 		void onDateSelected(SelectedDate selectedDate);
 	}
 
-	@Nullable
+	@NonNull
 	private CalendarDatePickerListener calendarDatePickerListener;
 
 	@NonNull

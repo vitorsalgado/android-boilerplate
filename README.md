@@ -1,6 +1,7 @@
 # Android Boilerplate  
 [![Build Status](https://travis-ci.org/vitorsalgado/android-boilerplate.svg?branch=master)](https://travis-ci.org/vitorsalgado/android-boilerplate)
 [![Code Climate](https://codeclimate.com/github/vitorsalgado/android-boilerplate/badges/gpa.svg)](https://codeclimate.com/github/vitorsalgado/android-boilerplate)
+[![HitCount](http://hits.dwyl.io/vitorsalgado/android-boilerplate.svg)](http://hits.dwyl.io/vitorsalgado/android-boilerplate)
 [![Min. API](https://img.shields.io/badge/API-19%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=19) 
 
 Android boilerplate application.  
@@ -21,6 +22,12 @@ All analysis tools are located on folder `tools/linters`.
 ### Code Analysis tools 
 The following code analysis tools are set up on this project:
 
+* [Infer](http://fbinfer.com/): Facebook Static analysis tool.
+```
+make infer-docker
+make infer-docker-ci
+```
+
 * [PMD](https://pmd.github.io/): It finds common programming flaws like unused variables, empty catch blocks, unnecessary object creation, and so forth. See [this project's PMD ruleset](tools/linters/pmd-ruleset.xml).
 ``` 
 ./gradlew pmd
@@ -39,6 +46,8 @@ SONARQUBE_TOKEN=<YOUR_GENERATED_SONARQUBE_TOKEN>
 
 make sonar
 ```
+
+Check the [SonarQube Dashboard](https://sonarcloud.io/dashboard?id=android-boilerplate) for this repository.
 
 * [OWASP Dependency Check](https://github.com/jeremylong/DependencyCheck): Detects publicly disclosed vulnerabilities in application dependencies.
 ```
