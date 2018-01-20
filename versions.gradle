@@ -15,6 +15,7 @@ versions.espresso = '3.0.1'
 versions.mockito = '2.10.0'
 versions.requestmatcher = '2.2.0'
 versions.jsonpathassert = '2.2.0'
+versions.soloader = '0.3.0'
 
 // main dependencies
 versions.okhttp = '3.9.0'

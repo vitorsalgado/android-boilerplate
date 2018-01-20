@@ -186,7 +186,10 @@ dependencies {
 	testImplementation "junit:junit:$versions.junit"
 	testImplementation "org.mockito:mockito-core:$versions.mockito"
 	testImplementation "org.hamcrest:hamcrest-all:$versions.hamcrest"
-	testImplementation "org.robolectric:robolectric:$versions.robolectric"
+	testImplementation("org.robolectric:robolectric:$versions.robolectric") {
+		exclude group: 'commons-logging', module: 'commons-logging'
+		exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+	}
 	testImplementation "br.com.concretesolutions:requestmatcher:$versions.requestmatcher"
 	testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
 	testImplementation "com.jayway.jsonpath:json-path-assert:$versions.jsonpathassert"

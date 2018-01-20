@@ -12,7 +12,7 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.withType(Test) {
-	if (!project.hasProperty("createReports")) {
+	if (project.hasProperty("skipReports")) {
 		reports.html.enabled = false
 		reports.junitXml.enabled = false
 	}

@@ -27,6 +27,11 @@ ext.cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 allprojects {
 	addRepos(repositories)
 	apply from: rootProject.file("tools/compile.gradle")
+	gradle.projectsEvaluated {
+		tasks.withType(JavaCompile) {
+			options.compilerArgs << "-Xlint:deprecation"
+		}
+	}
 }
 
 subprojects { subproject ->

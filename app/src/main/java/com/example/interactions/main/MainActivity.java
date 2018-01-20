@@ -44,6 +44,7 @@ public class MainActivity extends AbstractActivity implements TabLayout.OnTabSel
 	}
 
 	//region Activity Events
+
 	@NonNull
 	@Override
 	protected View root() {
@@ -54,15 +55,12 @@ public class MainActivity extends AbstractActivity implements TabLayout.OnTabSel
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (AppUtils.checkPlayServices(this, REQUEST_CODE_RECOVER_PLAY_SERVICES)) {
-			checkAuthentication();
+		if (!AppUtils.checkPlayServices(this, REQUEST_CODE_RECOVER_PLAY_SERVICES)) {
+			finish();
+			return;
 		}
 
-		// We only need WRITE_EXTERNAL_STORAGE permission in debug mode
-		// to LeakCanary write leak information without problems
-		// if (BuildConfig.DEBUG && !ActivityUtils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-		//	ActivityUtils.requestPermissionsSafely(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_STORAGE_PERMISSION);
-		// }
+		setLayout();
 	}
 
 	@Override
@@ -90,13 +88,11 @@ public class MainActivity extends AbstractActivity implements TabLayout.OnTabSel
 		mDoubleBackHandler.removeCallbacks(mExitRunnable);
 		super.onDestroy();
 	}
+
 	//endregion
 
-	private void checkAuthentication() {
-		setLayout();
-	}
-
 	//region TabLayout Events
+
 	@Override
 	public void onTabSelected(TabLayout.Tab tab) {
 		binding.tabPager.setCurrentItem(tab.getPosition());
@@ -114,9 +110,11 @@ public class MainActivity extends AbstractActivity implements TabLayout.OnTabSel
 	public void onTabReselected(TabLayout.Tab tab) {
 
 	}
+
 	//endregion
 
 	//region Helpers
+
 	private void setTabIcon(TabLayout.Tab tab, @DrawableRes int icon) {
 		if (tab == null) {
 			return;
@@ -158,5 +156,6 @@ public class MainActivity extends AbstractActivity implements TabLayout.OnTabSel
 		// setTabColor(binding.tablayoutMain.getTabAt(0), ContextCompat.getColor(this, R.color.tab_unselected));
 		// setTabColor(binding.tablayoutMain.getTabAt(mCurrentTab), ContextCompat.getColor(this, R.color.tab_seletected));
 	}
+	
 	//endregion
 }

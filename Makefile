@@ -26,6 +26,14 @@ infer-docker:
 	docker run -d -e "ANDROID_HOME=${ANDROID_HOME}" -v $(CONTEXT):/usr/app -v ${ANDROID_HOME}:${ANDROID_HOME} -v ${HOME}/.gradle:/root/.gradle --name $(PROJECT_TEST) -it $(PROJECT_TEST) /bin/bash && \
 	docker exec -it $(PROJECT_TEST) script /dev/null -c "infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x pmd"
 
+print-reports-paths:
+	echo "Unit Test Report" && \
+	echo file://$(CONTEXT)/app/build/reports/tests/testDebugUnitTest/index.html && \
+	echo "Lint Report" && \
+	echo file://$(CONTEXT)/app/build/reports/lint-results.html && \
+	echo "Checkstyle Report"
+	echo file://$(CONTEXT)/app/build/reports/checkstyle/checkstyle.html
+
 
 
 # apk recipes
@@ -51,7 +59,7 @@ full-coverage:
 	clear && \
 	./gradlew fullCoverageReport && \
 	echo "JaCoCo Coverage Report" && \
-	echo file://$$(pwd)/app/build/reports/jacoco/fullCoverageReport/html/index.html
+	echo file://$(CONTEXT)/app/build/reports/jacoco/fullCoverageReport/html/index.html
 
 check-security:
 	clear && \
