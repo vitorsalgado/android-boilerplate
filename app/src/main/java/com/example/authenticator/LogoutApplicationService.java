@@ -2,7 +2,6 @@ package com.example.authenticator;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.accounts.AccountManagerFuture;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -38,17 +37,8 @@ public class LogoutApplicationService implements LogoutService {
 				.getAccountsByType(AuthConstants.ACCOUNT_TYPE);
 
 			if (accounts.length > 0) {
-				final AccountManagerFuture<Boolean> removeAccountFuture
-					= accountManagerWithContext.removeAccount(accounts[0], null, null);
-
-				try {
-					removeAccountFuture.getResult();
-					emitter.onComplete();
-					return;
-				} catch (Exception ex) {
-					emitter.onError(ex);
-					return;
-				}
+				String authToken = accountManagerWithContext.peekAuthToken(accounts[0], AuthConstants.ACCOUNT_TYPE);
+				accountManagerWithContext.invalidateAuthToken(AuthConstants.ACCOUNT_TYPE, authToken);
 			}
 
 			emitter.onComplete();

@@ -1,6 +1,7 @@
 package com.example.interactions;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -45,11 +46,22 @@ public abstract class AbstractWebViewFragment extends AbstractFragment {
 			this.error = true;
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView webview, String url) {
 			return (shouldOverride(webview, url) && onHandleCallback(webview, url))
 				|| super.shouldOverrideUrlLoading(webview, url);
 		}
+
+		@TargetApi(Build.VERSION_CODES.N)
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView webview, WebResourceRequest request) {
+			final String uri = request.getUrl().toString();
+
+			return (shouldOverride(webview, uri) && onHandleCallback(webview, uri))
+				|| super.shouldOverrideUrlLoading(webview, uri);
+		}
+
 
 		@Override
 		public void onFormResubmission(WebView view, Message dontResend, Message resend) {
