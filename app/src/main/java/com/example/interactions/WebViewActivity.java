@@ -66,13 +66,14 @@ public class WebViewActivity extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
 		finish();
+		super.onBackPressed();
 	}
 
 	private void setupWebView() {
 		binding.webview.loadUrl(url);
 		binding.webview.setWebViewClient(new WebViewClient() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				view.loadUrl(url);
