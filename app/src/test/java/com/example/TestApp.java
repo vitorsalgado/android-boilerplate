@@ -1,9 +1,8 @@
 package com.example;
 
-import com.facebook.soloader.SoLoader;
 import com.squareup.leakcanary.RefWatcher;
 
-public class TestApp extends DebugApp {
+public class TestApp extends App {
 	@Override
 	public void onCreate() {
 		super.onCreate();
