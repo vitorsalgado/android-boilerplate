@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
@@ -17,8 +16,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CalendarDatePickerDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-	public static final String BUNDLE_DATE = "widgets.calendardatepicker.DATE";
-	public static final String DATE_FORMAT = "widgets.calendardatepicker.DATE_FORMAT";
+	public static final String BUNDLE_DATE = "com.example.android.utils.widgets.calendardatepicker.DATE";
+	public static final String DATE_FORMAT = "com.example.android.utils.widgets.calendardatepicker.DATE_FORMAT";
 	public static final int REQUEST_CODE = 98;
 
 	@FunctionalInterface
@@ -26,7 +25,6 @@ public class CalendarDatePickerDialog extends DialogFragment implements DatePick
 		void onDateSelected(SelectedDate selectedDate);
 	}
 
-	@NonNull
 	private CalendarDatePickerListener calendarDatePickerListener;
 
 	@NonNull

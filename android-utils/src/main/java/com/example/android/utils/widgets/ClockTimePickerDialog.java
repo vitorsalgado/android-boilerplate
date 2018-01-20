@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.widget.TimePicker;
 
@@ -17,8 +16,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ClockTimePickerDialog extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-	public static final String BUNDLE_TIME = "widgets.calendartimepicker.TIME";
-	public static final String DATETIME_FORMAT = "widgets.calendartimepicker.DATETIME_FORMAT";
+	public static final String BUNDLE_TIME = "com.example.android.utils.widgets.clocktimepicker.TIME";
+	public static final String DATETIME_FORMAT = "com.example.android.utils.widgets.clocktimepicker.DATETIME_FORMAT";
 	public static final int REQUEST_CODE = 99;
 
 	@FunctionalInterface
@@ -26,7 +25,6 @@ public class ClockTimePickerDialog extends DialogFragment implements TimePickerD
 		void onTimeSelected(SelectedTime selectedTime);
 	}
 
-	@NonNull
 	private ClockTimePickerListener clockTimePickerListener;
 
 	@NonNull
@@ -98,5 +96,4 @@ public class ClockTimePickerDialog extends DialogFragment implements TimePickerD
 			return date;
 		}
 	}
-
 }
