@@ -20,6 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.mockwebserver.MockResponse;
 
 @RunWith(JUnit4.class)
+@SuppressWarnings("RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT")
 public class ApiTest {
 	private Api api;
 

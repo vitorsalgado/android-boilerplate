@@ -33,3 +33,17 @@ tasks.withType(JavaForkOptions) {
 	jvmArgs "-Djava.awt.headless=true"
 	jvmArgs "-Dapple.awt.UIElement=true"
 }
+
+configurations.all {
+	resolutionStrategy {
+		force "org.hamcrest:hamcrest-core:$versions.hamcrest"
+		force "com.google.code.findbugs:jsr305:$versions.googlefindbugs"
+	}
+
+	resolutionStrategy.eachDependency { details ->
+		if (details.requested.group == 'com.android.support'
+			&& !details.requested.name.contains('multidex')) {
+			details.useVersion "$versions.supportLibrary"
+		}
+	}
+}

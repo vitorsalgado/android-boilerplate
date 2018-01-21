@@ -156,6 +156,6 @@ public class MainActivity extends AbstractActivity implements TabLayout.OnTabSel
 		// setTabColor(binding.tablayoutMain.getTabAt(0), ContextCompat.getColor(this, R.color.tab_unselected));
 		// setTabColor(binding.tablayoutMain.getTabAt(mCurrentTab), ContextCompat.getColor(this, R.color.tab_seletected));
 	}
-	
+
 	//endregion
 }

@@ -98,3 +98,4 @@ project.properties
 .env
 reports/
 .sonarlint/
+qark/

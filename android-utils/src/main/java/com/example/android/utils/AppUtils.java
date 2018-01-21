@@ -11,8 +11,6 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import com.example.logger.CLog;
-
 public final class AppUtils {
 	public static boolean checkPlayServices(@NonNull Activity activity, int resolutionCode) {
 		GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
@@ -52,7 +50,7 @@ public final class AppUtils {
 
 	public static boolean hasNetworkConnection(@NonNull Context context) {
 		ConnectivityManager connectivityManager =
-				(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+			(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
 		if (connectivityManager == null) {
 			return false;
@@ -69,8 +67,7 @@ public final class AppUtils {
 		try {
 			return manager.getPackageInfo(context.getPackageName(), 0).versionName;
 		} catch (PackageManager.NameNotFoundException e) {
-			CLog.e(e);
-			return "";
+			throw new RuntimeException(e);
 		}
 	}
 }

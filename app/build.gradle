@@ -10,7 +10,6 @@ android {
 	defaultConfig {
 		applicationId "com.example"
 		testInstrumentationRunner "com.example.InstrumentationRunner"
-		vectorDrawables.useSupportLibrary true
 	}
 
 	dexOptions {
@@ -186,10 +185,7 @@ dependencies {
 	testImplementation "junit:junit:$versions.junit"
 	testImplementation "org.mockito:mockito-core:$versions.mockito"
 	testImplementation "org.hamcrest:hamcrest-all:$versions.hamcrest"
-	testImplementation("org.robolectric:robolectric:$versions.robolectric") {
-		exclude group: 'commons-logging', module: 'commons-logging'
-		exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-	}
+	testImplementation "org.robolectric:robolectric:$versions.robolectric"
 	testImplementation "br.com.concretesolutions:requestmatcher:$versions.requestmatcher"
 	testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
 	testImplementation "com.jayway.jsonpath:json-path-assert:$versions.jsonpathassert"
@@ -204,20 +200,6 @@ dependencies {
 	androidTestImplementation "com.android.support.test.espresso:espresso-intents:$versions.espresso"
 	androidTestImplementation "com.android.support.test.espresso:espresso-web:$versions.espresso"
 	androidTestImplementation "com.linkedin.testbutler:test-butler-library:$versions.testButler"
-}
-
-configurations.all {
-	resolutionStrategy {
-		force "org.hamcrest:hamcrest-core:$versions.hamcrest"
-		force "com.google.code.findbugs:jsr305:$versions.googlefindbugs"
-	}
-
-	resolutionStrategy.eachDependency { details ->
-		if (details.requested.group == 'com.android.support'
-			&& !details.requested.name.contains('multidex')) {
-			details.useVersion "$versions.supportLibrary"
-		}
-	}
 }
 
 apply plugin: 'com.google.gms.google-services'

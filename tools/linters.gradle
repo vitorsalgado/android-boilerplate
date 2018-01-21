@@ -3,7 +3,12 @@ def reportsDir = "$rootDir/reports"
 
 afterEvaluate { project ->
 	apply plugin: 'pmd'
+	apply plugin: "com.github.spotbugs"
 	apply from: rootProject.file('tools/exclusions.gradle')
+
+	spotbugs {
+		toolVersion = '3.1.1'
+	}
 
 	pmd {
 		toolVersion = "5.8.1"
@@ -21,7 +26,6 @@ afterEvaluate { project ->
 		reports {
 			xml.enabled = false
 			html.enabled = true
-			xml.setDestination(file("$reportsDir/pmd/pmd.xml"))
 			html.setDestination(file("$reportsDir/pmd/index.html"))
 		}
 	}

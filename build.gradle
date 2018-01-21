@@ -13,11 +13,12 @@ buildscript {
 
 	dependencies {
 		classpath "com.android.tools.build:gradle:3.0.1"
-		classpath "com.google.gms:google-services:3.1.0"
+		classpath "com.google.gms:google-services:3.1.2"
 		classpath "io.fabric.tools:gradle:$fabricGradle"
 		classpath "org.owasp:dependency-check-gradle:2.1.1"
 		classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1"
 		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1"
+		classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:1.6.0"
 	}
 }
 
@@ -26,7 +27,9 @@ ext.cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 
 allprojects {
 	addRepos(repositories)
-	apply from: rootProject.file("tools/compile.gradle")
+
+	apply from: rootProject.file("compile.gradle")
+
 	gradle.projectsEvaluated {
 		tasks.withType(JavaCompile) {
 			options.compilerArgs << "-Xlint:deprecation"
@@ -35,7 +38,6 @@ allprojects {
 }
 
 subprojects { subproject ->
-	apply plugin: 'jacoco'
 	apply from: rootProject.file('tools/jacoco.gradle')
 	apply from: rootProject.file('tools/linters.gradle')
 
@@ -55,7 +57,23 @@ subprojects { subproject ->
 					targetSdkVersion 27
 					versionCode 1
 					versionName "1.0"
+					vectorDrawables.useSupportLibrary true
 				}
+
+				sourceSets {
+					main {
+						java.srcDirs = ['src/main/java']
+					}
+				}
+			}
+		}
+
+		tasks.withType(com.github.spotbugs.SpotBugsTask) {
+			excludeFilter rootProject.file("tools/linters/spotbugs-filter.xml")
+			reports {
+				xml.enabled = false
+				html.enabled = true
+				html.setDestination rootProject.file("reports/spotbugs/index.html")
 			}
 		}
 	}

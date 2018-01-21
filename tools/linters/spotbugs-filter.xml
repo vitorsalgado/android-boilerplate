@@ -30,7 +30,7 @@
 
 	<!-- DTOs -->
 	<Match>
-		<Package name="~.*\.dtos\..*" />
+		<Bug code="UwF" />
 	</Match>
 
 </FindBugsFilter>

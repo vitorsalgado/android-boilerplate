@@ -2,6 +2,8 @@ PROJECT := com.example
 PROJECT_TEST := $(PROJECT).test
 CONTEXT := $$(pwd)
 LEVEL := info
+QARK_VERSION := 0.9-alpha.10
+
 
 
 
@@ -26,13 +28,13 @@ infer-docker:
 	docker run -d -e "ANDROID_HOME=${ANDROID_HOME}" -v $(CONTEXT):/usr/app -v ${ANDROID_HOME}:${ANDROID_HOME} -v ${HOME}/.gradle:/root/.gradle --name $(PROJECT_TEST) -it $(PROJECT_TEST) /bin/bash && \
 	docker exec -it $(PROJECT_TEST) script /dev/null -c "infer -- ./gradlew clean build -x validateSigningRelease -x packageRelease -x testRelease -x testDebug -x lint -x pmd"
 
-print-reports-paths:
-	echo "Unit Test Report" && \
-	echo file://$(CONTEXT)/app/build/reports/tests/testDebugUnitTest/index.html && \
-	echo "Lint Report" && \
-	echo file://$(CONTEXT)/app/build/reports/lint-results.html && \
-	echo "Checkstyle Report"
-	echo file://$(CONTEXT)/app/build/reports/checkstyle/checkstyle.html
+infer-docker-ci:
+	clear && \
+	docker rm -f $(PROJECT_TEST) || true && \
+	docker build --build-arg ANDROID_HOME=${ANDROID_HOME} -t $(PROJECT_TEST) . && \
+	docker run -d -e "ANDROID_HOME=${ANDROID_HOME}" -v $(CONTEXT):/usr/app -v ${ANDROID_HOME}:${ANDROID_HOME} -v ${HOME}/.gradle:/root/.gradle --name $(PROJECT_TEST) -it $(PROJECT_TEST) /bin/bash && \
+	docker exec -it $(PROJECT_TEST) script /dev/null -c "infer -- ./gradlew clean build --$(LEVEL)"
+
 
 
 
@@ -48,6 +50,9 @@ redex-debug:
 
 # quality recipes
 # ##################################################################################################
+
+check:
+	./gradlew check --$(LEVEL) -x pmd
 
 checkstyle:
 	./gradlew checkstyle --$(LEVEL)
@@ -70,6 +75,24 @@ sonar:
     	-Dsonar.host.url=https://sonarcloud.io \
 		-Dsonar.organization=${SONARQUBE_ORG} \
 		-Dsonar.login=${SONARQUBE_TOKEN}
+
+qark:
+	if [ ! -d "./qark" ]; then \
+		wget https://github.com/linkedin/qark/archive/v$(QARK_VERSION).zip -O qark.zip; \
+		unzip qark.zip; \
+		mv qark-$(QARK_VERSION) qark; \
+		rm qark.zip; \
+	fi && \
+	cd qark && \
+	python qark.py -b ${ANDROID_HOME} -s 1 -p $(CONTEXT)/app/build/outputs/apk/app-debug.apk --exploit 1 --install 1
+
+mobsf:
+	docker rm -f mobsf || true && \
+	docker pull opensecurity/mobile-security-framework-mobsf && \
+	docker run -d -it -p 8000:8000 opensecurity/mobile-security-framework-mobsf:latest --name mobsf
+
+mobsf-down:
+	docker rm -f mobsf
 
 
 
@@ -96,7 +119,9 @@ increment-build-version:
 gitsemver:
 	@SUDO=$$([ $$(id -u) != 0 ] && echo sudo) && \
 	$$(git semver help &>/dev/null) || (cd /tmp && $${SUDO} rm -rf git-semver && \
-	git clone https://github.com/markchalloner/git-semver.git && \
+	if [ ! -d "git-semver" ]; then \
+		git clone https://github.com/markchalloner/git-semver.git; \
+	fi && \
 	cd git-semver && \
 	$${SUDO} ./install.sh)
 
@@ -138,4 +163,4 @@ new-project:
 
 
 
-.PHONY: build
+.PHONY: build qark
