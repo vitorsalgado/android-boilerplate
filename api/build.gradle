@@ -1,3 +1,4 @@
+apply plugin: 'org.jetbrains.kotlin.jvm'
 apply plugin: 'idea'
 apply plugin: 'java-library'
 

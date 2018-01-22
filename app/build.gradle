@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 apply from: "$rootDir/tools/layoutIds.gradle"
@@ -30,6 +33,11 @@ android {
 		checkAllWarnings true
 		warningsAsErrors true
 		lintConfig file("$rootDir/lint.xml")
+
+		if (rootProject.ext.isCI) {
+			textReport true
+			textOutput 'stdout'
+		}
 	}
 
 	signingConfigs {
@@ -40,9 +48,7 @@ android {
 			storePassword 'android'
 		}
 
-		if (System.getenv("KEY_ALIAS") == null) {
-			release {}
-		} else {
+		if (System.getenv("KEY_ALIAS") != null) {
 			release {
 				keyAlias System.getenv("KEY_ALIAS")
 				keyPassword System.getenv("KEY_PASSWORD")
@@ -55,8 +61,8 @@ android {
 	buildTypes {
 		debug {
 			versionNameSuffix ".debug"
-			minifyEnabled false
-			useProguard rootProject.ext.isCI
+			minifyEnabled true
+			useProguard true
 			debuggable true
 			shrinkResources false
 			signingConfig signingConfigs.debug
@@ -66,6 +72,8 @@ android {
 
 			testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
 
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
+			consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 			testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
 
 			resValue 'string', 'app_name', "1." + app_name + ".debug"
@@ -76,7 +84,12 @@ android {
 			zipAlignEnabled true
 			shrinkResources true
 			minifyEnabled true
-			signingConfig signingConfigs.release
+
+			if (System.getenv("KEY_ALIAS") == null) {
+				signingConfig signingConfigs.debug
+			} else {
+				signingConfig signingConfigs.release
+			}
 
 			ext.betaDistributionGroupAliases = "release"
 			ext.betaDistributionNotifications = true
@@ -103,10 +116,25 @@ android {
 			variant.mergedFlavor.versionName = file("$rootDir/VERSION").text
 		}
 	}
+
+	packagingOptions {
+		exclude 'kotlin/**'
+		exclude 'META-INF/*.kotlin_module'
+		exclude 'META-INF/*.version'
+		exclude 'META-INF/LICENSE.txt'
+		exclude 'META-INF/NOTICE.txt'
+		exclude 'META-INF/rxjava.properties'
+	}
 }
 
 jacoco {
 	toolVersion = "0.7.9"
+}
+
+kotlin {
+	experimental {
+		coroutines 'enable'
+	}
 }
 
 final versions = rootProject.ext.versions
@@ -146,7 +174,7 @@ dependencies {
 		exclude module: 'support-core-ui'
 	}
 	implementation "android.arch.lifecycle:extensions:$versions.arch"
-	annotationProcessor "android.arch.lifecycle:compiler:$versions.arch"
+	kapt "android.arch.lifecycle:compiler:$versions.arch"
 	implementation "com.google.firebase:firebase-crash:$versions.play"
 	implementation "com.google.firebase:firebase-core:$versions.play"
 	implementation "com.google.firebase:firebase-messaging:$versions.play"
@@ -156,11 +184,12 @@ dependencies {
 	implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
 	implementation "com.google.dagger:dagger-android:$versions.dagger"
 	implementation "com.google.dagger:dagger-android-support:$versions.dagger"
-	annotationProcessor "com.google.dagger:dagger-android-processor:$versions.dagger"
-	annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
+	kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
+	kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 	implementation "de.psdev.licensesdialog:licensesdialog:$versions.licensesDialog"
 	implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
 	implementation "com.facebook.fresco:fresco:$versions.fresco"
+	kapt "com.android.databinding:compiler:$versions.databinding"
 
 	// ---------------------------------------------------------------------------------------------
 	// Development and Support Libs
@@ -200,6 +229,7 @@ dependencies {
 	androidTestImplementation "com.android.support.test.espresso:espresso-intents:$versions.espresso"
 	androidTestImplementation "com.android.support.test.espresso:espresso-web:$versions.espresso"
 	androidTestImplementation "com.linkedin.testbutler:test-butler-library:$versions.testButler"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$versions.kotlin_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

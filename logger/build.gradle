@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {}
 
@@ -7,4 +8,5 @@ final versions = rootProject.ext.versions
 dependencies {
     testImplementation "junit:junit:$versions.junit"
 	testImplementation "org.robolectric:robolectric:$versions.robolectric"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$versions.kotlin_version"
 }

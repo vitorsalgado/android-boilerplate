@@ -35,6 +35,12 @@ infer-docker-ci:
 	docker run -d -e "ANDROID_HOME=${ANDROID_HOME}" -v $(CONTEXT):/usr/app -v ${ANDROID_HOME}:${ANDROID_HOME} -v ${HOME}/.gradle:/root/.gradle --name $(PROJECT_TEST) -it $(PROJECT_TEST) /bin/bash && \
 	docker exec -it $(PROJECT_TEST) script /dev/null -c "infer -- ./gradlew clean build --$(LEVEL)"
 
+set-licenses:
+	mkdir "${ANDROID_HOME}/licenses" || true && \
+	echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "${ANDROID_HOME}/licenses/android-sdk-license" && \
+	echo "84831b9409646a918e30573bab4c9c91346d8abd" > "${ANDROID_HOME}/licenses/android-sdk-preview-license" && \
+	yes | sdkmanager "platforms;android-27"
+
 
 
 

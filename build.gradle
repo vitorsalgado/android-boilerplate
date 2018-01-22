@@ -1,24 +1,22 @@
 apply from: rootProject.file('tools/predex.gradle')
 
 apply plugin: "org.owasp.dependencycheck"
-apply plugin: "com.github.kt3k.coveralls"
 apply plugin: "org.sonarqube"
 
 buildscript {
 	apply from: rootProject.file('versions.gradle')
-
-	ext.fabricGradle = '1.25.1'
 
 	addRepos(repositories)
 
 	dependencies {
 		classpath "com.android.tools.build:gradle:3.0.1"
 		classpath "com.google.gms:google-services:3.1.2"
-		classpath "io.fabric.tools:gradle:$fabricGradle"
+		classpath "io.fabric.tools:gradle:$versions.fabric"
 		classpath "org.owasp:dependency-check-gradle:2.1.1"
-		classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1"
 		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1"
 		classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:1.6.0"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin_version"
+		classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC6-2"
 	}
 }
 
@@ -28,7 +26,44 @@ ext.cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 allprojects {
 	addRepos(repositories)
 
-	apply from: rootProject.file("compile.gradle")
+	configurations.all {
+		resolutionStrategy {
+			eachDependency { details ->
+				if (details.requested.group == 'com.android.support') {
+					details.useVersion versions.supportLibrary
+				}
+			}
+		}
+	}
+
+	tasks.withType(JavaCompile) {
+		sourceCompatibility = JavaVersion.VERSION_1_8
+		targetCompatibility = JavaVersion.VERSION_1_8
+
+		configure(options) {
+			encoding = "utf-8"
+			incremental = true
+			fork = true
+		}
+	}
+
+	tasks.withType(Test) {
+		if (project.hasProperty("skipReports")) {
+			reports.html.enabled = false
+			reports.junitXml.enabled = false
+		}
+
+		testLogging {
+			exceptionFormat "full"
+			showExceptions true
+			showCauses true
+			showStackTraces true
+			maxParallelForks cores
+			forkEvery 10
+			events = ["failed", "passed", "skipped", "standardOut", "standardError"]
+		}
+	}
+
 
 	gradle.projectsEvaluated {
 		tasks.withType(JavaCompile) {
@@ -94,6 +129,40 @@ task wrapper(type: Wrapper) {
 	distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
-coveralls {
-	jacocoReportPath "$rootDir/app/build/reports/jacoco/fullCoverageReport/fullCoverageReport.xml"
+def gitSha() {
+	def f = new File(buildDir, "commit-sha.txt")
+
+	if (!f.exists()) {
+		def p = 'git rev-parse HEAD'.execute([], project.rootDir)
+
+		if (p.waitFor() != 0) {
+			throw new RuntimeException(p.errorStream.text)
+		}
+
+		f.parentFile.mkdirs()
+		f.text = p.text.trim()
+	}
+
+	return f.text.trim()
+}
+
+def gitTimestamp() {
+	def f = new File(buildDir, "commit-timestamp.txt")
+
+	if (!f.exists()) {
+		def p = 'git log -n 1 --format=%at'.execute([], rootDir)
+
+		if (p.waitFor() != 0) {
+			throw new RuntimeException(p.errorStream.text)
+		}
+
+		f.parentFile.mkdirs()
+		f.text = p.text.trim()
+	}
+
+	return f.text.trim()
+}
+
+def propOrEmpty(String name) {
+	return hasProperty(name) ? getProperty(name) : ''
 }

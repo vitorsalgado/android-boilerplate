@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 android {}
 
@@ -7,4 +8,5 @@ final versions = rootProject.ext.versions
 dependencies {
 	implementation "com.google.firebase:firebase-core:$versions.play"
 	implementation "com.android.support:support-annotations:$versions.supportLibrary"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$versions.kotlin_version"
 }

@@ -4,10 +4,20 @@ def reportsDir = "$rootDir/reports"
 afterEvaluate { project ->
 	apply plugin: 'pmd'
 	apply plugin: "com.github.spotbugs"
+	apply plugin: "io.gitlab.arturbosch.detekt"
 	apply from: rootProject.file('tools/exclusions.gradle')
 
 	spotbugs {
 		toolVersion = '3.1.1'
+	}
+
+	detekt {
+		version = "1.0.0.RC6-2"
+		profile("main") {
+			input = "$projectDir/your/app"
+			config = "$projectDir/detekt.yml"
+			filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+		}
 	}
 
 	pmd {
