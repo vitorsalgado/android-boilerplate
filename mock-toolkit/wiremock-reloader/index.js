@@ -9,7 +9,6 @@ const WIREMOCK_HOST = process.env.WIREMOCK_HOST || 'wiremock';
 const WIREMOCK_PORT = process.env.WIREMOCK_PORT || 3000;
 
 const watcher = Chokidar.watch(WIREMOCK_DATA, { ignored: /[/\\]\./, persistent: true, ignoreInitial: true });
-const exec = require('child_process').exec;
 
 const onFileChange = (event, path) => {
     const valid = path && path.length > 5 && path.substr(path.length - 5) === '.json';

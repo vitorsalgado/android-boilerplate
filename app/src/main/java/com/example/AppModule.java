@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.example.api.Api;
-import com.example.api.ApiBuilder;
-import com.example.api.Config;
+import com.example.api.apigateway.Api;
+import com.example.api.apigateway.ApiBuilder;
+import com.example.api.apigateway.Config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

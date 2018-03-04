@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.api.HttpClientWithPinningProvider;
+
 import okhttp3.OkHttpClient;
 
 class PerBuildComponentProvider {
@@ -14,6 +16,6 @@ class PerBuildComponentProvider {
 	}
 
 	OkHttpClient.Builder okHttpBuilder() {
-		return new OkHttpClient.Builder();
+		return HttpClientWithPinningProvider.getClient().newBuilder();
 	}
 }

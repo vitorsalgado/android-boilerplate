@@ -1,6 +1,6 @@
 package com.example.interactions;
 
-import com.example.uava.interfaces.RetryCallback;
+import com.example.toolkit.interfaces.RetryCallback;
 
 public interface PresenterView {
 	void showLoading();

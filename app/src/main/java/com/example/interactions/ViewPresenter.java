@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-import static com.example.uava.Preconditions.checkNotNull;
+import static com.example.toolkit.Preconditions.checkNotNull;
 
 public abstract class ViewPresenter<V extends PresenterView> {
 	private final CompositeDisposable mCompositeSubscription = new CompositeDisposable();

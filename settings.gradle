@@ -1,8 +1,10 @@
 include ':app',
-        ':uava',
-        ':graph-api',
+		':toolkit',
         ':api',
-        ':logger',
-		':interactors',
+        ':interactors',
 		':android-utils',
         ':analytics'
+
+rootProject.children.each {
+	it.buildFileName = it.name + '.gradle'
+}

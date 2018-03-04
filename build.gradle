@@ -1,4 +1,5 @@
 apply from: rootProject.file('tools/predex.gradle')
+apply from: rootProject.file('tools/git-utils.gradle')
 
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "org.sonarqube"
@@ -85,7 +86,7 @@ subprojects { subproject ->
 				}
 
 				compileSdkVersion 27
-				buildToolsVersion "27.0.1"
+				buildToolsVersion "27.0.3"
 
 				defaultConfig {
 					minSdkVersion 19
@@ -96,9 +97,10 @@ subprojects { subproject ->
 				}
 
 				sourceSets {
-					main {
-						java.srcDirs = ['src/main/java']
-					}
+					main.java.srcDirs += 'src/main/kotlin'
+					test.java.srcDirs += 'src/test/kotlin'
+					androidTest.java.srcDirs += 'src/androidTest/kotlin'
+					androidTest.resources.srcDirs += 'src/androidTest/res'
 				}
 			}
 		}
@@ -125,44 +127,6 @@ task printBuildScriptClasspath {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '4.4.1'
+	gradleVersion = '4.6'
 	distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
-}
-
-def gitSha() {
-	def f = new File(buildDir, "commit-sha.txt")
-
-	if (!f.exists()) {
-		def p = 'git rev-parse HEAD'.execute([], project.rootDir)
-
-		if (p.waitFor() != 0) {
-			throw new RuntimeException(p.errorStream.text)
-		}
-
-		f.parentFile.mkdirs()
-		f.text = p.text.trim()
-	}
-
-	return f.text.trim()
-}
-
-def gitTimestamp() {
-	def f = new File(buildDir, "commit-timestamp.txt")
-
-	if (!f.exists()) {
-		def p = 'git log -n 1 --format=%at'.execute([], rootDir)
-
-		if (p.waitFor() != 0) {
-			throw new RuntimeException(p.errorStream.text)
-		}
-
-		f.parentFile.mkdirs()
-		f.text = p.text.trim()
-	}
-
-	return f.text.trim()
-}
-
-def propOrEmpty(String name) {
-	return hasProperty(name) ? getProperty(name) : ''
 }

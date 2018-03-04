@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import com.example.App;
 import com.squareup.leakcanary.RefWatcher;
 
-import com.example.uava.interfaces.RetryCallback;
+import com.example.toolkit.interfaces.RetryCallback;
 
 public class AbstractFragment extends Fragment implements PresenterView {
 	@Override

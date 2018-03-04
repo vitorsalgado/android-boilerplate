@@ -11,8 +11,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.api.Api;
-import com.example.api.dtos.OAuthResponse;
+import com.example.api.apigateway.Api;
+import com.example.api.apigateway.dtos.OAuthResponse;
 import com.example.interactions.authentication.LoginActivity;
 import com.example.logger.CLog;
 

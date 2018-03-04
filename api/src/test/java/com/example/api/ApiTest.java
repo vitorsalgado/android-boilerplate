@@ -1,7 +1,9 @@
 package com.example.api;
 
-import com.example.api.dtos.OAuthResponse;
-import com.example.uava.api.ApiResponse;
+import com.example.api.apigateway.Api;
+import com.example.api.apigateway.ApiBuilder;
+import com.example.api.apigateway.Config;
+import com.example.api.apigateway.dtos.OAuthResponse;
 import com.google.gson.Gson;
 
 import org.junit.Assert;

@@ -15,7 +15,7 @@ import com.example.R;
 import com.example.Reporter;
 import com.example.android.utils.AppUtils;
 import com.example.android.utils.DialogUtils;
-import com.example.uava.interfaces.RetryCallback;
+import com.example.toolkit.interfaces.RetryCallback;
 
 public abstract class AbstractActivity extends AppCompatActivity {
 	@Nullable

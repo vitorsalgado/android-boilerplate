@@ -6,7 +6,7 @@ import android.os.IBinder;
 
 import java.util.Objects;
 
-import com.example.api.Api;
+import com.example.api.apigateway.Api;
 
 import static android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT;
 
