@@ -1,6 +1,6 @@
-package com.example.interactions;
+package com.example.features;
 
-import com.example.toolkit.interfaces.RetryCallback;
+import com.example.toolkit.RetryCallback;
 
 public interface PresenterView {
 	void showLoading();

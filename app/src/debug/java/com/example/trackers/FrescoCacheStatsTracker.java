@@ -1,10 +1,9 @@
 package com.example.trackers;
 
+import com.example.android.utils.LogUtility;
 import com.facebook.cache.common.CacheKey;
 import com.facebook.imagepipeline.cache.CountingMemoryCache;
 import com.facebook.imagepipeline.cache.ImageCacheStatsTracker;
-
-import com.example.logger.CLog;
 
 public class FrescoCacheStatsTracker implements ImageCacheStatsTracker {
 	@Override
@@ -14,7 +13,7 @@ public class FrescoCacheStatsTracker implements ImageCacheStatsTracker {
 
 	@Override
 	public void onBitmapCacheHit(CacheKey cacheKey) {
-		CLog.d("[ Fresco Bitmap Cache Hit ] " + cacheKey);
+		LogUtility.d("[ Fresco Bitmap Cache Hit ] " + cacheKey);
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class FrescoCacheStatsTracker implements ImageCacheStatsTracker {
 
 	@Override
 	public void onMemoryCacheHit(CacheKey cacheKey) {
-		CLog.d("[ Fresco Memory Cache Hit ] " + cacheKey);
+		LogUtility.d("[ Fresco Memory Cache Hit ] " + cacheKey);
 	}
 
 	@Override
@@ -39,7 +38,7 @@ public class FrescoCacheStatsTracker implements ImageCacheStatsTracker {
 
 	@Override
 	public void onStagingAreaHit(CacheKey cacheKey) {
-		CLog.d("[ Fresco Staging Area Hit ] " + cacheKey);
+		LogUtility.d("[ Fresco Staging Area Hit ] " + cacheKey);
 
 	}
 
@@ -50,7 +49,7 @@ public class FrescoCacheStatsTracker implements ImageCacheStatsTracker {
 
 	@Override
 	public void onDiskCacheHit() {
-		CLog.d("[ Fresco Disk Cache Hit ]");
+		LogUtility.d("[ Fresco Disk Cache Hit ]");
 	}
 
 	@Override

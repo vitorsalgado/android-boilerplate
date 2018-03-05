@@ -2,7 +2,7 @@ package com.example;
 
 import android.os.StrictMode;
 
-import com.example.logger.CLog;
+import com.example.android.utils.LogUtility;
 import com.example.trackers.ActivityLifecycleTracker;
 import com.example.trackers.FragmentLifecycleTracker;
 import com.example.trackers.FrescoCacheStatsTracker;
@@ -36,7 +36,7 @@ public class DebugApp extends App {
 	@Override
 	public void onTrimMemory(int level) {
 		super.onTrimMemory(level);
-		CLog.d("[ onTrimMemory ] " + level);
+		LogUtility.d("[ onTrimMemory ] " + level);
 	}
 
 	@Override

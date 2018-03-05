@@ -25,7 +25,7 @@ before_install:
 android:
   components:
     - android-27
-    - build-tools-27.0.1
+    - build-tools-27.0.3
     - tools
     - platform-tools
     - extra-android-m2repository

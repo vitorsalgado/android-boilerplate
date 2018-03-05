@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import com.example.BuildConfig;
-import com.example.logger.CLog;
+import com.example.android.utils.LogUtility;
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
@@ -16,7 +16,7 @@ public final class FrescoConfig {
 			.setBitmapsConfig(Bitmap.Config.RGB_565)
 			.setMainDiskCacheConfig(
 				DiskCacheConfig.newBuilder(context)
-					.setCacheErrorLogger((category, clazz, message, throwable) -> CLog.e(message, throwable))
+					.setCacheErrorLogger((category, clazz, message, throwable) -> LogUtility.e(message, throwable))
 					.setMaxCacheSize(100 * 1000 * 1000)
 					.setVersion(BuildConfig.VERSION_CODE)
 					.build()

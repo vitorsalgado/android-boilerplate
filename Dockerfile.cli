@@ -1,10 +1,12 @@
-FROM node:8.9.4
+FROM node:8.9.4 AS build-env
+WORKDIR /usr/app
+COPY package.json package-lock.json cli.js ./
+RUN npm install --production
 
+
+FROM gcr.io/distroless/nodejs
+COPY --from=build-env /usr/app /usr/app
 WORKDIR /usr/app
 VOLUME /usr/app/android
 
-COPY package.json package-lock.json cli.js ./
-
-RUN npm install --production
-
-CMD node cli
+CMD ["cli.js"]

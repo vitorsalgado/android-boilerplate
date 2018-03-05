@@ -1,4 +1,4 @@
-package com.example;
+package com.example.android.utils;
 
 import android.os.HandlerThread;
 import android.os.Looper;

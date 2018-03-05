@@ -1,4 +1,4 @@
-package com.example.interactions.main;
+package com.example.features.main;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

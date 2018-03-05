@@ -1,7 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 apply from: "$rootDir/tools/layoutIds.gradle"
@@ -131,16 +128,6 @@ jacoco {
 	toolVersion = "0.7.9"
 }
 
-kotlin {
-	experimental {
-		coroutines 'enable'
-	}
-}
-
-kapt {
-	useBuildCache = true
-}
-
 final versions = rootProject.ext.versions
 
 dependencies {
@@ -177,7 +164,7 @@ dependencies {
 		exclude module: 'support-core-ui'
 	}
 	implementation "android.arch.lifecycle:extensions:$versions.arch"
-	kapt "android.arch.lifecycle:compiler:$versions.arch"
+	annotationProcessor "android.arch.lifecycle:compiler:$versions.arch"
 	implementation "com.google.firebase:firebase-crash:$versions.play"
 	implementation "com.google.firebase:firebase-core:$versions.play"
 	implementation "com.google.firebase:firebase-messaging:$versions.play"
@@ -187,13 +174,12 @@ dependencies {
 	implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
 	implementation "com.google.dagger:dagger-android:$versions.dagger"
 	implementation "com.google.dagger:dagger-android-support:$versions.dagger"
-	kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
-	kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+	annotationProcessor "com.google.dagger:dagger-android-processor:$versions.dagger"
+	annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
 	implementation "de.psdev.licensesdialog:licensesdialog:$versions.licensesDialog"
 	implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
 	implementation "com.facebook.fresco:fresco:$versions.fresco"
 	implementation "com.scottyab:rootbeer-lib:$versions.rootbeer"
-	kapt "com.android.databinding:compiler:$versions.databinding"
 
 	// ---------------------------------------------------------------------------------------------
 	// Development and Support Libs
@@ -233,11 +219,6 @@ dependencies {
 	androidTestImplementation "com.android.support.test.espresso:espresso-intents:$versions.espresso"
 	androidTestImplementation "com.android.support.test.espresso:espresso-web:$versions.espresso"
 	androidTestImplementation "com.linkedin.testbutler:test-butler-library:$versions.testButler"
-
-	// ---------------------------------------------------------------------------------------------
-	// KOTLIN
-	// ---------------------------------------------------------------------------------------------
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$versions.kotlin_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

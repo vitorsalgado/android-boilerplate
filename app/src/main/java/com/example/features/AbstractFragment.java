@@ -1,12 +1,11 @@
-package com.example.interactions;
+package com.example.features;
 
-import android.support.compat.BuildConfig;
 import android.support.v4.app.Fragment;
 
 import com.example.App;
+import com.example.BuildConfig;
+import com.example.toolkit.RetryCallback;
 import com.squareup.leakcanary.RefWatcher;
-
-import com.example.toolkit.interfaces.RetryCallback;
 
 public class AbstractFragment extends Fragment implements PresenterView {
 	@Override

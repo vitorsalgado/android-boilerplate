@@ -1,4 +1,4 @@
-package com.example.toolkit.interfaces;
+package com.example.toolkit;
 
 @FunctionalInterface
 public interface RetryCallback {

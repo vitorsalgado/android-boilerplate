@@ -10,7 +10,7 @@ import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.v13.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -76,7 +76,7 @@ public final class ActivityUtils {
 
 	public static boolean hasPermission(@NonNull Context context, @NonNull String permission) {
 		return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
-				ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+			ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
 	}
 
 	public static boolean shouldRequestPermissionRationale(@NonNull Activity activity, @NonNull String permission) {

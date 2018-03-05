@@ -1,4 +1,4 @@
-package com.example.interactions.about;
+package com.example.features.about;
 
 import android.app.Dialog;
 

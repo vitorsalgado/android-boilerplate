@@ -11,10 +11,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.android.utils.LogUtility;
 import com.example.api.apigateway.Api;
 import com.example.api.apigateway.dtos.OAuthResponse;
-import com.example.interactions.authentication.LoginActivity;
-import com.example.logger.CLog;
+import com.example.features.authentication.LoginActivity;
 
 import java.util.UUID;
 
@@ -60,7 +60,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
 	@Override
 	public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) throws NetworkErrorException {
-		CLog.d("getAuthToken() account=" + account.name + " type=" + account.type);
+		LogUtility.d("getAuthToken() account=" + account.name + " type=" + account.type);
 
 		final AccountManager accountManager = AccountManager.get(context);
 		final Bundle bundle = new Bundle();

@@ -1,4 +1,4 @@
-package com.example.interactions.main;
+package com.example.features.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.example.R;
 import com.example.android.utils.AppUtils;
 import com.example.databinding.MainActivityBinding;
-import com.example.interactions.AbstractActivity;
+import com.example.features.AbstractActivity;
 
 import java.util.ArrayList;
 import java.util.List;

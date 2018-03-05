@@ -46,7 +46,7 @@
 
 		<!-- Main -->
 		<activity
-			android:name=".interactions.main.MainActivity"
+			android:name=".features.main.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/AppTheme.Launcher">
 			<intent-filter>
@@ -56,19 +56,19 @@
 		</activity>
 		<!-- Authentication -->
 		<activity
-			android:name=".interactions.authentication.LoginActivity"
+			android:name=".features.authentication.LoginActivity"
 			android:label="@string/login_title"
 			android:launchMode="singleTask"
 			android:screenOrientation="portrait" />
 		<!-- About -->
 		<activity
-			android:name=".interactions.about.AboutActivity"
+			android:name=".features.about.AboutActivity"
 			android:label="@string/about"
 			android:launchMode="singleTop"
 			android:screenOrientation="portrait" />
 		<!-- WebView -->
 		<activity
-			android:name=".interactions.WebViewActivity"
+			android:name=".features.WebViewActivity"
 			android:launchMode="singleTop"
 			android:screenOrientation="portrait" />
 

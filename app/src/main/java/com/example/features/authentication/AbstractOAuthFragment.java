@@ -1,4 +1,4 @@
-package com.example.interactions.authentication;
+package com.example.features.authentication;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
-import com.example.interactions.AbstractWebViewFragment;
+import com.example.features.AbstractWebViewFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;

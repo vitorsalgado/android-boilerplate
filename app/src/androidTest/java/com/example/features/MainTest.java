@@ -1,11 +1,11 @@
-package com.example.interactions;
+package com.example.features;
 
 
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.interactions.main.MainActivity;
+import com.example.features.main.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

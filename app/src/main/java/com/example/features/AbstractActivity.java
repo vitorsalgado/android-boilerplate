@@ -1,4 +1,4 @@
-package com.example.interactions;
+package com.example.features;
 
 import android.app.Dialog;
 import android.support.annotation.NonNull;
@@ -15,7 +15,7 @@ import com.example.R;
 import com.example.Reporter;
 import com.example.android.utils.AppUtils;
 import com.example.android.utils.DialogUtils;
-import com.example.toolkit.interfaces.RetryCallback;
+import com.example.toolkit.RetryCallback;
 
 public abstract class AbstractActivity extends AppCompatActivity {
 	@Nullable

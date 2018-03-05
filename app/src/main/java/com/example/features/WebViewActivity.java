@@ -1,4 +1,4 @@
-package com.example.interactions;
+package com.example.features;
 
 import android.content.Context;
 import android.content.Intent;

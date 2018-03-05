@@ -2,10 +2,9 @@ package com.example.push;
 
 import android.support.annotation.NonNull;
 
+import com.example.android.utils.LogUtility;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-
-import com.example.logger.CLog;
 
 public class InstanceIdService extends FirebaseInstanceIdService {
 	@Override
@@ -20,6 +19,6 @@ public class InstanceIdService extends FirebaseInstanceIdService {
 	}
 
 	private void sendRegistrationToServer(@NonNull String refreshedToken) {
-		CLog.d("( FIREBASE -> onTokenRefresh ) ", refreshedToken);
+		LogUtility.d("( FIREBASE -> onTokenRefresh ) ", refreshedToken);
 	}
 }

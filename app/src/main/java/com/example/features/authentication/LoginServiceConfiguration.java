@@ -1,4 +1,4 @@
-package com.example.interactions.authentication;
+package com.example.features.authentication;
 
 public class LoginServiceConfiguration {
 	private String id;

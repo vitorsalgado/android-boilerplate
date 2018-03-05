@@ -1,4 +1,4 @@
-package com.example.interactions.about;
+package com.example.features.about;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.view.View;
 import com.example.R;
 import com.example.android.utils.AppUtils;
 import com.example.databinding.AboutActivityBinding;
-import com.example.interactions.AbstractActivity;
+import com.example.features.AbstractActivity;
 
 import de.psdev.licensesdialog.LicensesDialog;
 

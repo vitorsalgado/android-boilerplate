@@ -1,4 +1,4 @@
-package com.example.interactions.authentication;
+package com.example.features.authentication;
 
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.example.R;
 import com.example.databinding.LoginActivityBinding;
-import com.example.interactions.AbstractActivity;
+import com.example.features.AbstractActivity;
 
 public class LoginActivity extends AbstractActivity {
 	private static final String EXTRA_ERROR_MESSAGE = "com.example.interactions.authentication.LoginActivity.ERROR_MESSAGE";

@@ -1,14 +1,14 @@
 package com.example;
 
 import com.crashlytics.android.Crashlytics;
+import com.example.android.utils.LogUtility;
 import com.google.firebase.crash.FirebaseCrash;
 
-import com.example.logger.CLog;
 import io.fabric.sdk.android.Fabric;
 
 public final class Reporter {
 	public static void report(Throwable throwable) {
-		CLog.e(throwable);
+		LogUtility.e(throwable);
 
 		if (BuildConfig.DEBUG) {
 			return;
