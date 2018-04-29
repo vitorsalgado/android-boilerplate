@@ -16,12 +16,12 @@ import static junit.framework.Assert.assertFalse;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class MainTest {
-	@Rule
-	public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+  @Rule
+  public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
-	@Test
-	public void ensureHomeInitialization() {
-		assertFalse(mActivityTestRule.getActivity().isFinishing());
-		mActivityTestRule.finishActivity();
-	}
+  @Test
+  public void ensureHomeInitialization() {
+    assertFalse(mActivityTestRule.getActivity().isFinishing());
+    mActivityTestRule.finishActivity();
+  }
 }

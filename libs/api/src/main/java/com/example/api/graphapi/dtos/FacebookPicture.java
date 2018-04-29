@@ -1,19 +1,19 @@
 package com.example.api.graphapi.dtos;
 
 public class FacebookPicture {
-	private String id;
-	private String picture;
-	private FacebookPictureUrl data;
+  private String id;
+  private String picture;
+  private FacebookPictureUrl data;
 
-	public FacebookPictureUrl getData() {
-		return data;
-	}
+  public FacebookPictureUrl getData() {
+    return data;
+  }
 
-	public String getId() {
-		return id;
-	}
+  public String getId() {
+    return id;
+  }
 
-	public String getPicture() {
-		return picture;
-	}
+  public String getPicture() {
+    return picture;
+  }
 }

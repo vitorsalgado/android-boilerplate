@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- main -->
-	<color name="primary">#616161</color>
-	<color name="primaryDark">#373737</color>
-	<color name="secondaryDark">#8e8e8e</color>
-	<color name="accent">#616161</color>
+  <!-- main -->
+  <color name="primary">#616161</color>
+  <color name="primaryDark">#373737</color>
+  <color name="secondaryDark">#8e8e8e</color>
+  <color name="accent">#616161</color>
 
-	<!-- tabs -->
-	<!--<color name="tab_unselected">@color/accent</color>-->
-	<color name="tab_seletected">#E5E3E6</color>
+  <!-- tabs -->
+  <!--<color name="tab_unselected">@color/accent</color>-->
+  <color name="tab_seletected">#E5E3E6</color>
 </resources>

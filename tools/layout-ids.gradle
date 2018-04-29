@@ -3,33 +3,33 @@ import java.util.regex.Pattern
 import static java.util.regex.Pattern.compile
 
 task layoutIds() {
-	group "QA"
+  group "QA"
 
-	doLast {
-		final Pattern VIEW = compile("<([\\w.]+)")
-		final Pattern ID = compile("android:id=\"(.*?)\"")
+  doLast {
+    final Pattern VIEW = compile("<([\\w.]+)")
+    final Pattern ID = compile("android:id=\"(.*?)\"")
 
-		def layoutDir = "${project.projectDir.absolutePath}/src/main/res/layout"
+    def layoutDir = "${project.projectDir.absolutePath}/src/main/res/layout"
 
-		println "LayoutDir = $layoutDir"
+    println "LayoutDir = $layoutDir"
 
-		def files = new File(layoutDir).listFiles()
+    def files = new File(layoutDir).listFiles()
 
-		files.each {
-			println "\n${it.getName()}"
-			String viewType
+    files.each {
+      println "\n${it.getName()}"
+      String viewType
 
-			it.newReader().lines().each {
-				def viewMatcher = VIEW.matcher(it)
+      it.newReader().lines().each {
+        def viewMatcher = VIEW.matcher(it)
 
-				if (viewMatcher.find())
-					viewType = viewMatcher.group(1)
+        if (viewMatcher.find())
+          viewType = viewMatcher.group(1)
 
-				def idMatcher = ID.matcher(it)
+        def idMatcher = ID.matcher(it)
 
-				if (idMatcher.find())
-					println "\t${idMatcher.group(1)} -> $viewType"
-			}
-		}
-	}
+        if (idMatcher.find())
+          println "\t${idMatcher.group(1)} -> $viewType"
+      }
+    }
+  }
 }

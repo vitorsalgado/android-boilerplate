@@ -6,6 +6,6 @@ import io.reactivex.Completable;
 
 @FunctionalInterface
 public interface LogoutService {
-	@WorkerThread
-	Completable logout();
+  @WorkerThread
+  Completable logout();
 }

@@ -11,16 +11,16 @@ import com.facebook.imagepipeline.cache.MemoryCacheParams;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 
 public final class FrescoPipelines {
-	public static ImagePipelineConfig.Builder setupFresco(@NonNull Context context) {
-		return ImagePipelineConfig.newBuilder(context)
-			.setBitmapsConfig(Bitmap.Config.RGB_565)
-			.setMainDiskCacheConfig(
-				DiskCacheConfig.newBuilder(context)
-					.setCacheErrorLogger((category, clazz, message, throwable) -> LogUtility.e(message, throwable))
-					.setMaxCacheSize(100 * 1000 * 1000)
-					.setVersion(BuildConfig.VERSION_CODE)
-					.build()
-			)
-			.setBitmapMemoryCacheParamsSupplier(() -> new MemoryCacheParams(32 * 1000 * 1000, 100, 5 * 1000 * 1000, 10, 250 * 1000));
-	}
+  public static ImagePipelineConfig.Builder setupFresco(@NonNull Context context) {
+    return ImagePipelineConfig.newBuilder(context)
+      .setBitmapsConfig(Bitmap.Config.RGB_565)
+      .setMainDiskCacheConfig(
+        DiskCacheConfig.newBuilder(context)
+          .setCacheErrorLogger((category, clazz, message, throwable) -> LogUtility.e(message, throwable))
+          .setMaxCacheSize(100 * 1000 * 1000)
+          .setVersion(BuildConfig.VERSION_CODE)
+          .build()
+      )
+      .setBitmapMemoryCacheParamsSupplier(() -> new MemoryCacheParams(32 * 1000 * 1000, 100, 5 * 1000 * 1000, 10, 250 * 1000));
+  }
 }

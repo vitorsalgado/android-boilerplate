@@ -15,46 +15,46 @@ import com.example.features.about.databinding.AboutActivityBinding;
 import de.psdev.licensesdialog.LicensesDialog;
 
 public class AboutActivity extends AppCompatActivity {
-	AboutActivityBinding binding;
+  AboutActivityBinding binding;
 
-	@NonNull
-	public static Intent newIntent(@NonNull Context context) {
-		return new Intent(context, AboutActivity.class);
-	}
+  @NonNull
+  public static Intent newIntent(@NonNull Context context) {
+    return new Intent(context, AboutActivity.class);
+  }
 
-	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-		binding = DataBindingUtil.setContentView(this, R.layout.about_activity);
+    binding = DataBindingUtil.setContentView(this, R.layout.about_activity);
 
-		// setUpToolBar(binding.toolbar, getString(R.string.about));
+    // setUpToolBar(binding.toolbar, getString(R.string.about));
 
-		binding.appVersion.setText(AppUtils.getVersionName(getApplicationContext()));
+    binding.appVersion.setText(AppUtils.getVersionName(getApplicationContext()));
 
-		binding.viewLicenses.setOnClickListener(view ->
-			new LicensesDialog.Builder(this)
-				.setNotices(R.raw.notices)
-				.setIncludeOwnLicense(true)
-				.setTitle(R.string.licenses)
-				.setCloseText(R.string.close)
-				.build()
-				.show());
-	}
+    binding.viewLicenses.setOnClickListener(view ->
+      new LicensesDialog.Builder(this)
+        .setNotices(R.raw.notices)
+        .setIncludeOwnLicense(true)
+        .setTitle(R.string.licenses)
+        .setCloseText(R.string.close)
+        .build()
+        .show());
+  }
 
-	@Override
-	public void onBackPressed() {
-		finish();
-		super.onBackPressed();
-	}
+  @Override
+  public void onBackPressed() {
+    finish();
+    super.onBackPressed();
+  }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			finish();
-			return true;
-		}
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      finish();
+      return true;
+    }
 
-		return super.onOptionsItemSelected(item);
-	}
+    return super.onOptionsItemSelected(item);
+  }
 }

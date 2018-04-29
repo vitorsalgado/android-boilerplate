@@ -1,24 +1,25 @@
 package com.example.services.push;
 
-import android.support.annotation.NonNull;
-
-import com.example.android.utils.LogUtility;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
+import android.support.annotation.NonNull;
+
+import com.example.android.utils.LogUtility;
+
 public class InstanceIdService extends FirebaseInstanceIdService {
-	@Override
-	public void onTokenRefresh() {
-		String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+  @Override
+  public void onTokenRefresh() {
+    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
-		if (refreshedToken == null || refreshedToken.isEmpty()) {
-			return;
-		}
+    if (refreshedToken == null || refreshedToken.isEmpty()) {
+      return;
+    }
 
-		sendRegistrationToServer(refreshedToken);
-	}
+    sendRegistrationToServer(refreshedToken);
+  }
 
-	private void sendRegistrationToServer(@NonNull String refreshedToken) {
-		LogUtility.d("( FIREBASE -> onTokenRefresh ) ", refreshedToken);
-	}
+  private void sendRegistrationToServer(@NonNull String refreshedToken) {
+    LogUtility.d("( FIREBASE -> onTokenRefresh ) ", refreshedToken);
+  }
 }

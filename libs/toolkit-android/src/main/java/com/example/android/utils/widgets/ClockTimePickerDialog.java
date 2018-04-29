@@ -16,84 +16,83 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ClockTimePickerDialog extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-	public static final String BUNDLE_TIME = "com.example.android.utils.widgets.clocktimepicker.TIME";
-	public static final String DATETIME_FORMAT = "com.example.android.utils.widgets.clocktimepicker.DATETIME_FORMAT";
-	public static final int REQUEST_CODE = 99;
+  public static final String BUNDLE_TIME = "com.example.android.utils.widgets.clocktimepicker.TIME";
+  public static final String DATETIME_FORMAT = "com.example.android.utils.widgets.clocktimepicker.DATETIME_FORMAT";
+  public static final int REQUEST_CODE = 99;
+  private ClockTimePickerListener clockTimePickerListener;
 
-	@FunctionalInterface
-	public interface ClockTimePickerListener {
-		void onTimeSelected(SelectedTime selectedTime);
-	}
+  @NonNull
+  @Override
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    if (getArguments() == null) {
+      throw new IllegalStateException("This fragment needs some arguments to correctly initialize");
+    }
 
-	private ClockTimePickerListener clockTimePickerListener;
+    final Calendar calendar = Calendar.getInstance();
+    final String incomingTime = getArguments().getString(BUNDLE_TIME);
+    final String commonDateFormat = getArguments().getString(DATETIME_FORMAT);
 
-	@NonNull
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		if (getArguments() == null) {
-			throw new IllegalStateException("This fragment needs some arguments to correctly initialize");
-		}
+    if (commonDateFormat == null || commonDateFormat.isEmpty()) {
+      throw new IllegalArgumentException("date format is required");
+    }
 
-		final Calendar calendar = Calendar.getInstance();
-		final String incomingTime = getArguments().getString(BUNDLE_TIME);
-		final String commonDateFormat = getArguments().getString(DATETIME_FORMAT);
+    if (incomingTime != null && !incomingTime.isEmpty()) {
+      try {
+        DateFormat dateFormat = new SimpleDateFormat(commonDateFormat, Locale.getDefault());
+        Date date = dateFormat.parse(incomingTime);
 
-		if (commonDateFormat == null || commonDateFormat.isEmpty()) {
-			throw new IllegalArgumentException("date format is required");
-		}
+        calendar.setTime(date);
+      } catch (ParseException e) {
+        throw new RuntimeException(e);
+      }
+    }
 
-		if (incomingTime != null && !incomingTime.isEmpty()) {
-			try {
-				DateFormat dateFormat = new SimpleDateFormat(commonDateFormat, Locale.getDefault());
-				Date date = dateFormat.parse(incomingTime);
+    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+    int minute = calendar.get(Calendar.MINUTE);
 
-				calendar.setTime(date);
-			} catch (ParseException e) {
-				throw new RuntimeException(e);
-			}
-		}
+    return new TimePickerDialog(getActivity(), this, hour, minute, true);
+  }
 
-		int hour = calendar.get(Calendar.HOUR_OF_DAY);
-		int minute = calendar.get(Calendar.MINUTE);
+  @Override
+  public void onAttach(@NonNull Context context) {
+    super.onAttach(context);
 
-		return new TimePickerDialog(getActivity(), this, hour, minute, true);
-	}
+    try {
+      if (getTargetFragment() == null) {
+        clockTimePickerListener = (ClockTimePickerListener) context;
+      } else {
+        clockTimePickerListener = (ClockTimePickerListener) getTargetFragment();
+      }
+    } catch (@NonNull final ClassCastException e) {
+      throw new ClassCastException(context.toString() + " or target fragment must implement OnDateSelectedListener");
+    }
+  }
 
-	@Override
-	public void onAttach(@NonNull Context context) {
-		super.onAttach(context);
+  @Override
+  public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+    calendar.set(Calendar.MINUTE, minute);
 
-		try {
-			if (getTargetFragment() == null) {
-				clockTimePickerListener = (ClockTimePickerListener) context;
-			} else {
-				clockTimePickerListener = (ClockTimePickerListener) getTargetFragment();
-			}
-		} catch (@NonNull final ClassCastException e) {
-			throw new ClassCastException(context.toString() + " or target fragment must implement OnDateSelectedListener");
-		}
-	}
+    clockTimePickerListener.onTimeSelected(new ClockTimePickerDialog.SelectedTime(calendar.getTime()));
+  }
 
-	@Override
-	public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-		calendar.set(Calendar.MINUTE, minute);
+  @FunctionalInterface
+  public interface ClockTimePickerListener {
+    void onTimeSelected(SelectedTime selectedTime);
+  }
 
-		clockTimePickerListener.onTimeSelected(new ClockTimePickerDialog.SelectedTime(calendar.getTime()));
-	}
+  public static class SelectedTime {
+    @NonNull
+    private final Date date;
 
-	public static class SelectedTime {
-		@NonNull
-		private final Date date;
+    SelectedTime(@NonNull Date date) {
+      this.date = date;
+    }
 
-		SelectedTime(@NonNull Date date) {
-			this.date = date;
-		}
-
-		@NonNull
-		public Date getDate() {
-			return date;
-		}
-	}
+    @NonNull
+    public Date getDate() {
+      return date;
+    }
+  }
 }

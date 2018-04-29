@@ -1,9 +1,9 @@
 package com.example.api.graphapi.dtos;
 
 public class FacebookAlbumCoverPhoto {
-	private String id;
+  private String id;
 
-	public String getId() {
-		return id;
-	}
+  public String getId() {
+    return id;
+  }
 }

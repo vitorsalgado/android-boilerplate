@@ -9,11 +9,11 @@ import com.example.BuildConfig;
 import io.fabric.sdk.android.Fabric;
 
 public final class CrashLytics {
-	public static void setup(@NonNull Context context) {
-		if (BuildConfig.DEBUG) {
-			return;
-		}
+  public static void setup(@NonNull Context context) {
+    if (BuildConfig.DEBUG) {
+      return;
+    }
 
-		Fabric.with(context, new Crashlytics());
-	}
+    Fabric.with(context, new Crashlytics());
+  }
 }

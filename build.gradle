@@ -6,123 +6,123 @@ apply plugin: "org.owasp.dependencycheck"
 apply plugin: "org.sonarqube"
 
 buildscript {
-	apply from: rootProject.file('versions.gradle')
+  apply from: rootProject.file('versions.gradle')
 
-	addRepos(repositories)
+  addRepos(repositories)
 
-	dependencies {
-		classpath 'com.android.tools.build:gradle:3.1.2'
-		classpath "org.jacoco:org.jacoco.core:$versions.jacoco"
-		classpath "com.google.gms:google-services:$versions.google_services"
-		classpath "io.fabric.tools:gradle:$versions.fabric"
-		classpath "org.owasp:dependency-check-gradle:$versions.owasp_dependency_check"
-		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$versions.sonar"
-		classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:$versions.spotbugs_plugin"
-	}
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.1.2'
+    classpath "org.jacoco:org.jacoco.core:$versions.jacoco"
+    classpath "com.google.gms:google-services:$versions.google_services"
+    classpath "io.fabric.tools:gradle:$versions.fabric"
+    classpath "org.owasp:dependency-check-gradle:$versions.owasp_dependency_check"
+    classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$versions.sonar"
+    classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:$versions.spotbugs_plugin"
+  }
 }
 
 ext.isCI = System.getenv("CI") == "true"
 ext.cores = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 
 allprojects {
-	addRepos(repositories)
+  addRepos(repositories)
 
-	configurations.all {
-		resolutionStrategy {
-			eachDependency { details ->
-				if (details.requested.group == 'com.android.support') {
-					details.useVersion versions.supportLibrary
-				}
-			}
-		}
-	}
+  configurations.all {
+    resolutionStrategy {
+      eachDependency { details ->
+        if (details.requested.group == 'com.android.support') {
+          details.useVersion versions.supportLibrary
+        }
+      }
+    }
+  }
 
-	tasks.withType(JavaCompile) {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
+  tasks.withType(JavaCompile) {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
-		configure(options) {
-			encoding = "utf-8"
-			incremental = true
-			fork = true
-		}
-	}
+    configure(options) {
+      encoding = "utf-8"
+      incremental = true
+      fork = true
+    }
+  }
 
-	tasks.withType(Test) {
-		if (project.hasProperty("skipReports")) {
-			reports.html.enabled = false
-			reports.junitXml.enabled = false
-		}
+  tasks.withType(Test) {
+    if (project.hasProperty("skipReports")) {
+      reports.html.enabled = false
+      reports.junitXml.enabled = false
+    }
 
-		testLogging {
-			exceptionFormat "full"
-			showExceptions true
-			showCauses true
-			showStackTraces true
-			maxParallelForks cores
-			forkEvery 10
-			events = ["failed", "passed", "skipped", "standardOut", "standardError"]
-		}
-	}
+    testLogging {
+      exceptionFormat "full"
+      showExceptions true
+      showCauses true
+      showStackTraces true
+      maxParallelForks cores
+      forkEvery 10
+      events = ["failed", "passed", "skipped", "standardOut", "standardError"]
+    }
+  }
 
-	gradle.projectsEvaluated {
-		tasks.withType(JavaCompile) {
-			options.compilerArgs << "-Xlint:deprecation"
-		}
-	}
+  gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+      options.compilerArgs << "-Xlint:deprecation"
+    }
+  }
 }
 
 subprojects {
-	apply from: rootProject.file('tools/linters.gradle')
+  apply from: rootProject.file('tools/linters.gradle')
 
-	afterEvaluate { Project project ->
-		project.tasks.whenTaskAdded {
-			if (it.name == "testReleaseUnitTest") {
-				it.enabled = false
-			}
-		}
+  afterEvaluate { Project project ->
+    project.tasks.whenTaskAdded {
+      if (it.name == "testReleaseUnitTest") {
+        it.enabled = false
+      }
+    }
 
-		if (project.findProperty('android')) {
-			android {
-				compileOptions {
-					sourceCompatibility JavaVersion.VERSION_1_8
-					targetCompatibility JavaVersion.VERSION_1_8
-				}
+    if (project.findProperty('android')) {
+      android {
+        compileOptions {
+          sourceCompatibility JavaVersion.VERSION_1_8
+          targetCompatibility JavaVersion.VERSION_1_8
+        }
 
-				compileSdkVersion build_versions.target_sdk
+        compileSdkVersion build_versions.target_sdk
 
-				defaultConfig {
-					minSdkVersion build_versions.min_sdk
-					targetSdkVersion build_versions.target_sdk
-					versionCode 1
-					versionName "1.0"
-					vectorDrawables.useSupportLibrary true
-				}
-			}
-		}
+        defaultConfig {
+          minSdkVersion build_versions.min_sdk
+          targetSdkVersion build_versions.target_sdk
+          versionCode 1
+          versionName "1.0"
+          vectorDrawables.useSupportLibrary true
+        }
+      }
+    }
 
-		tasks.withType(SpotBugsTask) {
-			excludeFilter rootProject.file("tools/linters/spotbugs-filter.xml")
-			reports {
-				xml.enabled = false
-				html.enabled = true
-				html.setDestination rootProject.file("reports/spotbugs/index.html")
-			}
-		}
-	}
+    tasks.withType(SpotBugsTask) {
+      excludeFilter rootProject.file("tools/linters/spotbugs-filter.xml")
+      reports {
+        xml.enabled = false
+        html.enabled = true
+        html.setDestination rootProject.file("reports/spotbugs/index.html")
+      }
+    }
+  }
 }
 
 task clean(type: Delete) {
-	delete rootProject.buildDir
+  delete rootProject.buildDir
 }
 
 task printBuildScriptClasspath {
-	doLast {
-		println project.buildscript.configurations.classpath.asPath
-	}
+  doLast {
+    println project.buildscript.configurations.classpath.asPath
+  }
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '4.6'
-	distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+  gradleVersion = '4.6'
+  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }

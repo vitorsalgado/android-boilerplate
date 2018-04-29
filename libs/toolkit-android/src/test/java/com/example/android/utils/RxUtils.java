@@ -8,26 +8,26 @@ import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
 public class RxUtils {
-	public static class ImmediateSchedulersRule implements TestRule {
-		@Override
-		public Statement apply(final Statement base, Description description) {
-			return new Statement() {
-				@Override
-				public void evaluate() throws Throwable {
-					RxJavaPlugins.setIoSchedulerHandler(scheduler ->
-						Schedulers.trampoline());
-					RxJavaPlugins.setComputationSchedulerHandler(scheduler ->
-						Schedulers.trampoline());
-					RxJavaPlugins.setNewThreadSchedulerHandler(scheduler ->
-						Schedulers.trampoline());
+  public static class ImmediateSchedulersRule implements TestRule {
+    @Override
+    public Statement apply(final Statement base, Description description) {
+      return new Statement() {
+        @Override
+        public void evaluate() throws Throwable {
+          RxJavaPlugins.setIoSchedulerHandler(scheduler ->
+            Schedulers.trampoline());
+          RxJavaPlugins.setComputationSchedulerHandler(scheduler ->
+            Schedulers.trampoline());
+          RxJavaPlugins.setNewThreadSchedulerHandler(scheduler ->
+            Schedulers.trampoline());
 
-					try {
-						base.evaluate();
-					} finally {
-						RxJavaPlugins.reset();
-					}
-				}
-			};
-		}
-	}
+          try {
+            base.evaluate();
+          } finally {
+            RxJavaPlugins.reset();
+          }
+        }
+      };
+    }
+  }
 }

@@ -18,80 +18,78 @@ import com.example.R;
 import com.example.databinding.WebviewBinding;
 
 public class WebViewActivity extends AppCompatActivity {
-	public static final String TITLE_PAGE = "TITLE_PAGE";
-	public static final String URL_PAGE = "URL_PAGE";
+  public static final String TITLE_PAGE = "TITLE_PAGE";
+  public static final String URL_PAGE = "URL_PAGE";
+  WebviewBinding binding;
+  private String title;
+  private String url;
 
-	private String title;
-	private String url;
+  public static Intent newIntent(@NonNull Context context, @StringRes int title, @StringRes int url) {
+    Intent intent = new Intent(context, WebViewActivity.class);
+    intent.putExtra(TITLE_PAGE, title);
+    intent.putExtra(URL_PAGE, url);
 
-	WebviewBinding binding;
+    return intent;
+  }
 
-	public static Intent newIntent(@NonNull Context context, @StringRes int title, @StringRes int url) {
-		Intent intent = new Intent(context, WebViewActivity.class);
-		intent.putExtra(TITLE_PAGE, title);
-		intent.putExtra(URL_PAGE, url);
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-		return intent;
-	}
+    binding = DataBindingUtil.setContentView(this, R.layout.webview);
 
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    if (getIntent().getExtras() == null) {
+      throw new IllegalStateException("WebViewActivity must be initialized with title and url extras.");
+    }
 
-		binding = DataBindingUtil.setContentView(this, R.layout.webview);
+    title = getIntent().getExtras().getString(TITLE_PAGE);
+    url = getIntent().getExtras().getString(URL_PAGE);
 
-		if (getIntent().getExtras() == null) {
-			throw new IllegalStateException("WebViewActivity must be initialized with title and url extras.");
-		}
+    setSupportActionBar(binding.toolbar);
 
-		title = getIntent().getExtras().getString(TITLE_PAGE);
-		url = getIntent().getExtras().getString(URL_PAGE);
+    final ActionBar supportActionBar = getSupportActionBar();
 
-		setSupportActionBar(binding.toolbar);
+    if (supportActionBar == null) {
+      throw new IllegalStateException("failed to setup supportActionBar. supportActionBar is null.");
+    }
 
-		final ActionBar supportActionBar = getSupportActionBar();
+    supportActionBar.setDisplayHomeAsUpEnabled(true);
+    supportActionBar.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_back));
+    supportActionBar.setTitle(title);
 
-		if (supportActionBar == null) {
-			throw new IllegalStateException("failed to setup supportActionBar. supportActionBar is null.");
-		}
+    setupWebView();
 
-		supportActionBar.setDisplayHomeAsUpEnabled(true);
-		supportActionBar.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_back));
-		supportActionBar.setTitle(title);
+    binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
+  }
 
-		setupWebView();
+  @Override
+  public void onBackPressed() {
+    finish();
+    super.onBackPressed();
+  }
 
-		binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
-	}
+  private void setupWebView() {
+    binding.webview.loadUrl(url);
+    binding.webview.setWebViewClient(new WebViewClient() {
+      @SuppressWarnings("deprecation")
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        view.loadUrl(url);
+        return true;
+      }
 
-	@Override
-	public void onBackPressed() {
-		finish();
-		super.onBackPressed();
-	}
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        return true;
+      }
+    });
+  }
 
-	private void setupWebView() {
-		binding.webview.loadUrl(url);
-		binding.webview.setWebViewClient(new WebViewClient() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
-			}
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
 
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-				return true;
-			}
-		});
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-
-		outState.putString(URL_PAGE, url);
-		outState.putString(TITLE_PAGE, title);
-	}
+    outState.putString(URL_PAGE, url);
+    outState.putString(TITLE_PAGE, title);
+  }
 }

@@ -14,27 +14,27 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.allOf;
 
 public class Utils {
-	public static Activity getCurrentActivity() {
-		final Activity[] currentActivity = new Activity[1];
+  public static Activity getCurrentActivity() {
+    final Activity[] currentActivity = new Activity[1];
 
-		onView(allOf(withId(android.R.id.content), isDisplayed())).perform(new ViewAction() {
-			@Override
-			public Matcher<View> getConstraints() {
-				return isAssignableFrom(View.class);
-			}
+    onView(allOf(withId(android.R.id.content), isDisplayed())).perform(new ViewAction() {
+      @Override
+      public Matcher<View> getConstraints() {
+        return isAssignableFrom(View.class);
+      }
 
-			@Override
-			public String getDescription() {
-				return "getting text from a TextView";
-			}
+      @Override
+      public String getDescription() {
+        return "getting text from a TextView";
+      }
 
-			@Override
-			public void perform(UiController uiController, View view) {
-				Activity activity1 = ((Activity) view.getContext());
-				currentActivity[0] = activity1;
-			}
-		});
+      @Override
+      public void perform(UiController uiController, View view) {
+        Activity activity1 = ((Activity) view.getContext());
+        currentActivity[0] = activity1;
+      }
+    });
 
-		return currentActivity[0];
-	}
+    return currentActivity[0];
+  }
 }

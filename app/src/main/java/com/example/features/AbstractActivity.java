@@ -18,96 +18,96 @@ import com.example.android.utils.DialogUtils;
 import com.example.toolkit.RetryCallback;
 
 public abstract class AbstractActivity extends AppCompatActivity {
-	@Nullable
-	private Dialog progressDialog;
+  @Nullable
+  private Dialog progressDialog;
 
-	@NonNull
-	protected abstract View root();
+  @NonNull
+  protected abstract View root();
 
-	//region Activity Events
+  //region Activity Events
 
-	@Override
-	protected void onResume() {
-		if (!AppUtils.hasNetworkConnection(getApplicationContext())) {
-			Snackbar.make(root(), R.string.error_no_internet_connection, Snackbar.LENGTH_LONG).show();
-		}
+  @Override
+  protected void onResume() {
+    if (!AppUtils.hasNetworkConnection(getApplicationContext())) {
+      Snackbar.make(root(), R.string.error_no_internet_connection, Snackbar.LENGTH_LONG).show();
+    }
 
-		super.onResume();
-	}
+    super.onResume();
+  }
 
-	@Override
-	public void onBackPressed() {
-		DialogUtils.dismiss(progressDialog);
-		super.onBackPressed();
-	}
+  @Override
+  public void onBackPressed() {
+    DialogUtils.dismiss(progressDialog);
+    super.onBackPressed();
+  }
 
-	@Override
-	protected void onDestroy() {
-		DialogUtils.dismiss(progressDialog);
-		super.onDestroy();
-	}
+  @Override
+  protected void onDestroy() {
+    DialogUtils.dismiss(progressDialog);
+    super.onDestroy();
+  }
 
-	//endregion
+  //endregion
 
-	//region Common Components Setup
+  //region Common Components Setup
 
-	protected void setUpToolBar(@NonNull Toolbar toolBar) {
-		setUpToolBar(toolBar, "");
-	}
+  protected void setUpToolBar(@NonNull Toolbar toolBar) {
+    setUpToolBar(toolBar, "");
+  }
 
-	protected void setUpToolBar(@NonNull Toolbar toolBar, @NonNull String title) {
-		setSupportActionBar(toolBar);
+  protected void setUpToolBar(@NonNull Toolbar toolBar, @NonNull String title) {
+    setSupportActionBar(toolBar);
 
-		final ActionBar supportActionBar = getSupportActionBar();
+    final ActionBar supportActionBar = getSupportActionBar();
 
-		if (supportActionBar == null) {
-			throw new IllegalStateException("failed to setup supportActionBar. supportActionBar is null.");
-		}
+    if (supportActionBar == null) {
+      throw new IllegalStateException("failed to setup supportActionBar. supportActionBar is null.");
+    }
 
-		supportActionBar.setDisplayHomeAsUpEnabled(true);
-		supportActionBar.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_back));
-		supportActionBar.setTitle(title);
-	}
+    supportActionBar.setDisplayHomeAsUpEnabled(true);
+    supportActionBar.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_back));
+    supportActionBar.setTitle(title);
+  }
 
-	@StringRes
-	protected int getUnexpectedErrorMessage() {
-		return 0;
-	}
+  @StringRes
+  protected int getUnexpectedErrorMessage() {
+    return 0;
+  }
 
-	//endregion
+  //endregion
 
-	//region Common Presenter View Events
+  //region Common Presenter View Events
 
-	public void showLoading() {
-		progressDialog = DialogUtils.loading(this, R.style.TransparentProgressDialog, R.color.accent);
-		progressDialog.show();
-	}
+  public void showLoading() {
+    progressDialog = DialogUtils.loading(this, R.style.TransparentProgressDialog, R.color.accent);
+    progressDialog.show();
+  }
 
-	public void loaded() {
-		DialogUtils.dismiss(progressDialog);
-	}
+  public void loaded() {
+    DialogUtils.dismiss(progressDialog);
+  }
 
-	public void error(Throwable throwable) {
-		Reporter.report(throwable);
+  public void error(Throwable throwable) {
+    Reporter.report(throwable);
 
-		DialogUtils.dismiss(progressDialog);
-		DialogUtils.simpleOk(this, R.string.error, getUnexpectedErrorMessage());
-	}
+    DialogUtils.dismiss(progressDialog);
+    DialogUtils.simpleOk(this, R.string.error, getUnexpectedErrorMessage());
+  }
 
-	public void errorWithRetry(Throwable throwable, RetryCallback retryAction) {
-		Reporter.report(throwable);
+  public void errorWithRetry(Throwable throwable, RetryCallback retryAction) {
+    Reporter.report(throwable);
 
-		DialogUtils.dismiss(progressDialog);
+    DialogUtils.dismiss(progressDialog);
 
-		DialogUtils.retry(this,
-			getUnexpectedErrorMessage(),
-			(dialog, which) -> {
-				retryAction.retry();
-				dialog.dismiss();
-			},
-			(dialog, which) -> dialog.dismiss())
-			.show();
-	}
+    DialogUtils.retry(this,
+      getUnexpectedErrorMessage(),
+      (dialog, which) -> {
+        retryAction.retry();
+        dialog.dismiss();
+      },
+      (dialog, which) -> dialog.dismiss())
+      .show();
+  }
 
-	//endregion
+  //endregion
 }

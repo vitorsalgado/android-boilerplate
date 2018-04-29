@@ -8,33 +8,33 @@ import com.example.toolkit.RetryCallback;
 import com.squareup.leakcanary.RefWatcher;
 
 public class AbstractFragment extends Fragment implements PresenterView {
-	@Override
-	public void onDestroy() {
-		if (BuildConfig.DEBUG) {
-			RefWatcher refWatcher = App.getRefWatcher();
-			refWatcher.watch(this);
-		}
+  @Override
+  public void onDestroy() {
+    if (BuildConfig.DEBUG) {
+      RefWatcher refWatcher = App.getRefWatcher();
+      refWatcher.watch(this);
+    }
 
-		super.onDestroy();
-	}
+    super.onDestroy();
+  }
 
-	@Override
-	public void showLoading() {
+  @Override
+  public void showLoading() {
 
-	}
+  }
 
-	@Override
-	public void loaded() {
+  @Override
+  public void loaded() {
 
-	}
+  }
 
-	@Override
-	public void error(Throwable throwable) {
+  @Override
+  public void error(Throwable throwable) {
 
-	}
+  }
 
-	@Override
-	public void errorWithRetry(Throwable throwable, RetryCallback retryAction) {
+  @Override
+  public void errorWithRetry(Throwable throwable, RetryCallback retryAction) {
 
-	}
+  }
 }

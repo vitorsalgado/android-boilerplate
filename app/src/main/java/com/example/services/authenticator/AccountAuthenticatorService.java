@@ -4,41 +4,41 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import java.util.Objects;
-
 import com.example.api.gateway.Api;
+
+import java.util.Objects;
 
 import static android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT;
 
 public class AccountAuthenticatorService extends Service {
-	private AccountAuthenticator authenticator = null;
-	Api api;
+  Api api;
+  private AccountAuthenticator authenticator = null;
 
-	@Override
-	public IBinder onBind(Intent intent) {
-		if (intent != null && Objects.equals(intent.getAction(), ACTION_AUTHENTICATOR_INTENT)) {
-			return getAuthenticator().getIBinder();
-		}
+  @Override
+  public IBinder onBind(Intent intent) {
+    if (intent != null && Objects.equals(intent.getAction(), ACTION_AUTHENTICATOR_INTENT)) {
+      return getAuthenticator().getIBinder();
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	private AccountAuthenticator getAuthenticator() {
-		if (authenticator == null) {
-			authenticator = new AccountAuthenticator(this, api);
-		}
+  private AccountAuthenticator getAuthenticator() {
+    if (authenticator == null) {
+      authenticator = new AccountAuthenticator(this, api);
+    }
 
-		return authenticator;
-	}
+    return authenticator;
+  }
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-	}
+  @Override
+  public void onCreate() {
+    super.onCreate();
+  }
 
-	@Override
-	public void onDestroy() {
-		authenticator = null;
-		super.onDestroy();
-	}
+  @Override
+  public void onDestroy() {
+    authenticator = null;
+    super.onDestroy();
+  }
 }

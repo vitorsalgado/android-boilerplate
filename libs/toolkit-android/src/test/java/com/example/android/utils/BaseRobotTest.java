@@ -8,15 +8,15 @@ import br.com.concretesolutions.requestmatcher.LocalTestRequestMatcherRule;
 import br.com.concretesolutions.requestmatcher.RequestMatcherRule;
 
 public abstract class BaseRobotTest {
-	@Rule
-	public final RequestMatcherRule server = new LocalTestRequestMatcherRule();
+  @Rule
+  public final RequestMatcherRule server = new LocalTestRequestMatcherRule();
 
-	@Before
-	public void baseSetUp() {
-		server.url("/");
-	}
+  @Before
+  public void baseSetUp() {
+    server.url("/");
+  }
 
-	@After
-	public void baseTearDown() {
-	}
+  @After
+  public void baseTearDown() {
+  }
 }

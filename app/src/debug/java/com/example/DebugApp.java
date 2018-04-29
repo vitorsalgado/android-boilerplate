@@ -13,61 +13,61 @@ import com.squareup.leakcanary.RefWatcher;
 import com.tspoon.traceur.Traceur;
 
 public class DebugApp extends App {
-	@Override
-	public void onCreate() {
-		if (LeakCanary.isInAnalyzerProcess(this)) {
-			return;
-		}
+  @Override
+  public void onCreate() {
+    if (LeakCanary.isInAnalyzerProcess(this)) {
+      return;
+    }
 
-		super.onCreate();
+    super.onCreate();
 
-		Stetho.initialize(
-			Stetho.newInitializerBuilder(this)
-				.enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-				.enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-				.build());
+    Stetho.initialize(
+      Stetho.newInitializerBuilder(this)
+        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+        .build());
 
-		trackActivitiesAndFragmentsLifecycle();
-		Traceur.enableLogging();
+    trackActivitiesAndFragmentsLifecycle();
+    Traceur.enableLogging();
 
-		enableStrictMode();
-	}
+    enableStrictMode();
+  }
 
-	@Override
-	public void onTrimMemory(int level) {
-		super.onTrimMemory(level);
-		LogUtility.d("[ onTrimMemory ] " + level);
-	}
+  @Override
+  public void onTrimMemory(int level) {
+    super.onTrimMemory(level);
+    LogUtility.d("[ onTrimMemory ] " + level);
+  }
 
-	@Override
-	protected RefWatcher enableLeakCanary() {
-		return LeakCanary.refWatcher(this).buildAndInstall();
-	}
+  @Override
+  protected RefWatcher enableLeakCanary() {
+    return LeakCanary.refWatcher(this).buildAndInstall();
+  }
 
-	private void enableStrictMode() {
-		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-			.detectAll()
-			.penaltyFlashScreen()
-			.penaltyLog()
-			.penaltyDeath()
-			.build());
+  private void enableStrictMode() {
+    StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+      .detectAll()
+      .penaltyFlashScreen()
+      .penaltyLog()
+      .penaltyDeath()
+      .build());
 
-		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-			.detectAll()
-			.penaltyLog()
-			.penaltyDeath()
-			.build());
-	}
+    StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+      .detectAll()
+      .penaltyLog()
+      .penaltyDeath()
+      .build());
+  }
 
-	@Override
-	protected void trackFresco(ImagePipelineConfig.Builder builder) {
-		builder.setImageCacheStatsTracker(new FrescoCacheStatsTracker());
-	}
+  @Override
+  protected void trackFresco(ImagePipelineConfig.Builder builder) {
+    builder.setImageCacheStatsTracker(new FrescoCacheStatsTracker());
+  }
 
-	private void trackActivitiesAndFragmentsLifecycle() {
-		final FragmentLifecycleTracker fragmentLifecycleTracker = new FragmentLifecycleTracker();
-		final ActivityLifecycleTracker activityLifecycleTracker = new ActivityLifecycleTracker(fragmentLifecycleTracker);
+  private void trackActivitiesAndFragmentsLifecycle() {
+    final FragmentLifecycleTracker fragmentLifecycleTracker = new FragmentLifecycleTracker();
+    final ActivityLifecycleTracker activityLifecycleTracker = new ActivityLifecycleTracker(fragmentLifecycleTracker);
 
-		registerActivityLifecycleCallbacks(activityLifecycleTracker);
-	}
+    registerActivityLifecycleCallbacks(activityLifecycleTracker);
+  }
 }

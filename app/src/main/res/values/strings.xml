@@ -1,10 +1,12 @@
 <resources>
-	<!-- application -->
-	<string name="account_type">com.example</string>
+  <!-- application -->
+  <string name="account_type">com.example</string>
 
-	<!-- login -->
-	<string name="login_title">Login</string>
+  <!-- login -->
+  <string name="login_title">Login</string>
 
-	<!-- errors -->
-	<string name="error_no_internet_connection">Rede indisponível :( \nVerifique sua conexão de dados e tente novamente.</string>
+  <!-- errors -->
+  <string name="error_no_internet_connection">Rede indisponível :( \nVerifique sua conexão de dados
+    e tente novamente.
+  </string>
 </resources>

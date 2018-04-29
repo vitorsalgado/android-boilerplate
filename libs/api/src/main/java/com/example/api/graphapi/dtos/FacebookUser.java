@@ -3,77 +3,77 @@ package com.example.api.graphapi.dtos;
 import com.google.gson.annotations.SerializedName;
 
 public class FacebookUser {
-	private String id;
+  private String id;
 
-	private String name;
+  private String name;
 
-	@SerializedName("first_name")
-	private String firstName;
+  @SerializedName("first_name")
+  private String firstName;
 
-	@SerializedName("last_name")
-	private String lastName;
+  @SerializedName("last_name")
+  private String lastName;
 
-	private String link;
+  private String link;
 
-	private String username;
+  private String username;
 
-	private String gender;
+  private String gender;
 
-	private String email;
+  private String email;
 
-	private String birthday;
+  private String birthday;
 
-	private String bio;
+  private String bio;
 
-	private FacebookPicture picture;
+  private FacebookPicture picture;
 
-	private FacebookAlbum albums;
+  private FacebookAlbum albums;
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public String getId() {
-		return id;
-	}
+  public String getId() {
+    return id;
+  }
 
-	public String getFirstName() {
-		return firstName;
-	}
+  public String getFirstName() {
+    return firstName;
+  }
 
-	public String getLastName() {
-		return lastName;
-	}
+  public String getLastName() {
+    return lastName;
+  }
 
-	public String getLink() {
-		return link;
-	}
+  public String getLink() {
+    return link;
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  public String getUsername() {
+    return username;
+  }
 
-	public String getGender() {
-		return gender;
-	}
+  public String getGender() {
+    return gender;
+  }
 
-	public String getEmail() {
-		return email;
-	}
+  public String getEmail() {
+    return email;
+  }
 
-	public String getBirthday() {
-		return birthday;
-	}
+  public String getBirthday() {
+    return birthday;
+  }
 
-	public String getBio() {
-		return bio;
-	}
+  public String getBio() {
+    return bio;
+  }
 
-	public FacebookPicture getPicture() {
-		return picture;
-	}
+  public FacebookPicture getPicture() {
+    return picture;
+  }
 
-	public FacebookAlbum getAlbums() {
-		return albums;
-	}
+  public FacebookAlbum getAlbums() {
+    return albums;
+  }
 }

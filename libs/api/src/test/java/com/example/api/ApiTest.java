@@ -1,10 +1,11 @@
 package com.example.api;
 
+import com.google.gson.Gson;
+
 import com.example.api.gateway.Api;
 import com.example.api.gateway.ApiBuilder;
 import com.example.api.gateway.Config;
 import com.example.api.gateway.dtos.OAuthResponse;
-import com.google.gson.Gson;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -24,36 +25,35 @@ import okhttp3.mockwebserver.MockResponse;
 @RunWith(JUnit4.class)
 @SuppressWarnings("RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT")
 public class ApiTest {
-	private Api api;
+  @Rule
+  public final RequestMatcherRule serverRule = new LocalTestRequestMatcherRule();
+  private Api api;
 
-	@Rule
-	public final RequestMatcherRule serverRule = new LocalTestRequestMatcherRule();
+  @Test
+  public void ensureConfigurations() throws IOException {
+    initServices();
+  }
 
-	@Test
-	public void ensureConfigurations() throws IOException {
-		initServices();
-	}
+  @Test
+  public void test() throws IOException {
+    initServices();
 
-	@Test
-	public void test() throws IOException {
-		initServices();
+    serverRule
+      .addResponse(
+        new MockResponse().setBody(
+          new Gson().toJson(
+            new OAuthResponse("TOKEN", "REFRESH", "STATE", new ArrayList<>(), "TOKEN_TYPE", 10000))))
+      .ifRequestMatches();
 
-		serverRule
-			.addResponse(
-				new MockResponse().setBody(
-					new Gson().toJson(
-						new OAuthResponse("TOKEN", "REFRESH", "STATE", new ArrayList<>(), "TOKEN_TYPE", 10000))))
-			.ifRequestMatches();
+    ApiResponse<OAuthResponse> response = api.getToken("client_id", "state", "grant_type", "username", "password")
+      .blockingFirst();
 
-		ApiResponse<OAuthResponse> response = api.getToken("client_id", "state", "grant_type", "username", "password")
-			.blockingFirst();
+    Assert.assertNotNull(response);
+  }
 
-		Assert.assertNotNull(response);
-	}
-
-	private void initServices() throws IOException {
-		String rootUrl = serverRule.url("/").toString();
-		File folder = File.createTempFile("tmp", ".tmp");
-		api = ApiBuilder.build(new OkHttpClient.Builder(), new Gson(), new Config(rootUrl, folder, "cache", 1024));
-	}
+  private void initServices() throws IOException {
+    String rootUrl = serverRule.url("/").toString();
+    File folder = File.createTempFile("tmp", ".tmp");
+    api = ApiBuilder.build(new OkHttpClient.Builder(), new Gson(), new Config(rootUrl, folder, "cache", 1024));
+  }
 }

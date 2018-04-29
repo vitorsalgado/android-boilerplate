@@ -55,11 +55,11 @@ ext.build_versions = build_versions
 ext.versions = versions
 
 static def addRepos(RepositoryHandler handler) {
-	handler.jcenter()
-	handler.google()
-	handler.maven { url 'https://maven.fabric.io/public' }
-	handler.maven { url "https://plugins.gradle.org/m2/" }
-	handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+  handler.jcenter()
+  handler.google()
+  handler.maven { url 'https://maven.fabric.io/public' }
+  handler.maven { url "https://plugins.gradle.org/m2/" }
+  handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 }
 
 ext.addRepos = this.&addRepos

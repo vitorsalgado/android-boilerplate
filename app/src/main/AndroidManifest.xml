@@ -1,110 +1,110 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-		  xmlns:tools="http://schemas.android.com/tools"
-		  package="com.example">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example">
 
 
-	<!-- Permissions -->
-	<!-- ######################################################################################  -->
+  <!-- Permissions -->
+  <!-- ######################################################################################  -->
 
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	<uses-permission android:name="android.permission.WAKE_LOCK"/>
-	<uses-permission
-		android:name="android.permission.MANAGE_ACCOUNTS"
-		android:maxSdkVersion="22"/>
-	<uses-permission
-		android:name="android.permission.GET_ACCOUNTS"
-		android:maxSdkVersion="22"/>
-	<uses-permission
-		android:name="android.permission.AUTHENTICATE_ACCOUNTS"
-		android:maxSdkVersion="22"/>
-
-
-	<!-- App -->
-	<!-- Begin application configuration section -->
-	<!-- ####################################################################################### -->
-
-	<application
-		android:allowBackup="false"
-		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
-		android:supportsRtl="true"
-		android:theme="@style/AppTheme">
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission
+    android:name="android.permission.MANAGE_ACCOUNTS"
+    android:maxSdkVersion="22"/>
+  <uses-permission
+    android:name="android.permission.GET_ACCOUNTS"
+    android:maxSdkVersion="22"/>
+  <uses-permission
+    android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+    android:maxSdkVersion="22"/>
 
 
-		<!-- Meta -->
-		<!-- ##################################################################################  -->
+  <!-- App -->
+  <!-- Begin application configuration section -->
+  <!-- ####################################################################################### -->
 
-		<meta-data
-			android:name="com.facebook.sdk.ApplicationId"
-			android:value="@string/facebook_app_id"/>
-
-		<meta-data
-			android:name="io.fabric.ApiKey"
-			android:value="d01d5909031246ac34bcd7283652fce59c445a0b"/>
-
-		<!-- Activities -->
-		<!-- ##################################################################################  -->
-
-		<!-- Main -->
-		<activity
-			android:name=".features.main.MainActivity"
-			android:screenOrientation="portrait"
-			android:theme="@style/AppTheme.Launcher">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
-		<!-- Authentication -->
-		<activity
-			android:name=".features.auth.LoginActivity"
-			android:label="@string/login_title"
-			android:launchMode="singleTask"
-			android:screenOrientation="portrait"/>
-		<!-- About -->
-		<activity
-			android:name=".features.about.AboutActivity"
-			android:label="@string/about"
-			android:launchMode="singleTop"
-			android:screenOrientation="portrait"/>
-		<!-- WebView -->
-		<activity
-			android:name=".features.WebViewActivity"
-			android:launchMode="singleTop"
-			android:screenOrientation="portrait"/>
+  <application
+    android:allowBackup="false"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme">
 
 
-		<!-- Services -->
-		<!-- ##################################################################################  -->
+    <!-- Meta -->
+    <!-- ##################################################################################  -->
 
-		<!-- Firebase -->
-		<service
-			android:name=".services.push.MessagingService"
-			tools:ignore="ExportedService">
-			<intent-filter>
-				<action android:name="com.google.firebase.MESSAGING_EVENT"/>
-			</intent-filter>
-		</service>
-		<service
-			android:name=".services.push.InstanceIdService"
-			tools:ignore="ExportedService">
-			<intent-filter>
-				<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-			</intent-filter>
-		</service>
-		<!-- Authenticator -->
-		<service
-			android:name=".services.authenticator.AccountAuthenticatorService"
-			android:exported="false"
-			android:process=":auth">
-			<intent-filter>
-				<action android:name="android.accounts.AccountAuthenticator"/>
-			</intent-filter>
-			<meta-data
-				android:name="android.accounts.AccountAuthenticator"
-				android:resource="@xml/authenticator"/>
-		</service>
-	</application>
+    <meta-data
+      android:name="com.facebook.sdk.ApplicationId"
+      android:value="@string/facebook_app_id"/>
+
+    <meta-data
+      android:name="io.fabric.ApiKey"
+      android:value="d01d5909031246ac34bcd7283652fce59c445a0b"/>
+
+    <!-- Activities -->
+    <!-- ##################################################################################  -->
+
+    <!-- Main -->
+    <activity
+      android:name=".features.main.MainActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.Launcher">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <!-- Authentication -->
+    <activity
+      android:name=".features.auth.LoginActivity"
+      android:label="@string/login_title"
+      android:launchMode="singleTask"
+      android:screenOrientation="portrait"/>
+    <!-- About -->
+    <activity
+      android:name=".features.about.AboutActivity"
+      android:label="@string/about"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"/>
+    <!-- WebView -->
+    <activity
+      android:name=".features.WebViewActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"/>
+
+
+    <!-- Services -->
+    <!-- ##################################################################################  -->
+
+    <!-- Firebase -->
+    <service
+      android:name=".services.push.MessagingService"
+      tools:ignore="ExportedService">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+      </intent-filter>
+    </service>
+    <service
+      android:name=".services.push.InstanceIdService"
+      tools:ignore="ExportedService">
+      <intent-filter>
+        <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+      </intent-filter>
+    </service>
+    <!-- Authenticator -->
+    <service
+      android:name=".services.authenticator.AccountAuthenticatorService"
+      android:exported="false"
+      android:process=":auth">
+      <intent-filter>
+        <action android:name="android.accounts.AccountAuthenticator"/>
+      </intent-filter>
+      <meta-data
+        android:name="android.accounts.AccountAuthenticator"
+        android:resource="@xml/authenticator"/>
+    </service>
+  </application>
 </manifest>

@@ -1,12 +1,14 @@
 <resources>
-	<string name="facebook_app_id">822968334426637</string>
+  <string name="facebook_app_id">822968334426637</string>
 
-	<string name="error">Erro</string>
-	<string name="double_back_to_exit">Clique em VOLTAR mais uma vez para sair</string>
-	<string name="about">Sobre</string>
-	<string name="version">Versão</string>
-	<string name="version_description">Versão %s</string>
-	<string name="licenses_description">Este projeto contém diversas bibliotecas de código aberto. Veja as licenças clicando no link abaixo.</string>
-	<string name="licenses">Licenças</string>
-	<string name="close">Fechar</string>
+  <string name="error">Erro</string>
+  <string name="double_back_to_exit">Clique em VOLTAR mais uma vez para sair</string>
+  <string name="about">Sobre</string>
+  <string name="version">Versão</string>
+  <string name="version_description">Versão %s</string>
+  <string name="licenses_description">Este projeto contém diversas bibliotecas de código aberto.
+    Veja as licenças clicando no link abaixo.
+  </string>
+  <string name="licenses">Licenças</string>
+  <string name="close">Fechar</string>
 </resources>

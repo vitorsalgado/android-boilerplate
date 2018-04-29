@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	package="com.example">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.example">
 
-	<application
-		android:name=".ReleaseApp"
-		tools:replace="android:name" />
+  <application
+    android:name=".ReleaseApp"
+    tools:replace="android:name"/>
 </manifest>

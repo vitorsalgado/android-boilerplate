@@ -1,20 +1,22 @@
 {
-    "request": {
-        "method": "POST",
-        "url": "/oauth/token"
+  "request": {
+    "method": "POST",
+    "url": "/oauth/token"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
     },
-    "response": {
-        "status": 200,
-        "headers": {
-            "Content-Type": "application/json"
-        },
-        "jsonBody": {
-            "token_type": "Bearer",
-            "access_token": "MOCK_ACCESS_TOKEN",
-            "refresh_token": "MOCK_REFRESH_TOKEN",
-            "expires_in": "500000",
-            "scope": ["admin"],
-            "state": ""
-        }
+    "jsonBody": {
+      "token_type": "Bearer",
+      "access_token": "MOCK_ACCESS_TOKEN",
+      "refresh_token": "MOCK_REFRESH_TOKEN",
+      "expires_in": "500000",
+      "scope": [
+        "admin"
+      ],
+      "state": ""
     }
+  }
 }

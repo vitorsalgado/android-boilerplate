@@ -24,30 +24,30 @@ final butlerApkURL = "https://bintray.com/linkedin/maven/download_file?file_path
  */
 task downloadButlerApk {
 
-	group "test-butler"
-	description "Verifies and downloads the Test Butler APK"
+  group "test-butler"
+  description "Verifies and downloads the Test Butler APK"
 
-	doLast {
-		logger.info("Verifying if test-butler apk is present")
+  doLast {
+    logger.info("Verifying if test-butler apk is present")
 
-		def butlerDir = new File(butlerApkDir)
+    def butlerDir = new File(butlerApkDir)
 
-		if (!butlerDir.exists())
-			butlerDir.mkdirs()
+    if (!butlerDir.exists())
+      butlerDir.mkdirs()
 
-		def f = new File(butlerApkPath)
+    def f = new File(butlerApkPath)
 
-		if (f.exists()) {
-			logger.info("Test butler $butlerApkPath is already downloaded.")
-			return
-		}
+    if (f.exists()) {
+      logger.info("Test butler $butlerApkPath is already downloaded.")
+      return
+    }
 
-		logger.info("Cleaning versions different than $rootProject.ext.versions.testButler")
-		butlerDir.listFiles().each { it.delete() }
+    logger.info("Cleaning versions different than $rootProject.ext.versions.testButler")
+    butlerDir.listFiles().each { it.delete() }
 
-		logger.info("Downloading Test-butler apk from: $butlerApkURL")
-		new URL(butlerApkURL).withInputStream { i -> f.withOutputStream { it << i } }
-	}
+    logger.info("Downloading Test-butler apk from: $butlerApkURL")
+    new URL(butlerApkURL).withInputStream { i -> f.withOutputStream { it << i } }
+  }
 }
 
 /**
@@ -55,35 +55,35 @@ task downloadButlerApk {
  */
 task('installButlerApk', dependsOn: [downloadButlerApk]) {
 
-	group "test-butler"
-	description "Install the Test Butler APK in all emulators if needed"
+  group "test-butler"
+  description "Install the Test Butler APK in all emulators if needed"
 
-	doLast {
-		logger.info("Verifying test-butler installation in emulators")
+  doLast {
+    logger.info("Verifying test-butler installation in emulators")
 
-		final adb = "$android.sdkDirectory.absolutePath/platform-tools/adb"
+    final adb = "$android.sdkDirectory.absolutePath/platform-tools/adb"
 
-		final String[] split = "$adb devices -l".execute().text.split("\\r?\\n")
+    final String[] split = "$adb devices -l".execute().text.split("\\r?\\n")
 
-		split.each {
+    split.each {
 
-			if (it.isEmpty() || !it.startsWith('emulator-'))
-				return;
+      if (it.isEmpty() || !it.startsWith('emulator-'))
+        return;
 
-			logger.info("Emulator: $it")
+      logger.info("Emulator: $it")
 
-			final emu = it.split("\\s")[0]
+      final emu = it.split("\\s")[0]
 
-			if ("$adb -s $emu shell pm list packages".execute().text.contains(butlerPackage))
-				return;
+      if ("$adb -s $emu shell pm list packages".execute().text.contains(butlerPackage))
+        return;
 
-			final installResult = "$adb -s $emu install $butlerApkPath".execute().text
+      final installResult = "$adb -s $emu install $butlerApkPath".execute().text
 
-			if (!installResult.contains("Success"))
-				logger.log(LogLevel.ERROR, "Could not install APK. Install output:\n$installResult")
+      if (!installResult.contains("Success"))
+        logger.log(LogLevel.ERROR, "Could not install APK. Install output:\n$installResult")
 
-			else
-				logger.info("Installed $butlerApkPath in $emu successfully")
-		}
-	}
+      else
+        logger.info("Installed $butlerApkPath in $emu successfully")
+    }
+  }
 }

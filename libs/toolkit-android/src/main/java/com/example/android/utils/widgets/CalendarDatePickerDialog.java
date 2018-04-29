@@ -16,84 +16,83 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CalendarDatePickerDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-	public static final String BUNDLE_DATE = "com.example.android.utils.widgets.calendardatepicker.DATE";
-	public static final String DATE_FORMAT = "com.example.android.utils.widgets.calendardatepicker.DATE_FORMAT";
-	public static final int REQUEST_CODE = 98;
+  public static final String BUNDLE_DATE = "com.example.android.utils.widgets.calendardatepicker.DATE";
+  public static final String DATE_FORMAT = "com.example.android.utils.widgets.calendardatepicker.DATE_FORMAT";
+  public static final int REQUEST_CODE = 98;
+  private CalendarDatePickerListener calendarDatePickerListener;
 
-	@FunctionalInterface
-	public interface CalendarDatePickerListener {
-		void onDateSelected(SelectedDate selectedDate);
-	}
+  @NonNull
+  @Override
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    if (getArguments() == null) {
+      throw new IllegalStateException("This fragment needs some arguments to correctly initialize");
+    }
 
-	private CalendarDatePickerListener calendarDatePickerListener;
+    final Calendar calendar = Calendar.getInstance();
+    final String incomingDate = getArguments().getString(BUNDLE_DATE);
+    final String commonDateFormat = getArguments().getString(DATE_FORMAT);
 
-	@NonNull
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		if (getArguments() == null) {
-			throw new IllegalStateException("This fragment needs some arguments to correctly initialize");
-		}
+    if (commonDateFormat == null || commonDateFormat.isEmpty()) {
+      throw new IllegalArgumentException("date format is required");
+    }
 
-		final Calendar calendar = Calendar.getInstance();
-		final String incomingDate = getArguments().getString(BUNDLE_DATE);
-		final String commonDateFormat = getArguments().getString(DATE_FORMAT);
+    if (incomingDate != null && !incomingDate.isEmpty()) {
+      try {
+        DateFormat dateFormat = new SimpleDateFormat(commonDateFormat, Locale.getDefault());
+        Date date = dateFormat.parse(incomingDate);
 
-		if (commonDateFormat == null || commonDateFormat.isEmpty()) {
-			throw new IllegalArgumentException("date format is required");
-		}
+        calendar.setTime(date);
+      } catch (ParseException e) {
+        throw new RuntimeException(e);
+      }
+    }
 
-		if (incomingDate != null && !incomingDate.isEmpty()) {
-			try {
-				DateFormat dateFormat = new SimpleDateFormat(commonDateFormat, Locale.getDefault());
-				Date date = dateFormat.parse(incomingDate);
+    final int year = calendar.get(Calendar.YEAR);
+    final int month = calendar.get(Calendar.MONTH);
+    final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-				calendar.setTime(date);
-			} catch (ParseException e) {
-				throw new RuntimeException(e);
-			}
-		}
+    return new DatePickerDialog(getActivity(), this, year, month, day);
+  }
 
-		final int year = calendar.get(Calendar.YEAR);
-		final int month = calendar.get(Calendar.MONTH);
-		final int day = calendar.get(Calendar.DAY_OF_MONTH);
+  @Override
+  public void onAttach(@NonNull Context context) {
+    super.onAttach(context);
 
-		return new DatePickerDialog(getActivity(), this, year, month, day);
-	}
+    try {
+      if (getTargetFragment() == null) {
+        calendarDatePickerListener = (CalendarDatePickerListener) context;
+      } else {
+        calendarDatePickerListener = (CalendarDatePickerListener) getTargetFragment();
+      }
+    } catch (@NonNull final ClassCastException e) {
+      throw new ClassCastException(context.toString() + " or target fragment must implement OnDateSelectedListener");
+    }
+  }
 
-	@Override
-	public void onAttach(@NonNull Context context) {
-		super.onAttach(context);
+  @Override
+  public void onDateSet(DatePicker view, int year, int month, int day) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(year, month, day);
 
-		try {
-			if (getTargetFragment() == null) {
-				calendarDatePickerListener = (CalendarDatePickerListener) context;
-			} else {
-				calendarDatePickerListener = (CalendarDatePickerListener) getTargetFragment();
-			}
-		} catch (@NonNull final ClassCastException e) {
-			throw new ClassCastException(context.toString() + " or target fragment must implement OnDateSelectedListener");
-		}
-	}
+    calendarDatePickerListener.onDateSelected(new SelectedDate(calendar.getTime()));
+  }
 
-	@Override
-	public void onDateSet(DatePicker view, int year, int month, int day) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(year, month, day);
+  @FunctionalInterface
+  public interface CalendarDatePickerListener {
+    void onDateSelected(SelectedDate selectedDate);
+  }
 
-		calendarDatePickerListener.onDateSelected(new SelectedDate(calendar.getTime()));
-	}
+  public static class SelectedDate {
+    @NonNull
+    private final Date date;
 
-	public static class SelectedDate {
-		@NonNull
-		private final Date date;
+    SelectedDate(@NonNull Date date) {
+      this.date = date;
+    }
 
-		SelectedDate(@NonNull Date date) {
-			this.date = date;
-		}
-
-		@NonNull
-		public Date getDate() {
-			return date;
-		}
-	}
+    @NonNull
+    public Date getDate() {
+      return date;
+    }
+  }
 }

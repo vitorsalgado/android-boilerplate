@@ -22,108 +22,107 @@ import com.example.R;
 import com.example.databinding.WebviewBinding;
 
 public abstract class AbstractWebViewFragment extends AbstractFragment {
-	private boolean isSet = false;
-	protected WebviewBinding binding;
+  protected WebviewBinding binding;
+  private boolean isSet = false;
+  private WebViewClient webviewClient = new WebViewClient() {
+    private boolean error;
 
-	private WebViewClient webviewClient = new WebViewClient() {
-		private boolean error;
+    @Override
+    public void onPageStarted(WebView webview, String url, Bitmap favicon) {
+      error = false;
+    }
 
-		@Override
-		public void onPageStarted(WebView webview, String url, Bitmap favicon) {
-			error = false;
-		}
+    @Override
+    public void onPageFinished(WebView webview, String url) {
+      if (!error) {
+        onPageLoaded(webview, url);
+      }
+    }
 
-		@Override
-		public void onPageFinished(WebView webview, String url) {
-			if (!error) {
-				onPageLoaded(webview, url);
-			}
-		}
+    @Override
+    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+      super.onReceivedError(view, request, error);
+      this.error = true;
+    }
 
-		@Override
-		public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-			super.onReceivedError(view, request, error);
-			this.error = true;
-		}
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView webview, String url) {
+      return (shouldOverride(webview, url) && onHandleCallback(webview, url))
+        || super.shouldOverrideUrlLoading(webview, url);
+    }
 
-		@SuppressWarnings("deprecation")
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView webview, String url) {
-			return (shouldOverride(webview, url) && onHandleCallback(webview, url))
-				|| super.shouldOverrideUrlLoading(webview, url);
-		}
+    @TargetApi(Build.VERSION_CODES.N)
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView webview, WebResourceRequest request) {
+      final String uri = request.getUrl().toString();
 
-		@TargetApi(Build.VERSION_CODES.N)
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView webview, WebResourceRequest request) {
-			final String uri = request.getUrl().toString();
-
-			return (shouldOverride(webview, uri) && onHandleCallback(webview, uri))
-				|| super.shouldOverrideUrlLoading(webview, uri);
-		}
+      return (shouldOverride(webview, uri) && onHandleCallback(webview, uri))
+        || super.shouldOverrideUrlLoading(webview, uri);
+    }
 
 
-		@Override
-		public void onFormResubmission(WebView view, Message dontResend, Message resend) {
-			//resend POST request without confirmation.
-			resend.sendToTarget();
-		}
-	};
+    @Override
+    public void onFormResubmission(WebView view, Message dontResend, Message resend) {
+      //resend POST request without confirmation.
+      resend.sendToTarget();
+    }
+  };
 
-	@Nullable
-	@Override
-	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
 
-		binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.webview, container, false);
+    binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.webview, container, false);
 
-		setupWebView();
-		navigateToInitialPage(binding.webview);
+    setupWebView();
+    navigateToInitialPage(binding.webview);
 
-		return binding.getRoot();
-	}
+    return binding.getRoot();
+  }
 
-	@SuppressLint("SetJavaScriptEnabled")
-	private void setupWebView() {
-		if (isSet) {
-			return;
-		}
+  @SuppressLint("SetJavaScriptEnabled")
+  private void setupWebView() {
+    if (isSet) {
+      return;
+    }
 
-		WebSettings settings = binding.webview.getSettings();
+    WebSettings settings = binding.webview.getSettings();
 
-		if (settings != null) {
-			settings.setJavaScriptEnabled(true);
-		}
+    if (settings != null) {
+      settings.setJavaScriptEnabled(true);
+    }
 
-		binding.webview.setHorizontalScrollBarEnabled(false);
-		binding.webview.setWebViewClient(webviewClient);
+    binding.webview.setHorizontalScrollBarEnabled(false);
+    binding.webview.setWebViewClient(webviewClient);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			WebView.setWebContentsDebuggingEnabled(true);
-		}
-		if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
-			//refs: https://code.google.com/p/android/issues/detail?id=35288
-			binding.webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-		}
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      WebView.setWebContentsDebuggingEnabled(true);
+    }
+    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
+      //refs: https://code.google.com/p/android/issues/detail?id=35288
+      binding.webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+    }
 
-		isSet = true;
-	}
+    isSet = true;
+  }
 
-	protected WebView getWebview() {
-		setupWebView();
-		return binding.webview;
-	}
+  protected WebView getWebview() {
+    setupWebView();
+    return binding.webview;
+  }
 
-	protected abstract void navigateToInitialPage(WebView webview);
+  protected abstract void navigateToInitialPage(WebView webview);
 
-	protected void onPageLoaded(WebView webview, String url) {
-	}
+  protected void onPageLoaded(WebView webview, String url) {
+  }
 
-	protected boolean shouldOverride(WebView webview, String url) {
-		return false;
-	}
+  protected boolean shouldOverride(WebView webview, String url) {
+    return false;
+  }
 
-	protected boolean onHandleCallback(WebView webview, String url) {
-		return false;
-	}
+  protected boolean onHandleCallback(WebView webview, String url) {
+    return false;
+  }
 }

@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 @FunctionalInterface
 public interface TraceableScreen {
-	@NonNull
-	@Screen
-	String getScreenName();
+  @NonNull
+  @Screen
+  String getScreenName();
 }
