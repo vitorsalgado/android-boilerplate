@@ -5,14 +5,13 @@ import android.app.Application;
 import android.content.ComponentCallbacks2;
 import android.support.annotation.NonNull;
 
-import com.example.config.AnalyticsConfig;
-import com.example.config.CrashlyticsConfig;
-import com.example.config.FrescoConfig;
-import com.example.config.RemoteConfig;
+import com.example.configurers.Analytics;
+import com.example.configurers.CrashLytics;
+import com.example.configurers.FrescoPipelines;
+import com.example.configurers.RemoteConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.crash.FirebaseCrash;
 import com.squareup.leakcanary.RefWatcher;
 
 import javax.inject.Inject;
@@ -40,17 +39,16 @@ public abstract class App extends Application implements HasActivityInjector {
 	public void onCreate() {
 		super.onCreate();
 
-		final ImagePipelineConfig.Builder fresco = FrescoConfig.setupFresco(this);
-
 		setupDependenciesManager();
+
+		final ImagePipelineConfig.Builder fresco = FrescoPipelines.setupFresco(this);
 		trackFresco(fresco);
 		Fresco.initialize(this, fresco.build());
-		FirebaseApp.initializeApp(this);
-		FirebaseCrash.setCrashCollectionEnabled(!BuildConfig.DEBUG);
 
-		CrashlyticsConfig.setup(this);
+		FirebaseApp.initializeApp(this);
+		CrashLytics.setup(this);
 		RemoteConfig.setup();
-		AnalyticsConfig.setup(this);
+		Analytics.setup(this);
 
 		refWatcher = enableLeakCanary();
 		instance = this;

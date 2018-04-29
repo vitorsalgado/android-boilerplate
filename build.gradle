@@ -1,5 +1,6 @@
+import com.github.spotbugs.SpotBugsTask
+
 apply from: rootProject.file('tools/predex.gradle')
-apply from: rootProject.file('tools/git-utils.gradle')
 
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "org.sonarqube"
@@ -10,16 +11,13 @@ buildscript {
 	addRepos(repositories)
 
 	dependencies {
-		classpath "com.android.tools.build:gradle:3.0.1"
-		classpath "com.google.gms:google-services:3.1.2"
+		classpath 'com.android.tools.build:gradle:3.1.2'
+		classpath "org.jacoco:org.jacoco.core:$versions.jacoco"
+		classpath "com.google.gms:google-services:$versions.google_services"
 		classpath "io.fabric.tools:gradle:$versions.fabric"
-		classpath "org.owasp:dependency-check-gradle:2.1.1"
-		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1"
-		classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:1.6.0"
-	}
-	
-	repositories {
-		mavenCentral()
+		classpath "org.owasp:dependency-check-gradle:$versions.owasp_dependency_check"
+		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$versions.sonar"
+		classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:$versions.spotbugs_plugin"
 	}
 }
 
@@ -67,7 +65,6 @@ allprojects {
 		}
 	}
 
-
 	gradle.projectsEvaluated {
 		tasks.withType(JavaCompile) {
 			options.compilerArgs << "-Xlint:deprecation"
@@ -75,11 +72,16 @@ allprojects {
 	}
 }
 
-subprojects { subproject ->
-	apply from: rootProject.file('tools/jacoco.gradle')
+subprojects {
 	apply from: rootProject.file('tools/linters.gradle')
 
 	afterEvaluate { Project project ->
+		project.tasks.whenTaskAdded {
+			if (it.name == "testReleaseUnitTest") {
+				it.enabled = false
+			}
+		}
+
 		if (project.findProperty('android')) {
 			android {
 				compileOptions {
@@ -87,12 +89,11 @@ subprojects { subproject ->
 					targetCompatibility JavaVersion.VERSION_1_8
 				}
 
-				compileSdkVersion 27
-				buildToolsVersion "27.0.3"
+				compileSdkVersion build_versions.target_sdk
 
 				defaultConfig {
-					minSdkVersion 19
-					targetSdkVersion 27
+					minSdkVersion build_versions.min_sdk
+					targetSdkVersion build_versions.target_sdk
 					versionCode 1
 					versionName "1.0"
 					vectorDrawables.useSupportLibrary true
@@ -100,7 +101,7 @@ subprojects { subproject ->
 			}
 		}
 
-		tasks.withType(com.github.spotbugs.SpotBugsTask) {
+		tasks.withType(SpotBugsTask) {
 			excludeFilter rootProject.file("tools/linters/spotbugs-filter.xml")
 			reports {
 				xml.enabled = false

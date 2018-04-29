@@ -1,15 +1,15 @@
 def versions = [:]
 
 // support
-versions.supportLibrary = '27.1.0'
+versions.supportLibrary = '27.1.1'
 versions.testSupportLibrary = '1.0.1'
-versions.constraintLayout = '1.0.2'
+versions.constraintLayout = '1.1.0'
 
 // test dependencies
 versions.junit = '4.12'
 versions.hamcrest = '1.3'
 versions.testButler = '1.3.1'
-versions.robolectric = '3.7.1'
+versions.robolectric = '3.8'
 versions.espresso = '3.0.1'
 versions.mockito = '2.15.0'
 versions.requestmatcher = '2.2.0'
@@ -18,7 +18,7 @@ versions.jsonpathassert = '2.2.0'
 // main dependencies
 versions.okhttp = '3.10.0'
 versions.retrofit = '2.3.0'
-versions.play = '11.8.0'
+versions.play = '15.0.0'
 versions.gson = '2.8.2'
 versions.fresco = '1.8.1'
 versions.rxAndroid = '2.0.2'
@@ -31,20 +31,25 @@ versions.dagger = '2.14.1'
 versions.fabric = '1.25.1'
 versions.databinding = '2.3.3'
 versions.rootbeer = '0.0.6'
+versions.google_services = '3.2.0'
+versions.owasp_dependency_check = '2.1.1'
+versions.sonar = '2.6.1'
+versions.spotbugs_plugin = '1.6.0'
 
 // architecture components
-versions.arch = '1.1.0'
+versions.arch = '1.1.1'
 
 // utils
 versions.leakCanary = '1.5.4'
 versions.stetho = '1.5.0'
 versions.rxlint = '1.6'
 versions.detekt = '1.0.0.RC6-2'
+versions.jacoco = '0.8.0'
 
 def build_versions = [:]
-build_versions.min_sdk = 19
+build_versions.min_sdk = 21
 build_versions.target_sdk = 27
-build_versions.build_tools = "27.0.1"
+build_versions.build_tools = "27.0.3"
 
 ext.build_versions = build_versions
 ext.versions = versions

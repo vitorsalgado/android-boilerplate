@@ -5,7 +5,7 @@ android {}
 final versions = rootProject.ext.versions
 
 dependencies {
-	implementation project(':toolkit')
+	implementation project(':libs:toolkit')
 
 	// ---------------------------------------------------------------------------------------------
 	// Libraries
