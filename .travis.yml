@@ -21,7 +21,7 @@ before_install:
      curl https://sdk.cloud.google.com | bash;
     fi
   - echo $GCLOUD_KEY > gcloud_key.json
-  - gcloud auth activate-service-account --key-file gcloud_key.json
+  - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud_key.json
 
 install:
   - gcloud components update
