@@ -17,10 +17,6 @@ env:
   - GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 before_install:
-  - if [ ! -d "${GAE_PYTHONPATH}" ]; then
-      python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}");
-    fi
-
   - if [ ! -d ${HOME}/google-cloud-sdk ]; then
      curl https://sdk.cloud.google.com | bash;
     fi
