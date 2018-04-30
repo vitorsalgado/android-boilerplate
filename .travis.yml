@@ -1,5 +1,6 @@
 language: android
 jdk: openjdk8
+sudo: false
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -13,19 +14,25 @@ cache:
     - $HOME/google-cloud-sdk/
 
 env:
-  - PATH=$PATH:${HOME}/google-cloud-sdk/bin CLOUDSDK_CORE_DISABLE_PROMPTS=1
+  - GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 before_install:
-  - make set-licenses
+  - if [ ! -d "${GAE_PYTHONPATH}" ]; then
+      python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}");
+    fi
+
   - if [ ! -d ${HOME}/google-cloud-sdk ]; then
      curl https://sdk.cloud.google.com | bash;
     fi
-  - echo $GCLOUD_KEY > gcloud_key.json
-  - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud_key.json
+
+  - echo $GCLOUD_KEY > $HOME/gcloud_key.json
+  - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file $HOME/gcloud_key.json
+
+  - make set-licenses
 
 install:
-  - gcloud components update
   - gcloud config set project example-bb31f
+  - gcloud -q components update gae-python
 
 android:
   components:
