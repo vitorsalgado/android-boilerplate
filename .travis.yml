@@ -29,6 +29,7 @@ before_install:
      curl https://sdk.cloud.google.com | bash;
     fi
 
+  - tar -xzf credentials.tar.gz
   - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
   - make set-licenses
 
