@@ -29,7 +29,7 @@ Inquirer.prompt(
 		let pwd = await cmd('pwd');
 		pwd = pwd.toString().replace('\n', '');
 
-		const appBuildPath = `${pwd}/app/build.gradle`;
+		const appBuildPath = `${pwd}/app/app.gradle`;
 		const appBuild = FileSystem.readFileSync(appBuildPath).toString();
 		const changedAppBuild = appBuild.replace(/final app_name = 'Boilerplate'/, `final app_name = '${project}'`);
 
@@ -48,18 +48,18 @@ Inquirer.prompt(
 		const root = `${pwd}`;
 		const libraries = [
 			`${root}/app`,
-			`${root}/analytics`,
-			`${root}/android-utils`,
-			`${root}/api`,
-			`${root}/graph-api`,
-			`${root}/logger`,
-			`${root}/interactors`,
-			`${root}/uava`
+			`${root}/libs/analytics`,
+			`${root}/libs/toolkit-android`,
+			`${root}/libs/api`,
+      `${root}/libs/toolkit`,
+      `${root}/features/feature-about`,
+      `${root}/features/feature-auth`
 		];
 		const languages = [
 			'java',
 			'kotlin',
-			'scala'
+      'scala',
+      'groovy'
 		];
 
 		libraries.forEach(async (library) =>

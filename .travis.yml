@@ -1,14 +1,5 @@
 language: android
-
-sudo: true
-
 jdk: openjdk8
-
-os:
-  - linux
-
-services:
-  - docker
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -18,9 +9,23 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+    - $HOME/google-cloud-sdk/
+
+env:
+  - PATH=$PATH:${HOME}/google-cloud-sdk/bin CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 before_install:
   - make set-licenses
+  - if [ ! -d ${HOME}/google-cloud-sdk ]; then
+     curl https://sdk.cloud.google.com | bash;
+    fi
+  - echo $GCLOUD_KEY > gcloud_key.json
+  - gcloud auth activate-service-account --key-file gcloud_key.json
+
+install:
+  - gcloud components update
+  - gcloud config set project example-bb31f
 
 android:
   components:
@@ -30,11 +35,10 @@ android:
     - platform-tools
     - extra-android-m2repository
     - extra-google-m2repository
-    - extra-google-android-support
     - extra-google-google_play_services
 
 script:
-  - make build-all
+  - make build-ci
 
 after_success:
   - make sonar

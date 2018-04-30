@@ -15,8 +15,8 @@ build:
 	clear && \
 	./gradlew clean build --$(LEVEL) -x validateSigningRelease -x packageRelease -x testRelease
 
-build-all:
-	./gradlew clean build --$(LEVEL)
+build-ci:
+	./gradlew build --quiet
 
 infer:
 	clear && \
