@@ -35,7 +35,6 @@ before_install:
 
 install:
   - gcloud config set project example-bb31f
-  - gcloud -q components update gae-python
 
   - if test ! -e $HOME/android-sdk-dl/sdk-tools.zip ; then curl https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip > $HOME/android-sdk-dl/sdk-tools.zip ; fi
   - unzip -qq -n $HOME/android-sdk-dl/sdk-tools.zip -d $HOME/android-sdk
