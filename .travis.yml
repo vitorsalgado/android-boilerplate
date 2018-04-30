@@ -8,13 +8,15 @@ before_cache:
 
 cache:
   directories:
+    - $HOME/android-sdk-dl
+    - $HOME/android-sdk
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
     - $HOME/google-cloud-sdk/
 
 env:
-  - CLOUDSDK_PYTHON_SITEPACKAGES=1 GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
+  - BUILD_TOOLS=27.0.3 API=27 ANDROID_HOME=$HOME/android-sdk CLOUDSDK_PYTHON_SITEPACKAGES=1 GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 before_install:
   - pip install -U crcmod
@@ -36,15 +38,14 @@ install:
   - gcloud config set project example-bb31f
   - gcloud -q components update gae-python
 
-android:
-  components:
-    - android-27
-    - build-tools-27.0.3
-    - tools
-    - platform-tools
-    - extra-android-m2repository
-    - extra-google-m2repository
-    - extra-google-google_play_services
+  - if test ! -e $HOME/android-sdk-dl/sdk-tools.zip ; then curl https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip > $HOME/android-sdk-dl/sdk-tools.zip ; fi
+  - unzip -qq -n $HOME/android-sdk-dl/sdk-tools.zip -d $HOME/android-sdk
+
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'tools' > /dev/null
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platform-tools' > /dev/null
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'build-tools;${BUILD_TOOLS}' > /dev/null
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'platforms;android-${API}' > /dev/null
+  - echo y | $HOME/android-sdk/tools/bin/sdkmanager 'extras;google;m2repository' > /dev/null
 
 script:
   - make build-ci
