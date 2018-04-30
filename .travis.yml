@@ -16,7 +16,7 @@ cache:
     - $HOME/google-cloud-sdk/
 
 env:
-  - PROJECT_ID=example-bb31f BUILD_TOOLS=27.0.3 API=27 ANDROID_HOME=$HOME/android-sdk CLOUDSDK_PYTHON_SITEPACKAGES=1 GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
+  - CLOUDSDK_PYTHON_SITEPACKAGES=1 GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 android:
   components:
@@ -41,14 +41,15 @@ before_install:
 
   - tar -xzf credentials.tar.gz
   - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
+  - yes | sdkmanager "platforms;android-27"
   - make set-licenses
 
 install:
-  - gcloud config set project ${PROJECT_ID}
+  - gcloud config set project example-bb31f
 
 script:
   - make build-ci
-  - gcloud firebase test android run --app app/build/outputs/apk/app-debug.apk --results-bucket cloud-test-${PROJECT_ID}
+  - gcloud firebase test android run --app app/build/outputs/apk/app-debug.apk
 
 after_success:
   - make sonar
