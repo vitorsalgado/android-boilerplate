@@ -1,3 +1,4 @@
+SHELL := /bin/bash
 PROJECT := com.example
 PROJECT_TEST := $(PROJECT).test
 CONTEXT := $$(pwd)

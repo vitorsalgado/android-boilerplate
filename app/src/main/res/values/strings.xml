@@ -2,11 +2,10 @@
   <!-- application -->
   <string name="account_type">com.example</string>
 
-  <!-- login -->
-  <string name="login_title">Login</string>
-
-  <!-- errors -->
-  <string name="error_no_internet_connection">Rede indisponível :( \nVerifique sua conexão de dados
-    e tente novamente.
-  </string>
+  <!-- navigation -->
+  <string name="nav_group">Example</string>
+  <string name="nav_title_logged_out">Sign in or register</string>
+  <string name="nav_item_home">Start</string>
+  <string name="navigation_drawer_open">Open navigation drawer</string>
+  <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

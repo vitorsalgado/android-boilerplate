@@ -1,1 +1,10 @@
-<manifest package="com.example.features.auth"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.features.auth">
+  <application>
+    <activity
+      android:name="com.example.features.auth.LoginActivity"
+      android:label="@string/login_title"
+      android:launchMode="singleTask"
+      android:screenOrientation="portrait"/>
+  </application>
+</manifest>

@@ -5,8 +5,6 @@ include ':app',
   ':libs:analytics',
   ':libs:resources',
 
-  ':interactors',
-
   ':features:feature-auth',
   ':features:feature-about'
 

@@ -1,10 +1,10 @@
 <resources>
   <!-- common -->
   <string name="dialog_action_ok">OK</string>
-  <string name="common_cancel">Cancelar</string>
-  <string name="common_retry">Tentar novamente</string>
-  <string name="common_prompt_discard_data">Tem certeza de que deseja descartar as alterações?
+  <string name="common_cancel">Cancel</string>
+  <string name="common_retry">Retry</string>
+  <string name="common_prompt_discard_data">Discard changes?
   </string>
-  <string name="common_discard">Descartar</string>
-  <string name="common_keep_editing">Continuar Editando</string>
+  <string name="common_discard">Discard</string>
+  <string name="common_keep_editing">Keep editing</string>
 </resources>

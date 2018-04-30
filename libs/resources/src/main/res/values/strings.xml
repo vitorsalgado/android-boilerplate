@@ -1,14 +1,19 @@
 <resources>
   <string name="facebook_app_id">822968334426637</string>
 
-  <string name="error">Erro</string>
-  <string name="double_back_to_exit">Clique em VOLTAR mais uma vez para sair</string>
-  <string name="about">Sobre</string>
-  <string name="version">Versão</string>
-  <string name="version_description">Versão %s</string>
-  <string name="licenses_description">Este projeto contém diversas bibliotecas de código aberto.
-    Veja as licenças clicando no link abaixo.
+  <string name="error">Error</string>
+  <string name="double_back_to_exit">Click BACK one more time to exit</string>
+  <string name="about">About</string>
+  <string name="version">Version</string>
+  <string name="version_description">Version %s</string>
+  <string name="licenses_description">This project contains several open-source libraries.
+    See licenses clicking on link below.
   </string>
-  <string name="licenses">Licenças</string>
-  <string name="close">Fechar</string>
+  <string name="licenses">Licenses</string>
+  <string name="close">Close</string>
+
+  <!-- errors -->
+  <string name="error_no_internet_connection">Network unavailable :( \nVerify your data connection
+    and try again.
+  </string>
 </resources>

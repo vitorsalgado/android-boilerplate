@@ -1,14 +1,17 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.feature'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
-android {
-  dataBinding {
-    enabled true
-  }
-}
+android {}
 
 dependencies {
   implementation project(':libs:resources')
   implementation project(':libs:toolkit-android')
+
+  // ---------------------------------------------------------------------------------------------
+  // Kotlin
+  // ---------------------------------------------------------------------------------------------
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
 
   // ---------------------------------------------------------------------------------------------
   // Dependencies
@@ -33,4 +36,14 @@ dependencies {
     exclude module: 'support-compat'
     exclude module: 'support-core-ui'
   }
+}
+
+kotlin {
+  experimental {
+    coroutines 'enable'
+  }
+}
+
+androidExtensions {
+  experimental = true
 }

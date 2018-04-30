@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco'
 
 apply from: "$rootDir/tools/layout-ids.gradle"
@@ -7,11 +10,11 @@ apply from: "$rootDir/tools/test-butler.gradle"
 apply from: "$rootDir/tools/jacoco.gradle"
 
 final app_name = 'Boilerplate'
-final versions = rootProject.ext.versions
 
 android {
   defaultConfig {
     applicationId "com.example"
+    multiDexEnabled false
     testInstrumentationRunner "com.example.InstrumentationRunner"
   }
 
@@ -23,10 +26,6 @@ android {
 
   aaptOptions {
     cruncherEnabled false
-  }
-
-  dataBinding {
-    enabled true
   }
 
   lintOptions {
@@ -84,6 +83,7 @@ android {
       zipAlignEnabled true
       shrinkResources true
       minifyEnabled true
+      crunchPngs false
 
       if (System.getenv("KEY_ALIAS") == null) {
         signingConfig signingConfigs.debug
@@ -146,10 +146,13 @@ dependencies {
   implementation project(':libs:api')
   implementation project(':libs:analytics')
 
-  implementation project(':interactors')
-
   implementation project(':features:feature-auth')
   implementation project(':features:feature-about')
+
+  // ---------------------------------------------------------------------------------------------
+  // Kotlin
+  // ---------------------------------------------------------------------------------------------
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
 
   // ---------------------------------------------------------------------------------------------
   // Dependencies
@@ -175,7 +178,7 @@ dependencies {
     exclude module: 'support-core-ui'
   }
   implementation "android.arch.lifecycle:extensions:$versions.arch"
-  annotationProcessor "android.arch.lifecycle:compiler:$versions.arch"
+  kapt "android.arch.lifecycle:compiler:$versions.arch"
   implementation "com.google.firebase:firebase-core:$versions.play"
   implementation "com.google.firebase:firebase-messaging:$versions.play"
   implementation "com.google.firebase:firebase-config:$versions.play"
@@ -184,11 +187,12 @@ dependencies {
   implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
   implementation "com.google.dagger:dagger-android:$versions.dagger"
   implementation "com.google.dagger:dagger-android-support:$versions.dagger"
-  annotationProcessor "com.google.dagger:dagger-android-processor:$versions.dagger"
-  annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger"
+  kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
+  kapt "com.google.dagger:dagger-compiler:$versions.dagger"
   implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
   implementation "com.facebook.fresco:fresco:$versions.fresco"
   implementation "com.scottyab:rootbeer-lib:$versions.rootbeer"
+  implementation "com.jakewharton.timber:timber:$versions.timber"
 
   // ---------------------------------------------------------------------------------------------
   // Development and Support Libs
@@ -196,7 +200,6 @@ dependencies {
   implementation("com.crashlytics.sdk.android:crashlytics:$versions.crashlytics") {
     transitive = true
   }
-  debugImplementation "nl.littlerobots.rxlint:rxlint:$versions.rxlint"
   releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
   testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakCanary"
   debugImplementation "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary"
@@ -228,6 +231,20 @@ dependencies {
   androidTestImplementation "com.android.support.test.espresso:espresso-intents:$versions.espresso"
   androidTestImplementation "com.android.support.test.espresso:espresso-web:$versions.espresso"
   androidTestImplementation "com.linkedin.testbutler:test-butler-library:$versions.testButler"
+}
+
+kapt {
+  useBuildCache = true
+}
+
+kotlin {
+  experimental {
+    coroutines 'enable'
+  }
+}
+
+androidExtensions {
+  experimental = true
 }
 
 apply plugin: 'com.google.gms.google-services'
