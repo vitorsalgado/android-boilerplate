@@ -8,8 +8,6 @@ before_cache:
 
 cache:
   directories:
-    - $HOME/android-sdk-dl
-    - $HOME/android-sdk
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
@@ -46,6 +44,7 @@ before_install:
 
 install:
   - gcloud config set project example-bb31f
+  - gcloud components update
 
 script:
   - make build-ci
