@@ -1,5 +1,3 @@
-package com.example.utils.base
-
 //package com.example.features
 //
 //import android.annotation.SuppressLint

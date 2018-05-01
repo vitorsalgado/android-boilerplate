@@ -5,7 +5,7 @@ import android.support.annotation.StringRes
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import com.example.android.R
+import com.example.utils.R
 
 fun AppCompatActivity.setToolbar(@NonNull toolbar: Toolbar, @StringRes title: Int) {
   this.setToolbar(toolbar, getString(title))

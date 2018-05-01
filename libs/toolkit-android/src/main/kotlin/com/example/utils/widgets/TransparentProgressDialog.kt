@@ -7,7 +7,7 @@ import android.support.annotation.StyleRes
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.widget.RelativeLayout
-import com.example.android.R
+import com.example.utils.R
 import kotlinx.android.synthetic.main.component_progress_dialog.*
 
 class TransparentProgressDialog(context: Context, @StyleRes style: Int, @ColorRes color: Int) : Dialog(context, style) {

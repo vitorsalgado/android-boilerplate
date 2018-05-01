@@ -12,8 +12,8 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
-import com.example.android.R
 import com.example.utils.DimensionUtils
+import com.example.utils.R
 import java.math.BigDecimal
 
 class RangeSeekBar<T : Number> : android.support.v7.widget.AppCompatImageView {
