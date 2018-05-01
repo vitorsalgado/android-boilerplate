@@ -1,6 +1,6 @@
 package com.example.trackers
 
-import com.example.android.utils.LogUtility
+import com.example.utils.LogUtility
 import com.facebook.cache.common.CacheKey
 import com.facebook.imagepipeline.cache.CountingMemoryCache
 import com.facebook.imagepipeline.cache.ImageCacheStatsTracker

@@ -1,4 +1,4 @@
-package com.example.android.utils.widgets
+package com.example.utils.widgets
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -13,7 +13,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import com.example.android.R
-import com.example.android.utils.DimensionUtils
+import com.example.utils.DimensionUtils
 import java.math.BigDecimal
 
 class RangeSeekBar<T : Number> : android.support.v7.widget.AppCompatImageView {

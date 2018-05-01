@@ -5,7 +5,7 @@ import android.app.Application
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
-import com.example.android.utils.LogUtility
+import com.example.utils.LogUtility
 
 class ActivityLifecycleTracker(private val tracker: FragmentLifecycleTracker) : Application.ActivityLifecycleCallbacks {
 

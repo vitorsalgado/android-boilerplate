@@ -1,4 +1,4 @@
-package com.example.android.utils.extensions
+package com.example.utils.extensions
 
 import android.support.annotation.NonNull
 import android.support.annotation.StringRes

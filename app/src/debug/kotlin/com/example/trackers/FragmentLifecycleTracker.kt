@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager
 import android.view.View
 import com.example.App
 
-import com.example.android.utils.LogUtility
+import com.example.utils.LogUtility
 
 class FragmentLifecycleTracker : FragmentManager.FragmentLifecycleCallbacks() {
   override fun onFragmentActivityCreated(fm: FragmentManager?, f: Fragment?, savedInstanceState: Bundle?) {

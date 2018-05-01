@@ -5,7 +5,7 @@ import android.accounts.AccountManager.KEY_BOOLEAN_RESULT
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import com.example.android.utils.LogUtility
+import com.example.utils.LogUtility
 import com.example.api.gateway.Api
 import com.example.api.gateway.dtos.OAuthResponse
 import com.example.features.auth.LoginActivity

@@ -1,4 +1,4 @@
-package com.example.android.utils.widgets
+package com.example.utils.widgets
 
 import android.app.Dialog
 import android.content.Context

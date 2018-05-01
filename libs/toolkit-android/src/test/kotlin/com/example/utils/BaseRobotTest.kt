@@ -1,4 +1,4 @@
-package com.example.android.utils
+package com.example.utils
 
 import br.com.concretesolutions.requestmatcher.LocalTestRequestMatcherRule
 import br.com.concretesolutions.requestmatcher.RequestMatcherRule

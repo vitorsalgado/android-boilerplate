@@ -1,4 +1,4 @@
-package com.example.android.utils
+package com.example.utils
 
 import android.app.Activity
 import android.support.v7.widget.Toolbar

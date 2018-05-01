@@ -12,7 +12,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.example.R
-import com.example.android.utils.AppUtils
+import com.example.utils.AppUtils
 import kotlinx.android.synthetic.main.main_activity.*
 import java.util.*
 

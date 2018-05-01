@@ -5,10 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.example.android.utils.AppUtils
-import com.example.android.utils.extensions.setToolbar
+import com.example.utils.AppUtils
+import com.example.utils.extensions.setToolbar
 import de.psdev.licensesdialog.LicensesDialog
-import kotlinx.android.synthetic.main.about_activity.*
 
 class AboutActivity : AppCompatActivity() {
   companion object {

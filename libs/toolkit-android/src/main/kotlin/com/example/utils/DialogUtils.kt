@@ -1,4 +1,4 @@
-package com.example.android.utils
+package com.example.utils
 
 import android.app.Dialog
 import android.content.Context
@@ -11,9 +11,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import com.example.android.R
-import com.example.android.utils.widgets.CalendarDatePickerDialog
-import com.example.android.utils.widgets.ClockTimePickerDialog
-import com.example.android.utils.widgets.TransparentProgressDialog
+import com.example.utils.widgets.CalendarDatePickerDialog
+import com.example.utils.widgets.ClockTimePickerDialog
+import com.example.utils.widgets.TransparentProgressDialog
 
 object DialogUtils {
   fun promptToDiscard(

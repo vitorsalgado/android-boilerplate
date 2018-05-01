@@ -1,4 +1,4 @@
-package com.example.android.utils
+package com.example.utils
 
 import android.annotation.TargetApi
 import android.app.Activity

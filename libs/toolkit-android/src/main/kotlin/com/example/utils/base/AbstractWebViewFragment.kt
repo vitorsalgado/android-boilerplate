@@ -1,4 +1,4 @@
-package com.example.android.utils.base
+package com.example.utils.base
 
 //package com.example.features
 //

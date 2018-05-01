@@ -1,4 +1,4 @@
-package com.example.android.utils.base
+package com.example.utils.base
 
 //package com.example.features
 //
@@ -11,8 +11,8 @@ package com.example.android.utils.base
 //import android.view.View
 //import com.example.R
 //import com.example.Reporter
-//import com.example.android.utils.AppUtils
-//import com.example.android.utils.DialogUtils
+//import com.example.utils.AppUtils
+//import com.example.utils.DialogUtils
 //import com.example.toolkit.RetryCallback
 //
 //abstract class AbstractActivity : AppCompatActivity() {

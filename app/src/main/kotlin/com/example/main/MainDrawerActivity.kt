@@ -11,8 +11,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.R
-import com.example.android.utils.AppUtils
-import com.example.android.utils.extensions.setToolbar
+import com.example.utils.AppUtils
+import com.example.utils.extensions.setToolbar
 import kotlinx.android.synthetic.main.main_drawer_activity.*
 
 class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

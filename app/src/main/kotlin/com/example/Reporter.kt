@@ -1,7 +1,7 @@
 package com.example
 
 import com.crashlytics.android.Crashlytics
-import com.example.android.utils.LogUtility
+import com.example.utils.LogUtility
 
 import io.fabric.sdk.android.Fabric
 

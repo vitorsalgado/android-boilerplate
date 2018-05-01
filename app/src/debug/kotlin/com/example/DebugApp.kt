@@ -2,7 +2,7 @@ package com.example
 
 import android.os.StrictMode
 
-import com.example.android.utils.LogUtility
+import com.example.utils.LogUtility
 import com.example.trackers.ActivityLifecycleTracker
 import com.example.trackers.FragmentLifecycleTracker
 import com.example.trackers.FrescoCacheStatsTracker

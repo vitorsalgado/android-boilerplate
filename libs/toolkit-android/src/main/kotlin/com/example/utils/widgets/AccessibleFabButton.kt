@@ -1,4 +1,4 @@
-package com.example.android.utils.widgets
+package com.example.utils.widgets
 
 import android.content.Context
 import android.support.design.widget.FloatingActionButton

@@ -1,4 +1,4 @@
-package com.example.android.utils.widgets
+package com.example.utils.widgets
 
 import android.app.Dialog
 import android.app.TimePickerDialog
@@ -76,6 +76,6 @@ class ClockTimePickerDialog : DialogFragment(), TimePickerDialog.OnTimeSetListen
     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
     calendar.set(Calendar.MINUTE, minute)
 
-    clockTimePickerListener!!.onTimeSelected(ClockTimePickerDialog.SelectedTime(calendar.time))
+    clockTimePickerListener!!.onTimeSelected(SelectedTime(calendar.time))
   }
 }

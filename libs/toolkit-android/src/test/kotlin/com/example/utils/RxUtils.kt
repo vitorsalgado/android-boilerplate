@@ -1,4 +1,4 @@
-package com.example.android.utils
+package com.example.utils
 
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers

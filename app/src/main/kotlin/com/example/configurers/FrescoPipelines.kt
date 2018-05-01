@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 
 import com.example.BuildConfig
-import com.example.android.utils.LogUtility
+import com.example.utils.LogUtility
 import com.facebook.cache.disk.DiskCacheConfig
 import com.facebook.imagepipeline.cache.MemoryCacheParams
 import com.facebook.imagepipeline.core.ImagePipelineConfig

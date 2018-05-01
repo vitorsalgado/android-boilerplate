@@ -1,5 +1,6 @@
-package com.example.android.utils
+package com.example.utils
 
+import com.example.utils.LogUtility
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner

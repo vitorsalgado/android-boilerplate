@@ -1,6 +1,6 @@
 package com.example.services.push
 
-import com.example.android.utils.LogUtility
+import com.example.utils.LogUtility
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.FirebaseInstanceIdService
 
