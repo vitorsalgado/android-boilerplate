@@ -43,6 +43,7 @@ Inquirer.prompt(
     const root = `${pwd}`
     const libraries = [
       `${root}/app`,
+      `${root}/resources`,
       `${root}/libs/analytics`,
       `${root}/libs/toolkit-android`,
       `${root}/libs/api`,
@@ -80,7 +81,7 @@ Inquirer.prompt(
               return
             }
 
-            readDirRecursively(`${library}/`, filters)
+            readDirRecursively(`${library}/`, inclusions)
               .map(file => ({ content: FileSystem.readFileSync(file), file }))
               .map(({ content, file }) => ({ content: content.toString(), file }))
               .map(({ content, file }) => ({ content: content.split('com.example').join(pkg), file }))
@@ -115,11 +116,12 @@ const readDirRecursively = (dir, predicate) => {
 
 const exclusions = file => ['build', '.settings', 'bin', '.idea', '.classpath', '.gitignore', '.project'].includes(file)
 
-const filters = file =>
+const inclusions = file =>
   file.indexOf('.java') >= 0 ||
   file.indexOf('.kotlin') >= 0 ||
   file.indexOf('.kt') >= 0 ||
   file.indexOf('.scala') >= 0 ||
   file.indexOf('.feature') >= 0 ||
   file.indexOf('.gradle') >= 0 ||
-  file.indexOf('.xml') >= 0
+  file.indexOf('.xml') >= 0 ||
+  file.indexOf('.pro') >= 0

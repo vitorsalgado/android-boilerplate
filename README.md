@@ -9,6 +9,16 @@ The goal is to have a base from where new projects can start with basic architec
 This project contains several tools and different languages all working together to build a nice development environment.  
 Continue reading below for more details.
 
+## How to start a new project
+This project has a predefined name and package structure (__Boilerplate__ and __com.example__).  
+To facilitate new projects starting from this repository, 
+there's a CLI tool written in JavaScript that fully replaces this predefined structure to new one, chosen by you. 
+To use it, install latest Node.js version and then:
+```
+npm install
+node cli.js
+```
+
 ## Mock Server
 This project comes with a Mock Server already set. The mock tool was built on top of was built on top of [WireMock](http://wiremock.org/) and 
 the reloader that comes together uses *Node.js* to watch file changes and restart WireMock.

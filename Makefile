@@ -163,11 +163,5 @@ cp:
 # ##################################################################################################
 
 new-project:
-	docker rm -f $(PROJECT_TEST).cli || true && \
-	docker build -t $(PROJECT_TEST).cli -f Dockerfile.cli . && \
-	docker run --rm -v $(CONTEXT):/usr/app/android --name $(PROJECT_TEST).cli -it $(PROJECT_TEST).cli
-
-
-
-
-.PHONY: build qark
+	npm install && \
+	node cli.js
