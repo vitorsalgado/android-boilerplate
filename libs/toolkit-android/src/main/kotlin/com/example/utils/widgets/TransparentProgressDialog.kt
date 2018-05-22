@@ -6,11 +6,15 @@ import android.support.annotation.ColorRes
 import android.support.annotation.StyleRes
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import com.example.utils.R
-import kotlinx.android.synthetic.main.component_progress_dialog.*
+import com.example.utils.delegates.viewWithId
 
 class TransparentProgressDialog(context: Context, @StyleRes style: Int, @ColorRes color: Int) : Dialog(context, style) {
+  private val root: RelativeLayout by viewWithId(R.id.root)
+  private val loading: ProgressBar by viewWithId(R.id.loading)
+
   init {
     val layoutParams = window!!.attributes
     layoutParams.gravity = Gravity.CENTER_HORIZONTAL

@@ -1,15 +1,8 @@
-include ':app',
-  ':libs:toolkit',
-  ':libs:toolkit-android',
-  ':libs:api',
-  ':libs:analytics',
-  ':libs:resources',
-
-  ':features:feature-auth',
-  ':features:feature-about'
+include ':app'
+include ':libs:toolkit', ':libs:toolkit-android', ':libs:api', ':libs:analytics', ':libs:resources'
 
 def changeBuildFileName = { project -> project.buildFileName = project.name + '.gradle' }
-def isGroupDir = { dir -> dir == 'libs' || dir == 'features' }
+def isGroupDir = { dir -> dir == 'libs' }
 
 rootProject.children.each {
   if (isGroupDir(it.name)) {

@@ -1,6 +1,11 @@
 <resources>
+  <!-- GENERAL APPLICATION RESOURCES -->
+  <!-- ######################################################################################### -->
+
   <!-- application -->
   <string name="account_type">com.example</string>
+  <string name="facebook_app_id">822968334426637</string>
+  <string name="fb_login_protocol_scheme">fb822968334426637</string>
 
   <!-- navigation -->
   <string name="nav_group">Example</string>
@@ -8,4 +13,16 @@
   <string name="nav_item_home">Start</string>
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+  <!-- FEATURES -->
+  <!-- ######################################################################################### -->
+  <!-- login -->
+  <string name="login_title">Login</string>
+  <string name="login_terms_and_conditions">By continuing, you agree to our Terms of Service and
+    Privacy Policy
+  </string>
+  <string name="login_button_facebook">Enter with Facebook</string>
+  <!-- about -->
+  <string name="about_title">About</string>
 </resources>

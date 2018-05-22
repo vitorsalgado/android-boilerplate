@@ -5,13 +5,13 @@ import android.accounts.AccountManager.KEY_BOOLEAN_RESULT
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import com.example.utils.LogUtility
 import com.example.api.gateway.Api
 import com.example.api.gateway.dtos.OAuthResponse
-import com.example.features.auth.LoginActivity
+import com.example.features.authentication.LoginActivity
 import com.example.services.authenticator.AuthConstants.Companion.ACCOUNT_AUTHTOKEN_TYPE
 import com.example.services.authenticator.AuthConstants.Companion.ACCOUNT_EXPIRESIN
 import com.example.services.authenticator.AuthConstants.Companion.ACCOUNT_REFRESHTOKEN
+import com.example.utils.LogUtility
 import java.util.*
 
 class AccountAuthenticator internal constructor(private val context: Context, private val api: Api) : AbstractAccountAuthenticator(context) {

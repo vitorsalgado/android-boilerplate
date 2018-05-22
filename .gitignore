@@ -99,3 +99,4 @@ project.properties
 reports/
 .sonarlint/
 qark/
+.garbage/

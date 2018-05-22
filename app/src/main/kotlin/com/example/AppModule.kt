@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import com.example.api.gateway.Api
 import com.example.api.gateway.ApiBuilder
 import com.example.api.gateway.Config
+import com.facebook.CallbackManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -50,5 +51,10 @@ internal class AppModule {
     val config = Config(uri, File(cache), cache, 100 * 1024 * 1024)
 
     return ApiBuilder.build(okBuilder, gson, config)
+  }
+
+  @Provides
+  fun provideCallbackManager(): CallbackManager {
+    return CallbackManager.Factory.create()
   }
 }

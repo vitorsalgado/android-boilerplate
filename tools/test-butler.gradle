@@ -16,8 +16,8 @@ ext {
 
 final butlerPackage = 'com.linkedin.android.testbutler'
 final butlerApkDir = "$rootDir/tools/test-butler"
-final butlerApkPath = "$butlerApkDir/test-butler-app-${rootProject.ext.versions.testButler}.apk"
-final butlerApkURL = "https://bintray.com/linkedin/maven/download_file?file_path=com%2Flinkedin%2Ftestbutler%2Ftest-butler-app%2F${rootProject.ext.versions.testButler}%2Ftest-butler-app-${rootProject.ext.versions.testButler}.apk"
+final butlerApkPath = "$butlerApkDir/test-butler-app-${Versions.testButler}.apk"
+final butlerApkURL = "https://bintray.com/linkedin/maven/download_file?file_path=com%2Flinkedin%2Ftestbutler%2Ftest-butler-app%2F${Versions.testButler}%2Ftest-butler-app-${Versions.testButler}.apk"
 
 /**
  * Downloads Test Butler APK if needed
@@ -42,7 +42,7 @@ task downloadButlerApk {
       return
     }
 
-    logger.info("Cleaning versions different than $rootProject.ext.versions.testButler")
+    logger.info("Cleaning versions different than $Versions.testButler")
     butlerDir.listFiles().each { it.delete() }
 
     logger.info("Downloading Test-butler apk from: $butlerApkURL")

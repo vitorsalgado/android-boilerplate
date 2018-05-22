@@ -1,47 +1,48 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+
+android {}
 
 dependencies {
   implementation project(':libs:resources')
 
   // ---------------------------------------------------------------------------------------------
+  // Kotlin
+  // ---------------------------------------------------------------------------------------------
+  implementation Dependencies.kotlinStandardLib
+
+  // ---------------------------------------------------------------------------------------------
   // Libraries
   // ---------------------------------------------------------------------------------------------
-  implementation "com.android.support:support-annotations:$versions.supportLibrary"
-  implementation("com.android.support:appcompat-v7:$versions.supportLibrary") {
+  implementation Dependencies.supportAnnotations
+  implementation(Dependencies.supportAppCompatV7) {
     exclude module: 'support-annotations'
     exclude module: 'support-v4'
     exclude module: 'cardview-v7'
   }
-  implementation("com.android.support:design:$versions.supportLibrary") {
+  implementation(Dependencies.supportDesign) {
     exclude module: 'support-v4'
     exclude module: 'appcompat-v7'
     exclude module: 'recyclerview-v7'
     exclude module: 'cardview-v7'
   }
-  implementation "com.android.support:support-v4:$versions.supportLibrary"
-  implementation "com.android.support:support-v13:$versions.supportLibrary"
-  implementation "com.google.android.gms:play-services-base:$versions.play"
-  implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
-  implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
-  implementation "com.jakewharton.timber:timber:$versions.timber"
+  implementation(Dependencies.supportRecyclerView) {
+    exclude module: 'support-annotations'
+    exclude module: 'support-compat'
+    exclude module: 'support-core-ui'
+  }
+  implementation Dependencies.supportV4
+  implementation Dependencies.supportV13
+  implementation Dependencies.playServicesBase
+  implementation Dependencies.rxAndroid
+  implementation Dependencies.rxJava
+  implementation Dependencies.timber
 
   // ---------------------------------------------------------------------------------------------
   // Test Libs
   // ---------------------------------------------------------------------------------------------
-  testImplementation "junit:junit:$versions.junit"
-  testImplementation "org.robolectric:robolectric:$versions.robolectric"
-  testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okhttp"
-  testImplementation "br.com.concretesolutions:requestmatcher:$versions.requestmatcher"
-}
-
-kotlin {
-  experimental {
-    coroutines 'enable'
-  }
-}
-
-androidExtensions {
-  experimental = true
+  testImplementation TestDependencies.junit
+  testImplementation TestDependencies.robolectric
+  testImplementation TestDependencies.okhttp3MockWebserver
+  testImplementation TestDependencies.requestMatcher
 }

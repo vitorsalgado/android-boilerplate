@@ -1,15 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {}
 
 dependencies {
-  // ---------------------------------------------------------------------------------------------
-  // Kotlin
-  // ---------------------------------------------------------------------------------------------
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
-
-  implementation "com.google.firebase:firebase-core:$versions.play"
-  implementation "com.android.support:support-annotations:$versions.supportLibrary"
+  implementation Dependencies.kotlinStandardLib
+  implementation Dependencies.firebaseCore
+  implementation Dependencies.supportAnnotations
 }

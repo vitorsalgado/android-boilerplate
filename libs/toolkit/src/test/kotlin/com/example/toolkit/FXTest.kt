@@ -1,26 +1,38 @@
 package com.example.toolkit
 
 import com.example.toolkit.FX.anyOf
+import com.example.toolkit.FX.curry
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @RunWith(JUnit4::class)
 class FXTest {
   @Test
-  fun `it should return true when any of functions evaluates to true`() {
+  fun `anyOf should return true when any of functions evaluates to true`() {
     assertTrue {
       anyOf(::isTest, ::isA)("test")
     }
   }
 
   @Test
-  fun `it should return false if all functions evaluates to false`() {
+  fun `anyOf should return false if all functions evaluates to false`() {
     assertFalse {
       anyOf(::isTest, ::isA)("nothing")
     }
+  }
+
+  @Test
+  fun `curry should reduce a function with multiple arguments into a function that accepts just one`() {
+    val fn: (Int, Int) -> Int = { a, b -> a + b }
+    val addTwo = curry(fn)(2)
+
+    val result = addTwo(2)
+
+    assertEquals(4, result)
   }
 
   private fun isTest(value: String): Boolean = value == "test"

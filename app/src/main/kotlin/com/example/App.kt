@@ -48,12 +48,16 @@ abstract class App : Application(), HasActivityInjector {
     super.onTrimMemory(level)
 
     when (level) {
-      ComponentCallbacks2.TRIM_MEMORY_COMPLETE, ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW, ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL, ComponentCallbacks2.TRIM_MEMORY_BACKGROUND, ComponentCallbacks2.TRIM_MEMORY_MODERATE, ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE, ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
-        if (!Fresco.hasBeenInitialized()) {
-          return
+      ComponentCallbacks2.TRIM_MEMORY_COMPLETE,
+      ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
+      ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
+      ComponentCallbacks2.TRIM_MEMORY_BACKGROUND,
+      ComponentCallbacks2.TRIM_MEMORY_MODERATE,
+      ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE,
+      ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
+        if (Fresco.hasBeenInitialized()) {
+          Fresco.getImagePipeline().clearMemoryCaches()
         }
-
-        Fresco.getImagePipeline().clearMemoryCaches()
       }
     }
   }

@@ -4,7 +4,7 @@ package com.example.features
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.example.main.MainActivity
+import com.example.features.main.MainActivity
 import junit.framework.Assert.assertFalse
 import org.junit.Rule
 import org.junit.Test

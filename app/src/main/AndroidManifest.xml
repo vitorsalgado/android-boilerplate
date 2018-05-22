@@ -36,9 +36,8 @@
     <!-- Meta -->
     <!-- ##################################################################################  -->
 
-    <meta-data
-      android:name="com.facebook.sdk.ApplicationId"
-      android:value="@string/facebook_app_id"/>
+    <meta-data android:name="com.facebook.sdk.ApplicationId"
+               android:value="@string/facebook_app_id"/>
 
     <meta-data
       android:name="io.fabric.ApiKey"
@@ -49,7 +48,7 @@
 
     <!-- Main -->
     <activity
-      android:name=".main.MainActivity"
+      android:name=".features.main.MainActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Launcher">
       <intent-filter>
@@ -58,7 +57,30 @@
       </intent-filter>
     </activity>
     <!-- Main With Drawer -->
-    <activity android:name=".main.MainDrawerActivity"/>
+    <activity android:name=".features.main.MainDrawerActivity"/>
+    <!-- Authentication -->
+    <activity
+      android:name=".features.authentication.LoginActivity"
+      android:label="@string/login_title"
+      android:launchMode="singleTask"
+      android:screenOrientation="portrait"/>
+    <activity android:name="com.facebook.FacebookActivity"
+              android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+              android:label="@string/app_name"/>
+    <activity
+      android:name="com.facebook.CustomTabActivity"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="@string/fb_login_protocol_scheme"/>
+      </intent-filter>
+    </activity>
+    <!-- About -->
+    <activity android:name=".features.about.AboutActivity"
+              android:launchMode="singleTask" android:screenOrientation="portrait"/>
 
 
     <!-- Services -->

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/container"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <android.support.constraint.Guideline
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/divider_top_dark"/>
+
+  <LinearLayout
+    android:id="@+id/pageIndicator"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toTopOf="@id/termsAndConditions"/>
+
+  <TextView
+    android:id="@+id/termsAndConditions"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:gravity="center"
+    android:text="@string/login_terms_and_conditions"
+    android:textColor="@android:color/black"
+    app:layout_constraintBottom_toTopOf="@id/facebookLogin"/>
+
+  <Button
+    android:id="@+id/facebookLogin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/btn_login_shadow"
+    android:paddingBottom="18dp"
+    android:paddingTop="15dp"
+    android:text="@string/login_button_facebook"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    android:textStyle="normal"
+    app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
