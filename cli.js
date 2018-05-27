@@ -54,7 +54,6 @@ Inquirer.prompt(
 
     const libraries = [
       `${root}/app`,
-      `${root}/buildSrc`,
       `${root}/resources`,
       `${root}/libs/analytics`,
       `${root}/libs/toolkit-android`,
