@@ -27,6 +27,7 @@ android:
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_cb141303541b_key -iv $encrypted_cb141303541b_iv -in ./tools/gae/credentials.tar.gz.enc -out credentials.tar.gz -d
+  - openssl aes-256-cbc -K $encrypted_fa08cc4ca265_key -iv $encrypted_fa08cc4ca265_iv -in ./app/distribution/release.keystore.enc -out ./app/distribution -d
   - sudo apt-get install google-cloud-sdk
   - tar -xzf credentials.tar.gz
   - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
@@ -40,6 +41,7 @@ install:
 
 script:
   - make build-ci
+  - make ktlint
 
 after_success:
   - make sonar

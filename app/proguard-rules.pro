@@ -63,7 +63,7 @@
     public static int e(...);
 }
 
--assumenosideeffects class com.example.utils.LogUtility {
+-assumenosideeffects class br.com.vitorsalgado.example.utils.LogUtility {
     public static void d(...);
     public static void w(...);
     public static void e(...);

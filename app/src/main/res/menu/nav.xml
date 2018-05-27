@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:showIn="navigation_view">
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:showIn="navigation_view">
 
   <item
     android:id="@+id/nav_group"
@@ -9,7 +9,7 @@
     <menu>
       <item
         android:id="@+id/nav_item_home"
-        android:title="@string/nav_item_home"/>
+        android:title="@string/nav_item_home" />
     </menu>
   </item>
 </menu>

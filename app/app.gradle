@@ -10,9 +10,9 @@ final app_name = 'Boilerplate'
 
 android {
   defaultConfig {
-    applicationId "com.example"
+    applicationId "br.com.vitorsalgado.example"
     multiDexEnabled false
-    testInstrumentationRunner "com.example.InstrumentationRunner"
+    testInstrumentationRunner "br.com.vitorsalgado.example.InstrumentationRunner"
   }
 
   dexOptions {
@@ -48,7 +48,7 @@ android {
       release {
         keyAlias System.getenv("KEY_ALIAS")
         keyPassword System.getenv("KEY_PASSWORD")
-        storeFile file(System.getenv("KEYSTORE_FILE"))
+        storeFile file("$rootDir/app/distribution/release.keystore")
         storePassword System.getenv("KEYSTORE_PASSWORD")
       }
     }

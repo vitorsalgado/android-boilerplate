@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
@@ -17,7 +16,7 @@
       android:layout_height="?android:attr/actionBarSize"
       android:background="@color/primary"
       app:layout_scrollFlags="scroll|enterAlways"
-      app:titleTextColor="@android:color/white"/>
+      app:titleTextColor="@android:color/white" />
   </android.support.design.widget.AppBarLayout>
 
   <android.support.v4.widget.DrawerLayout
@@ -30,13 +29,13 @@
     <android.support.v4.view.ViewPager
       android:id="@+id/pager"
       android:layout_width="match_parent"
-      android:layout_height="50dp"/>
+      android:layout_height="50dp" />
 
     <android.support.v7.widget.RecyclerView
       android:id="@+id/highlights"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:background="@color/accent"/>
+      tools:background="@color/accent" />
 
     <android.support.design.widget.NavigationView
       android:id="@+id/nav"
@@ -48,6 +47,6 @@
       android:fitsSystemWindows="true"
       app:headerLayout="@layout/main_nav_header"
       app:itemTextColor="@android:color/white"
-      app:menu="@menu/nav"/>
+      app:menu="@menu/nav" />
   </android.support.v4.widget.DrawerLayout>
 </android.support.design.widget.CoordinatorLayout>

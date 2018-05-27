@@ -6,7 +6,7 @@ const ChildProcess = require('child_process')
 
 const exec = ChildProcess.execSync
 
-const BASE_PACKAGE = 'com.example'
+const BASE_PACKAGE = 'br.com.vitorsalgado.example'
 const BASE_PACKAGE_FOLDER = BASE_PACKAGE.split('.').join('/')
 const BASE_APP_NAME = 'Boilerplate'
 
@@ -85,11 +85,11 @@ Inquirer.prompt(
               .forEach(({ content, file }) => FileSystem.writeFileSync(file, content))
           })))
 
-//    exec(`rm -rf Dockerfile.cli`)
-//    exec(`rm -rf package.json`)
-//    exec(`rm -rf package-lock.json`)
-//    exec(`rm -rf .nvmrc`)
-//    exec(`rm -rf cli.js`)
+    exec(`rm -rf Dockerfile.cli`)
+    exec(`rm -rf package.json`)
+    exec(`rm -rf package-lock.json`)
+    exec(`rm -rf .nvmrc`)
+    exec(`rm -rf cli.js`)
   })
 
 const readDirRecursively = (dir, predicate) => {
@@ -118,7 +118,7 @@ const readDirRecursively = (dir, predicate) => {
 }
 
 const changeFile = (path, transform) => {
-  const content = FileSystem.readFileSync(appBuildPath).toString()
+  const content = FileSystem.readFileSync(path).toString()
   const changed = transform(content)
 
   FileSystem.writeFileSync(path, changed)

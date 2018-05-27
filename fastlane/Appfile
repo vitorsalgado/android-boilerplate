@@ -1,2 +1,2 @@
-json_key_file "./distribution/key.json" # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
-package_name "com.example" # e.g. com.krausefx.app
+json_key_file "./app/distribution/key.json" # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name "br.com.vitorsalgado.example" # e.g. com.krausefx.app

@@ -3,7 +3,7 @@
   <!-- ######################################################################################### -->
 
   <!-- application -->
-  <string name="account_type">com.example</string>
+  <string name="account_type">br.com.vitorsalgado.example</string>
   <string name="facebook_app_id">822968334426637</string>
 
   <!-- navigation -->
