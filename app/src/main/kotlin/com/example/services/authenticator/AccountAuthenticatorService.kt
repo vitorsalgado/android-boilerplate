@@ -14,7 +14,6 @@ class AccountAuthenticatorService : Service() {
     return if (intent != null && intent.action == ACTION_AUTHENTICATOR_INTENT) {
       getAuthenticator().iBinder
     } else null
-
   }
 
   private fun getAuthenticator(): AccountAuthenticator {

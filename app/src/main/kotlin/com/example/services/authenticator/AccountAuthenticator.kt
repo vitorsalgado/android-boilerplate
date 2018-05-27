@@ -21,7 +21,13 @@ class AccountAuthenticator internal constructor(private val context: Context, pr
   }
 
   @Throws(NetworkErrorException::class)
-  override fun addAccount(accountAuthenticatorResponse: AccountAuthenticatorResponse, accountType: String, authTokenType: String, requiredFeatures: Array<String>, options: Bundle): Bundle {
+  override fun addAccount(
+    accountAuthenticatorResponse: AccountAuthenticatorResponse,
+    accountType: String,
+    authTokenType: String,
+    requiredFeatures: Array<String>,
+    options: Bundle
+  ): Bundle {
     val intent = LoginActivity.newClearIntent(context)
 
     intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, accountType)
@@ -35,12 +41,21 @@ class AccountAuthenticator internal constructor(private val context: Context, pr
   }
 
   @Throws(NetworkErrorException::class)
-  override fun confirmCredentials(accountAuthenticatorResponse: AccountAuthenticatorResponse, account: Account, bundle: Bundle): Bundle? {
+  override fun confirmCredentials(
+    accountAuthenticatorResponse: AccountAuthenticatorResponse,
+    account: Account,
+    bundle: Bundle
+  ): Bundle? {
     return null
   }
 
   @Throws(NetworkErrorException::class)
-  override fun getAuthToken(response: AccountAuthenticatorResponse, account: Account, authTokenType: String, options: Bundle): Bundle {
+  override fun getAuthToken(
+    response: AccountAuthenticatorResponse,
+    account: Account,
+    authTokenType: String,
+    options: Bundle
+  ): Bundle {
     LogUtility.d("getAuthToken() account=" + account.name + " type=" + account.type)
 
     val accountManager = AccountManager.get(context)
@@ -104,12 +119,21 @@ class AccountAuthenticator internal constructor(private val context: Context, pr
   }
 
   @Throws(NetworkErrorException::class)
-  override fun updateCredentials(accountAuthenticatorResponse: AccountAuthenticatorResponse, account: Account, s: String, bundle: Bundle): Bundle? {
+  override fun updateCredentials(
+    accountAuthenticatorResponse: AccountAuthenticatorResponse,
+    account: Account,
+    s: String,
+    bundle: Bundle
+  ): Bundle? {
     return null
   }
 
   @Throws(NetworkErrorException::class)
-  override fun hasFeatures(accountAuthenticatorResponse: AccountAuthenticatorResponse, account: Account, strings: Array<String>): Bundle {
+  override fun hasFeatures(
+    accountAuthenticatorResponse: AccountAuthenticatorResponse,
+    account: Account,
+    strings: Array<String>
+  ): Bundle {
     val result = Bundle()
     result.putBoolean(KEY_BOOLEAN_RESULT, false)
     return result

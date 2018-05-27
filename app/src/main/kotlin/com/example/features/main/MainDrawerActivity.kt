@@ -56,7 +56,6 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     drawer.addDrawerListener(toggle)
     toggle.syncState()
     nav.setNavigationItemSelectedListener(this)
-
   }
 
   override fun onBackPressed() {
@@ -64,7 +63,6 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
       drawer.closeDrawer(GravityCompat.START)
       return
     }
-
 
     if (mDoubleBackToExitPressedOnce) {
       super.onBackPressed()

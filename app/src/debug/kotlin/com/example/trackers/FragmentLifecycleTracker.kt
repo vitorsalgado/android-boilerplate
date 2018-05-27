@@ -10,11 +10,20 @@ import com.example.App
 import com.example.utils.LogUtility
 
 class FragmentLifecycleTracker : FragmentManager.FragmentLifecycleCallbacks() {
-  override fun onFragmentActivityCreated(fm: FragmentManager?, f: Fragment?, savedInstanceState: Bundle?) {
+  override fun onFragmentActivityCreated(
+    fm: FragmentManager?,
+    f: Fragment?,
+    savedInstanceState: Bundle?
+  ) {
     LogUtility.d("Fragment CREATED --> " + f?.javaClass?.simpleName)
   }
 
-  override fun onFragmentViewCreated(fm: FragmentManager?, f: Fragment?, v: View?, savedInstanceState: Bundle?) {
+  override fun onFragmentViewCreated(
+    fm: FragmentManager?,
+    f: Fragment?,
+    v: View?,
+    savedInstanceState: Bundle?
+  ) {
     LogUtility.d("Fragment VIEW CREATED --> " + f?.javaClass?.simpleName)
   }
 

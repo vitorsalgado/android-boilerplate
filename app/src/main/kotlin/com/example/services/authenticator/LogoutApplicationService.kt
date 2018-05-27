@@ -11,7 +11,8 @@ import javax.inject.Inject
 class LogoutApplicationService @Inject
 internal constructor(
   private val context: Context,
-  private val sharedPreferences: SharedPreferences) : LogoutService {
+  private val sharedPreferences: SharedPreferences
+) : LogoutService {
 
   @WorkerThread
   override fun logout(): Completable {

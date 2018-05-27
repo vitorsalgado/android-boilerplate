@@ -7,7 +7,6 @@ import com.facebook.imagepipeline.cache.ImageCacheStatsTracker
 
 class FrescoCacheStatsTracker : ImageCacheStatsTracker {
   override fun onBitmapCachePut() {
-
   }
 
   override fun onBitmapCacheHit(cacheKey: CacheKey) {
@@ -15,11 +14,9 @@ class FrescoCacheStatsTracker : ImageCacheStatsTracker {
   }
 
   override fun onBitmapCacheMiss() {
-
   }
 
   override fun onMemoryCachePut() {
-
   }
 
   override fun onMemoryCacheHit(cacheKey: CacheKey) {
@@ -27,16 +24,13 @@ class FrescoCacheStatsTracker : ImageCacheStatsTracker {
   }
 
   override fun onMemoryCacheMiss() {
-
   }
 
   override fun onStagingAreaHit(cacheKey: CacheKey) {
     LogUtility.d("[ Fresco Staging Area Hit ] $cacheKey")
-
   }
 
   override fun onStagingAreaMiss() {
-
   }
 
   override fun onDiskCacheHit() {
@@ -44,18 +38,14 @@ class FrescoCacheStatsTracker : ImageCacheStatsTracker {
   }
 
   override fun onDiskCacheMiss() {
-
   }
 
   override fun onDiskCacheGetFail() {
-
   }
 
   override fun registerBitmapMemoryCache(bitmapMemoryCache: CountingMemoryCache<*, *>) {
-
   }
 
   override fun registerEncodedMemoryCache(encodedMemoryCache: CountingMemoryCache<*, *>) {
-
   }
 }

@@ -10,7 +10,10 @@ import android.support.test.runner.AndroidJUnitRunner
 import com.linkedin.android.testbutler.TestButler
 
 class InstrumentationRunner : AndroidJUnitRunner() {
-  @Throws(InstantiationException::class, IllegalAccessException::class, ClassNotFoundException::class)
+  @Throws(
+    InstantiationException::class,
+    IllegalAccessException::class,
+    ClassNotFoundException::class)
   override fun newApplication(cl: ClassLoader, className: String, context: Context): Application {
     return Instrumentation.newApplication(InstrumentedApp::class.java, context)
   }

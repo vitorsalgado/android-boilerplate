@@ -7,7 +7,6 @@ import com.facebook.login.LoginResult
 
 class LoginViewModel : FacebookCallback<LoginResult>, AbstractViewModel() {
   override fun onSuccess(result: LoginResult?) {
-
   }
 
   override fun onCancel() {

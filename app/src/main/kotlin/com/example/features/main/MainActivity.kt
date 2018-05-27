@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     }
   }
 
-  //region Activity Events
+  // region Activity Events
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -77,9 +77,9 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     super.onDestroy()
   }
 
-  //endregion
+  // endregion
 
-  //region TabLayout Events
+  // region TabLayout Events
 
   override fun onTabSelected(tab: TabLayout.Tab) {
     tabPager.currentItem = tab.position
@@ -93,12 +93,11 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
   }
 
   override fun onTabReselected(tab: TabLayout.Tab) {
-
   }
 
-  //endregion
+  // endregion
 
-  //region Helpers
+  // region Helpers
 
   private fun setTabIcon(tab: TabLayout.Tab?, @DrawableRes icon: Int) {
     if (tab == null) {
@@ -138,5 +137,5 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     // setTabColor(binding.tablayoutMain.getTabAt(mCurrentTab), ContextCompat.getColor(this, R.color.tab_seletected));
   }
 
-  //endregion
+  // endregion
 }
