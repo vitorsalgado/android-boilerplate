@@ -53,7 +53,7 @@ before_script:
 script:
   - make build-ci
   - make ktlint
-  - ./gradlew connectedCheck
+  - ./gradlew connectedCheck -PdisablePreDex --quiet
 
 after_success:
   - make sonar

@@ -10,7 +10,7 @@ This project contains several tools and different languages all working together
 Continue reading below for more details.
 
 ## How to start a new project
-This project has a predefined name and package structure (__Boilerplate__ and __com.example__).  
+This project has a predefined name and package structure (__Boilerplate__ and __br.com.vitorsalgado.example__).  
 To facilitate new projects starting from this repository, 
 there's a CLI tool written in JavaScript that fully replaces this predefined structure to new one, chosen by you. 
 To use it, install latest Node.js version and then:
@@ -31,13 +31,6 @@ Check the list below:
 
 ### Static Analysis Tools 
 The following static analysis tools are set up on this project:
-
-* [Infer](http://fbinfer.com/): Facebook Static analysis tool.
-```
-make infer # Infer must be installed locally
-make infer-docker # runs Infer with Docker (does not need to install Infer locally)
-make infer-docker-ci # for ci
-```
 
 * [SpotBugs](https://github.com/spotbugs/spotbugs): Static analysis tool to look for bugs in Java code:
 ```
@@ -61,6 +54,11 @@ SONARQUBE_ORG=<YOUR_SONARQUBE_ORGANIZATION_KEY>
 SONARQUBE_TOKEN=<YOUR_GENERATED_SONARQUBE_TOKEN>
 
 make sonar
+```
+
+* [Ktlint](https://github.com/shyiko/ktlint): Lint for Kotlin
+```
+./gradlew ktlint
 ```
 
 ### Security Tools
