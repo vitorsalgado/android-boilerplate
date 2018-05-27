@@ -1,9 +1,9 @@
 import com.github.spotbugs.SpotBugsTask
 
-apply from: rootProject.file("build.utils.gradle")
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "org.sonarqube"
 apply plugin: "com.github.spotbugs"
+apply from: "$rootDir/build.utils.gradle"
 
 buildscript {
   ext.kotlin_version = '1.2.41'
@@ -106,6 +106,7 @@ subprojects {
 
   apply from: rootProject.file('tools/linters.gradle')
   apply from: rootProject.file('tools/coverage.gradle')
+
 
   afterEvaluate { Project project ->
     project.tasks.whenTaskAdded {

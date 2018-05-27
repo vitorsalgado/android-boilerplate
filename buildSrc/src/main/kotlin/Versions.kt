@@ -49,4 +49,5 @@ object Versions {
   val stetho = "1.5.0"
   val jacoco = "0.8.1"
   val coveralls = "2.8.2"
+  val ktlint = "0.23.1"
 }
