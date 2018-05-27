@@ -4,7 +4,6 @@ sudo: false
 
 env:
   - CLOUDSDK_CORE_DISABLE_PROMPTS=1
-  - JVM_OPTS=-Xmx3200m
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
