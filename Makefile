@@ -165,3 +165,8 @@ cp:
 new-project:
 	npm install && \
 	node cli.js
+
+
+
+
+.PHONY: qark

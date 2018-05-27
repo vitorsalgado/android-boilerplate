@@ -4,8 +4,8 @@
 
   <!-- Ignores -->
   <issue id="Typos" severity="ignore"/>
-  <issue id="UnusedIds" severity="informational"/>
-  <issue id="GoogleAppIndexingWarning" severity="informational"/>
+  <issue id="UnusedIds" severity="ignore"/>
+  <issue id="GoogleAppIndexingWarning" severity="ignore"/>
   <issue id="UnusedResources">
     <ignore path="build/generated/res/google-services/**"/>
   </issue>

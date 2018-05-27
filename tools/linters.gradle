@@ -4,10 +4,9 @@ def reportsDir = "$rootDir/reports"
 afterEvaluate { project ->
   apply plugin: 'pmd'
   apply plugin: "com.github.spotbugs"
-  apply from: rootProject.file('tools/exclusions.gradle')
 
   spotbugs {
-    toolVersion = '3.1.1'
+    toolVersion = '3.1.3'
   }
 
   pmd {
@@ -15,7 +14,7 @@ afterEvaluate { project ->
   }
 
   task pmd(type: Pmd) {
-    group "QA"
+    group "Linters"
     ruleSetFiles = files("$lintersDir/pmd-ruleset.xml")
     ruleSets = []
 

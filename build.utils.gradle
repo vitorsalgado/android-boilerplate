@@ -1,10 +1,28 @@
-static def addRepos(RepositoryHandler handler) {
-  handler.mavenCentral()
-  handler.google()
-  handler.jcenter()
-  handler.maven { url 'https://maven.fabric.io/public' }
-  handler.maven { url "https://plugins.gradle.org/m2/" }
-  handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+static def shouldSkip(project) { return project.name == "libs" }
+
+static def isAndroidModule(project) {
+  return project.plugins.find {
+    it.class.name == "com.android.build.gradle.LibraryPlugin" || it.class.name == "com.android.build.gradle.AppPlugin"
+  }
 }
 
-ext.addRepos = this.&addRepos
+static def setPreDex(project) {
+  project.plugins.whenPluginAdded { plugin ->
+    if ("com.android.build.gradle.AppPlugin" == plugin.class.name) {
+      project.android.dexOptions.preDexLibraries = BuildUtils.preDex
+    } else if ("com.android.build.gradle.LibraryPlugin" == plugin.class.name) {
+      project.android.dexOptions.preDexLibraries = BuildUtils.preDex
+    }
+  }
+}
+
+task incrementVersionNumberByBuild << {
+  def version_code = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim()) +
+    Integer.valueOf(build_number)
+
+  file("$rootDir/VERSION_CODE").write(version_code.toString())
+}
+
+ext.shouldSkip = this.&shouldSkip
+ext.isAndroidModule = this.&isAndroidModule
+ext.setPreDex = this.&setPreDex

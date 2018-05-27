@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
@@ -11,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
     app:layout_scrollFlags="scroll|enterAlways"
-    app:titleTextColor="@android:color/white"/>
+    app:titleTextColor="@android:color/white" />
 
   <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
@@ -25,10 +24,11 @@
       android:layout_height="wrap_content"
       android:fontFamily="sans-serif-condensed"
       android:textColor="@android:color/white"
+      android:textIsSelectable="true"
       android:textSize="32sp"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toTopOf="parent"/>
+      app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
       android:id="@+id/versionLabel"
@@ -36,7 +36,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="30dp"
       android:text="@string/version"
-      app:layout_constraintTop_toBottomOf="@id/appName"/>
+      app:layout_constraintTop_toBottomOf="@id/appName" />
 
     <TextView
       android:id="@+id/appVersion"
@@ -46,7 +46,7 @@
       android:text="@string/version_description"
       android:textColor="@android:color/white"
       android:textSize="18sp"
-      app:layout_constraintTop_toBottomOf="@id/versionLabel"/>
+      app:layout_constraintTop_toBottomOf="@id/versionLabel" />
 
     <TextView
       android:id="@+id/licenses"
@@ -54,7 +54,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="20dp"
       android:text="@string/licenses_description"
-      app:layout_constraintTop_toBottomOf="@id/appVersion"/>
+      app:layout_constraintTop_toBottomOf="@id/appVersion" />
 
     <TextView
       android:id="@+id/viewLicenses"
@@ -63,6 +63,6 @@
       android:layout_marginTop="5dp"
       android:text="@string/licenses"
       android:textColor="@android:color/white"
-      app:layout_constraintTop_toBottomOf="@id/licenses"/>
+      app:layout_constraintTop_toBottomOf="@id/licenses" />
   </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

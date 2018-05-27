@@ -63,5 +63,4 @@ object TestDependencies {
   val supportTestEspressoContrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espresso}"
   val supportTestEspressoIntents = "com.android.support.test.espresso:espresso-intents:${Versions.espresso}"
   val supportTestEspressoWeb = "com.android.support.test.espresso:espresso-web:${Versions.espresso}"
-
 }

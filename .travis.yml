@@ -2,6 +2,10 @@ language: android
 jdk: openjdk8
 sudo: false
 
+env:
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+  - JVM_OPTS=-Xmx3200m
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -11,9 +15,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
-
-env:
-  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 android:
   components:
@@ -26,18 +27,21 @@ android:
     - extra-google-google_play_services
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_cb141303541b_key -iv $encrypted_cb141303541b_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
+  - openssl aes-256-cbc -K $encrypted_cb141303541b_key -iv $encrypted_cb141303541b_iv -in ./tools/gae/credentials.tar.gz.enc -out credentials.tar.gz -d
   - sudo apt-get install google-cloud-sdk
   - tar -xzf credentials.tar.gz
   - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
   - yes | sdkmanager "platforms;android-27"
   - make set-licenses
+  - mkdir -p app/ && touch app/google-services.json
+  - echo "${GOOGLE_SERVICES_JSON}" >> "app/google-services.json"
 
 install:
-  - gcloud config set project example-bb31f
+  - gcloud config set project $FIREBASE_PROJECT
 
 script:
   - make build-ci
 
 after_success:
   - make sonar
+  - ./gradlew coveralls

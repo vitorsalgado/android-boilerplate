@@ -47,5 +47,6 @@ object Versions {
   // utils
   val leakCanary = "1.5.4"
   val stetho = "1.5.0"
-  val jacoco = "0.8.0"
+  val jacoco = "0.8.1"
+  val coveralls = "2.8.2"
 }

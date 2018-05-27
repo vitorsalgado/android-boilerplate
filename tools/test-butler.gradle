@@ -23,7 +23,6 @@ final butlerApkURL = "https://bintray.com/linkedin/maven/download_file?file_path
  * Downloads Test Butler APK if needed
  */
 task downloadButlerApk {
-
   group "test-butler"
   description "Verifies and downloads the Test Butler APK"
 
@@ -54,7 +53,6 @@ task downloadButlerApk {
  * This task installs the test-butler apk in all emulators if needed
  */
 task('installButlerApk', dependsOn: [downloadButlerApk]) {
-
   group "test-butler"
   description "Install the Test Butler APK in all emulators if needed"
 
@@ -62,26 +60,22 @@ task('installButlerApk', dependsOn: [downloadButlerApk]) {
     logger.info("Verifying test-butler installation in emulators")
 
     final adb = "$android.sdkDirectory.absolutePath/platform-tools/adb"
-
     final String[] split = "$adb devices -l".execute().text.split("\\r?\\n")
 
     split.each {
-
       if (it.isEmpty() || !it.startsWith('emulator-'))
-        return;
+        return
 
       logger.info("Emulator: $it")
 
       final emu = it.split("\\s")[0]
 
-      if ("$adb -s $emu shell pm list packages".execute().text.contains(butlerPackage))
-        return;
+      if ("$adb -s $emu shell pm list packages".execute().text.contains(butlerPackage)) return
 
       final installResult = "$adb -s $emu install $butlerApkPath".execute().text
 
       if (!installResult.contains("Success"))
         logger.log(LogLevel.ERROR, "Could not install APK. Install output:\n$installResult")
-
       else
         logger.info("Installed $butlerApkPath in $emu successfully")
     }

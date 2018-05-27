@@ -2,11 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'jacoco'
 
 apply from: "$rootDir/tools/layout-ids.gradle"
 apply from: "$rootDir/tools/test-butler.gradle"
-apply from: "$rootDir/tools/jacoco.gradle"
 
 final app_name = 'Boilerplate'
 
@@ -23,14 +21,14 @@ android {
     maxProcessCount BuildUtils.cores
   }
 
-  aaptOptions {
-    cruncherEnabled false
-  }
+  aaptOptions { cruncherEnabled false }
 
   lintOptions {
+    check 'Interoperability'
     checkAllWarnings true
     warningsAsErrors true
     lintConfig file("$rootDir/lint.xml")
+    baseline file("$rootDir/lint-baseline.xml")
 
     if (BuildUtils.isCI) {
       textReport true
@@ -62,13 +60,11 @@ android {
       minifyEnabled false
       useProguard false
       debuggable true
-      shrinkResources false
       signingConfig signingConfigs.debug
 
+      testCoverageEnabled = BuildUtils.isCI
       ext.alwaysUpdateBuildId = false
       ext.enableCrashlytics = false
-
-      testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
 
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
       consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -94,8 +90,8 @@ android {
       ext.betaDistributionNotifications = true
       ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes.txt"
 
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
-      consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
+      consumerProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
       resValue 'string', 'app_name', app_name
       buildConfigField 'String', 'API_URI', '"http://api.prod"'
@@ -119,7 +115,7 @@ android {
   }
 
   applicationVariants.all { variant ->
-    if (variant.buildType.name == "release") {
+    if (variant.buildType.name == "release" || BuildUtils.isCI) {
       variant.mergedFlavor.versionCode = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim())
       variant.mergedFlavor.versionName = file("$rootDir/VERSION").text
     }
@@ -133,14 +129,6 @@ android {
     exclude 'META-INF/NOTICE.txt'
     exclude 'META-INF/rxjava.properties'
   }
-}
-
-jacoco {
-  toolVersion = Versions.jacoco
-}
-
-tasks.withType(Test) {
-  jacoco.includeNoLocationClasses = true
 }
 
 dependencies {
@@ -238,7 +226,6 @@ dependencies {
 
 kapt {
   useBuildCache = true
-  generateStubs = true
   mapDiagnosticLocations = true
 }
 

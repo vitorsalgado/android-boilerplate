@@ -33,24 +33,35 @@ Inquirer.prompt(
     const appBuild = FileSystem.readFileSync(appBuildPath).toString()
     const changedAppBuild = appBuild.replace(/final app_name = 'Boilerplate'/, `final app_name = '${project}'`)
 
+    const settingsPath = `${pwd}/settings.gradle`
+    const settings = FileSystem.readFileSync(settingsPath).toString()
+    const changedSettings = settings.replace(/rootProject.name = 'Boilerplate'/, `rootProject.name = '${project}'`)
+
+    const fastlaneAppFilePath = `${pwd}/fastlane/AppFile`
+    const fastlaneAppFile = FileSystem.readFileSync(fastlaneAppFile).toString()
+    const changedFastlaneAppFile = fastlaneAppFile.replace(/package_name \"com.example\"/, `package_name '${pkg}'`)
+
     const makefilePath = `${pwd}/Makefile`
     const makefile = FileSystem.readFileSync(makefilePath).toString()
     const changedMakefile = makefile.split('com.example').join(pkg)
 
     FileSystem.writeFileSync(appBuildPath, changedAppBuild)
+    FileSystem.writeFileSync(settingsPath, changedSettings)
     FileSystem.writeFileSync(makefilePath, changedMakefile)
+    FileSystem.writeFileSync(fastlaneAppFilePath, changedFastlaneAppFile)
 
     const root = `${pwd}`
+
     const libraries = [
       `${root}/app`,
+      `${root}/buildSrc`,
       `${root}/resources`,
       `${root}/libs/analytics`,
       `${root}/libs/toolkit-android`,
       `${root}/libs/api`,
-      `${root}/libs/toolkit`,
-      `${root}/features/feature-about`,
-      `${root}/features/feature-auth`
+      `${root}/libs/toolkit`
     ]
+
     const languages = [
       'java',
       'kotlin',
@@ -87,6 +98,12 @@ Inquirer.prompt(
               .map(({ content, file }) => ({ content: content.split('com.example').join(pkg), file }))
               .forEach(({ content, file }) => FileSystem.writeFileSync(file, content))
           })))
+
+    exec(`rm -rf Dockerfile.cli`)
+    exec(`rm -rf package.json`)
+    exec(`rm -rf package-lock.json`)
+    exec(`rm -rf .nvmrc`)
+    exec(`rm -rf cli.js`)
   })
 
 const readDirRecursively = (dir, predicate) => {
@@ -120,6 +137,7 @@ const inclusions = file =>
   file.indexOf('.java') >= 0 ||
   file.indexOf('.kotlin') >= 0 ||
   file.indexOf('.kt') >= 0 ||
+  file.indexOf('.kts') >= 0 ||
   file.indexOf('.scala') >= 0 ||
   file.indexOf('.feature') >= 0 ||
   file.indexOf('.gradle') >= 0 ||

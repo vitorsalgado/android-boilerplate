@@ -1,3 +1,5 @@
+rootProject.name = 'Boilerplate'
+
 include ':app'
 include ':libs:toolkit', ':libs:toolkit-android', ':libs:api', ':libs:analytics', ':libs:resources'
 

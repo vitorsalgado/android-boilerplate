@@ -88,6 +88,9 @@ keystores/
 # Infer
 infer-out/
 
+# Google Services
+google-services.json
+
 # Project
 .buckd/
 .okbuck/
@@ -99,4 +102,3 @@ project.properties
 reports/
 .sonarlint/
 qark/
-.garbage/

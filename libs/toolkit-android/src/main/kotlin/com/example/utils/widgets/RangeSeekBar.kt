@@ -16,6 +16,7 @@ import com.example.utils.DimensionUtils
 import com.example.utils.R
 import java.math.BigDecimal
 
+@Suppress("UNCHECKED_CAST")
 class RangeSeekBar<T : Number> : android.support.v7.widget.AppCompatImageView {
 
   private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -112,8 +113,8 @@ class RangeSeekBar<T : Number> : android.support.v7.widget.AppCompatImageView {
 
   private fun extractNumericValueFromAttributes(a: TypedArray, attribute: Int, defaultValue: Int): T {
     val tv = a.peekValue(attribute) ?: return Integer.valueOf(defaultValue) as T
-
     val type = tv.type
+
     return if (type == TypedValue.TYPE_FLOAT) {
       java.lang.Float.valueOf(a.getFloat(attribute, defaultValue.toFloat())) as T
     } else {
