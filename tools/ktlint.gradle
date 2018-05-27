@@ -19,11 +19,11 @@ task ktlint(type: JavaExec, group: "verification") {
   // see https://github.com/shyiko/ktlint#usage for more
 }
 
-//def check = tasks.findByName("check")
-//
-//if (check != null) {
-//  check.dependsOn ktlint
-//}
+def check = tasks.findByName("check")
+
+if (check != null) {
+  check.dependsOn ktlint
+}
 
 task ktlintFormat(type: JavaExec, group: "formatting") {
   description = "Fix Kotlin code style deviations."
