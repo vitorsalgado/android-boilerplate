@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-android {}
-
 dependencies {
   implementation Dependencies.kotlinStandardLib
   implementation Dependencies.firebaseCore

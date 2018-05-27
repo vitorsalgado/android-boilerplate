@@ -10,6 +10,7 @@ before_cache:
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
+  - bundler
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
@@ -24,6 +25,7 @@ android:
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-google-google_play_services
+    - sys-img-armeabi-v7a-android-27
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_cb141303541b_key -iv $encrypted_cb141303541b_iv -in ./tools/gae/credentials.tar.gz.enc -out credentials.tar.gz -d
@@ -35,14 +37,30 @@ before_install:
   - make set-licenses
   - mkdir -p app/ && touch app/google-services.json
   - echo $GOOGLE_SERVICES_JSON >> app/google-services.json
+  - echo $PLAYSTORE_ACCOUNT_JSON >> app/distribution/key.json
+  - bundle install
+  - bundle update
 
 install:
   - gcloud config set project $FIREBASE_PROJECT
 
+before_script:
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
 script:
   - make build-ci
   - make ktlint
+  - ./gradlew connectedCheck
 
 after_success:
   - make sonar
   - ./gradlew coveralls
+
+deploy:
+  provider: script
+  script: fastlane playstore
+  on:
+    branch: master

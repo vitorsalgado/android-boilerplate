@@ -95,16 +95,4 @@
     <url>https://github.com/concretesolutions/requestmatcher</url>
     <license>Apache Software License 2.0</license>
   </notice>
-  <notice>
-    <name>NullAway</name>
-    <copyright>Copyright (c) 2017 Uber Technologies, Inc.</copyright>
-    <url>https://github.com/uber/NullAway</url>
-    <license>MIT License</license>
-  </notice>
-  <notice>
-    <name>Error Prone</name>
-    <url>https://github.com/google/error-prone/</url>
-    <copyright>Google Inc.</copyright>
-    <license>Apache Software License 2.0</license>
-  </notice>
 </notices>

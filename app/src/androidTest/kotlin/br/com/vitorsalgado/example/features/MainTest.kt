@@ -12,8 +12,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class MainTest {
-  @Rule
-  var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+  @get:Rule
+  val mActivityTestRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
   @Test
   fun ensureHomeInitialization() {
