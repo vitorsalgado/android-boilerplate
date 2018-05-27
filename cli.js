@@ -6,6 +6,10 @@ const ChildProcess = require('child_process')
 
 const exec = ChildProcess.execSync
 
+const BASE_PACKAGE = 'com.example'
+const BASE_PACKAGE_FOLDER = BASE_PACKAGE.split('.').join('/')
+const BASE_APP_NAME = 'Boilerplate'
+
 Inquirer.prompt(
   [
     {
@@ -18,7 +22,7 @@ Inquirer.prompt(
       type: 'input',
       name: 'package',
       message: 'What\'s the project package name?',
-      validate: input => !!input && input.indexOf('.') >= 0 && input !== 'com.example'
+      validate: input => !!input && input.indexOf('.') >= 0 && input !== BASE_PACKAGE
     }
   ])
   .then(answers => {
@@ -29,32 +33,15 @@ Inquirer.prompt(
     let pwd = exec('pwd')
     pwd = pwd.toString().replace('\n', '')
 
-    const appBuildPath = `${pwd}/app/app.gradle`
-    const appBuild = FileSystem.readFileSync(appBuildPath).toString()
-    const changedAppBuild = appBuild.replace(/final app_name = 'Boilerplate'/, `final app_name = '${project}'`)
-
-    const settingsPath = `${pwd}/settings.gradle`
-    const settings = FileSystem.readFileSync(settingsPath).toString()
-    const changedSettings = settings.replace(/rootProject.name = 'Boilerplate'/, `rootProject.name = '${project}'`)
-
-    const fastlaneAppFilePath = `${pwd}/fastlane/AppFile`
-    const fastlaneAppFile = FileSystem.readFileSync(fastlaneAppFile).toString()
-    const changedFastlaneAppFile = fastlaneAppFile.replace(/package_name \"com.example\"/, `package_name '${pkg}'`)
-
-    const makefilePath = `${pwd}/Makefile`
-    const makefile = FileSystem.readFileSync(makefilePath).toString()
-    const changedMakefile = makefile.split('com.example').join(pkg)
-
-    FileSystem.writeFileSync(appBuildPath, changedAppBuild)
-    FileSystem.writeFileSync(settingsPath, changedSettings)
-    FileSystem.writeFileSync(makefilePath, changedMakefile)
-    FileSystem.writeFileSync(fastlaneAppFilePath, changedFastlaneAppFile)
+    changeFile(`${pwd}/app/app.gradle`, x => x.replace(new RegExp("final app_name = '" + BASE_APP_NAME + "'"), `final app_name = '${project}'`))
+    changeFile(`${pwd}/settings.gradle`, x => x.replace(new RegExp("rootProject.name = '" + BASE_APP_NAME + "'"), `rootProject.name = '${project}'`))
+    changeFile(`${pwd}/fastlane/Appfile`, x => x.replace(new RegExp("package_name \"" + BASE_PACKAGE + "\""), `package_name "${pkg}"`))
+    changeFile(`${pwd}/Makefile`, x => x.split(BASE_PACKAGE).join(pkg))
 
     const root = `${pwd}`
 
     const libraries = [
       `${root}/app`,
-      `${root}/resources`,
       `${root}/libs/analytics`,
       `${root}/libs/toolkit-android`,
       `${root}/libs/api`,
@@ -81,7 +68,7 @@ Inquirer.prompt(
               }
 
               exec(`cd ${library}/src/${src}/kotlin && mkdir -p ${folders} || true`)
-              exec(`mv ${library}/src/${src}/${language}/com/example/* ${library}/src/${src}/${language}/${folders}/ || true`)
+              exec(`mv ${library}/src/${src}/${language}/${BASE_PACKAGE_FOLDER}/* ${library}/src/${src}/${language}/${folders}/ || true`)
               exec(`rm -rf ${library}/src/${src}/${language}/com || true`)
             } catch (ex) {
               if (ex.code !== 'ENOENT') {
@@ -94,15 +81,15 @@ Inquirer.prompt(
             readDirRecursively(`${library}/`, inclusions)
               .map(file => ({ content: FileSystem.readFileSync(file), file }))
               .map(({ content, file }) => ({ content: content.toString(), file }))
-              .map(({ content, file }) => ({ content: content.split('com.example').join(pkg), file }))
+              .map(({ content, file }) => ({ content: content.split(BASE_PACKAGE).join(pkg), file }))
               .forEach(({ content, file }) => FileSystem.writeFileSync(file, content))
           })))
 
-    exec(`rm -rf Dockerfile.cli`)
-    exec(`rm -rf package.json`)
-    exec(`rm -rf package-lock.json`)
-    exec(`rm -rf .nvmrc`)
-    exec(`rm -rf cli.js`)
+//    exec(`rm -rf Dockerfile.cli`)
+//    exec(`rm -rf package.json`)
+//    exec(`rm -rf package-lock.json`)
+//    exec(`rm -rf .nvmrc`)
+//    exec(`rm -rf cli.js`)
   })
 
 const readDirRecursively = (dir, predicate) => {
@@ -128,6 +115,13 @@ const readDirRecursively = (dir, predicate) => {
   })
 
   return results
+}
+
+const changeFile = (path, transform) => {
+  const content = FileSystem.readFileSync(appBuildPath).toString()
+  const changed = transform(content)
+
+  FileSystem.writeFileSync(path, changed)
 }
 
 const exclusions = file => ['build', '.settings', 'bin', '.idea', '.classpath', '.gitignore', '.project'].includes(file)
