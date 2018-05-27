@@ -41,6 +41,5 @@ object HttpClientWithPinningProvider {
     } catch (e: GeneralSecurityException) {
       throw RuntimeException(e)
     }
-
   }
 }

@@ -106,7 +106,7 @@ subprojects {
 
   apply from: rootProject.file('tools/linters.gradle')
   apply from: rootProject.file('tools/coverage.gradle')
-
+  apply from: "$rootDir/tools/ktlint.gradle"
 
   afterEvaluate { Project project ->
     project.tasks.whenTaskAdded {

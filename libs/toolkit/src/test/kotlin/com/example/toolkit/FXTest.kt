@@ -26,7 +26,8 @@ class FXTest {
   }
 
   @Test
-  fun `curry should reduce a function with multiple arguments into a function that accepts just one`() {
+  fun `curry should reduce a function with multiple arguments into a function that accepts just one`(
+  ) {
     val fn: (Int, Int) -> Int = { a, b -> a + b }
     val addTwo = curry(fn)(2)
 

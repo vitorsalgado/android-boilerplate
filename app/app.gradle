@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 
 apply from: "$rootDir/tools/layout-ids.gradle"
 apply from: "$rootDir/tools/test-butler.gradle"
-apply from: "$rootDir/tools/ktlint.gradle"
 
 final app_name = 'Boilerplate'
 

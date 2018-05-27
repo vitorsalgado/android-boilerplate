@@ -14,7 +14,6 @@ class PreconditionsTest {
     } catch (ex: NullPointerException) {
       Assert.assertEquals(ex.message, "the message")
     }
-
   }
 
   @Test
@@ -36,12 +35,10 @@ class PreconditionsTest {
     } catch (ex: IllegalArgumentException) {
       Assert.assertEquals(ex.message, "error message")
     }
-
   }
 
   @Test
   fun shouldNotThrowExceptionWhenArgumentSatisfyExpression() {
     Preconditions.checkArgument(true, "message")
   }
-
 }

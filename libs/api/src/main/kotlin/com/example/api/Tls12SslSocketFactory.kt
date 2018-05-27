@@ -55,7 +55,12 @@ class Tls12SslSocketFactory internal constructor() : SSLSocketFactory() {
   }
 
   @Throws(IOException::class)
-  override fun createSocket(address: InetAddress, port: Int, localAddress: InetAddress, localPort: Int): Socket {
+  override fun createSocket(
+    address: InetAddress,
+    port: Int,
+    localAddress: InetAddress,
+    localPort: Int
+  ): Socket {
     val sslSocket = socketFactory.createSocket(address, port, localAddress, localPort) as SSLSocket
     sslSocket.enabledProtocols = arrayOf(PROTOCOL)
 

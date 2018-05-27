@@ -15,8 +15,17 @@ interface GraphApi {
   fun me(@Query("access_token") access_token: String, @Query("fields") fields: String): Single<FacebookUser>
 
   @GET("{albumId}/photos?locale=en_US")
-  fun albumPhotos(@Path("albumId") albumId: String, @Query("access_token") access_token: String, @Query("fields") fields: String, @Query("limit") limit: Int): Observable<FacebookAlbumPhotos>
+  fun albumPhotos(
+    @Path("albumId") albumId: String,
+    @Query("access_token") access_token: String,
+    @Query("fields") fields: String,
+    @Query("limit") limit: Int
+  ): Observable<FacebookAlbumPhotos>
 
   @GET("{photoId}?locale=en_US")
-  fun photo(@Path("photoId") photoId: String, @Query("access_token") access_token: String, @Query("fields") fields: String): Single<FacebookPhoto>
+  fun photo(
+    @Path("photoId") photoId: String,
+    @Query("access_token") access_token: String,
+    @Query("fields") fields: String
+  ): Single<FacebookPhoto>
 }

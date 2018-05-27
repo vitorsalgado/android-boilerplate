@@ -32,9 +32,7 @@ class ApiResponse<T> {
         try {
           message = response.errorBody()!!.string()
         } catch (ignored: IOException) {
-
         }
-
       }
 
       if (message == null || message.isEmpty()) {
