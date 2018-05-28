@@ -35,10 +35,10 @@ redex-debug:
 # ##################################################################################################
 
 check:
-	./gradlew check --$(LEVEL) -x pmd
+	./gradlew check --$(LEVEL)
 
 combined-coverage:
-	./gradlew createCombinedCoverageReport -PdisablePreDex
+	./gradlew createCombinedCoverageReport --stacktrace
 
 upload-data-coveralls:
 	./gradlew coveralls --quiet
@@ -117,4 +117,4 @@ new-project:
 	npm install && \
 	node cli.js
 
-.PHONY: qark
+.PHONY: build qark
