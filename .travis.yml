@@ -40,15 +40,15 @@ before_install:
   - mkdir -p app/ && touch app/google-services.json
   - echo $GOOGLE_SERVICES_JSON >> app/google-services.json
   - echo $PLAYSTORE_ACCOUNT_JSON >> app/distribution/key.json
-#  - bundle install
-#  - bundle update
+  - bundle install
+  - bundle update
 
 install:
   - gcloud config set project $FIREBASE_PROJECT
 
 script:
-#  - make build-ci
-#  - make static-check
+  - make build-ci
+  - make static-check
   - make assemble-android-test
 
   - ./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --results-dir $TRAVIS_BUILD_NUMBER --no-record-video
