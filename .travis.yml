@@ -46,7 +46,7 @@ before_script:
   - emulator -list-avds
   - android list targets
   - emulator \
-    -avd "Android 8.1.0" \
+    -avd android-27 \
     -netfast \
     -netdelay none \
     -no-boot-anim \
