@@ -4,7 +4,7 @@
 from itertools import *
 
 def to_slack_markdown(line):
-    if line.startswith('Versão'):
+    if line.startswith('Version'):
         return '*%s*\n' % line.replace('\n', '')
     return line.replace('-', '•').replace('\n', '')
 
