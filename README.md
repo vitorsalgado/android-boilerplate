@@ -64,10 +64,5 @@ make mobsf
 Navigate to: http://localhost:8000
 ```
 
-* [Qark](https://github.com/linkedin/qark): Look for security vulnerabilities.
-```
-make qark # Python required
-```
-
 ## License
 This project is available under Apache Public License version 2.0. See [LICENSE](LICENSE).

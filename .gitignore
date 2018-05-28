@@ -101,4 +101,5 @@ project.properties
 .env
 reports/
 .sonarlint/
-qark/
+qark
+fastlane/report.xml

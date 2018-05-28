@@ -3,7 +3,6 @@ PROJECT := br.com.vitorsalgado.example
 PROJECT_TEST := $(PROJECT).test
 CONTEXT := $$(pwd)
 LEVEL := info
-QARK_VERSION := 0.9-alpha.10
 
 # build recipes
 # ##################################################################################################
@@ -58,16 +57,6 @@ sonar:
     	-Dsonar.host.url=https://sonarcloud.io \
 		-Dsonar.organization=${SONARQUBE_ORG} \
 		-Dsonar.login=${SONARQUBE_TOKEN}
-
-qark:
-	if [ ! -d "./qark" ]; then \
-		wget https://github.com/linkedin/qark/archive/v$(QARK_VERSION).zip -O qark.zip; \
-		unzip qark.zip; \
-		mv qark-$(QARK_VERSION) qark; \
-		rm qark.zip; \
-	fi && \
-	cd qark && \
-	python qark.py -b ${ANDROID_HOME} -s 1 -p $(CONTEXT)/app/build/outputs/apk/app-debug.apk --exploit 1 --install 1
 
 mobsf:
 	docker rm -f mobsf || true && \

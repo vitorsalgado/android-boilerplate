@@ -63,7 +63,7 @@ after_success:
 
 deploy:
   provider: script
-  script: fastlane playstore
+  script: bundle exec fastlane playstore
   skip_cleanup: true
   on:
     branch: master
