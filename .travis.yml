@@ -42,7 +42,6 @@ install:
   - gcloud config set project $FIREBASE_PROJECT
 
 before_script:
-  - avdmanager list avd
   - emulator -list-avds
   - android list targets
   - emulator \
