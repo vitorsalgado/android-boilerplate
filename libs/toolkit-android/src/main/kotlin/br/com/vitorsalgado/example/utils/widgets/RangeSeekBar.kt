@@ -429,13 +429,11 @@ class RangeSeekBar<T : Number> : android.support.v7.widget.AppCompatImageView {
 
     // draw minimum thumb if not a single thumb control
     if (!mSingleThumb) {
-      drawThumb(normalizedToScreen(normalizedMinValue), Thumb.MIN == pressedThumb, canvas,
-        selectedValuesAreDefault)
+      drawThumb(normalizedToScreen(normalizedMinValue), Thumb.MIN == pressedThumb, canvas)
     }
 
     // draw maximum thumb
-    drawThumb(normalizedToScreen(normalizedMaxValue), Thumb.MAX == pressedThumb, canvas,
-      selectedValuesAreDefault)
+    drawThumb(normalizedToScreen(normalizedMaxValue), Thumb.MAX == pressedThumb, canvas)
 
     // draw the text if sliders have moved from default edges
     if (!selectedValuesAreDefault) {
@@ -491,14 +489,7 @@ class RangeSeekBar<T : Number> : android.support.v7.widget.AppCompatImageView {
    * @param pressed Is the thumb currently in "pressed" state?
    * @param canvas The canvas to draw upon.
    */
-  private fun drawThumb(screenCoord: Float, pressed: Boolean, canvas: Canvas, areSelectedValuesDefault: Boolean) {
-    //        Bitmap buttonToDraw;
-    //        if (areSelectedValuesDefault) {
-    //            buttonToDraw = thumbDisabledImage;
-    //        } else {
-    //            buttonToDraw = pressed ? thumbPressedImage : thumbImage;
-    //        }
-    //
+  private fun drawThumb(screenCoord: Float, pressed: Boolean, canvas: Canvas) {
     canvas.drawBitmap(mThumbImage!!, screenCoord - thumbHalfWidth,
       mTextOffset.toFloat(),
       paint)
@@ -632,7 +623,6 @@ class RangeSeekBar<T : Number> : android.support.v7.widget.AppCompatImageView {
         SHORT -> value.toShort()
         BYTE -> value.toByte()
         BIG_DECIMAL -> BigDecimal.valueOf(value)
-        else -> throw InstantiationError("can't convert " + this + " to a Number object")
       }
     }
 
