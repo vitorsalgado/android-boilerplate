@@ -105,7 +105,6 @@ subprojects {
   setPreDex(it)
 
   apply from: "$rootDir/tools/linters.gradle"
-  apply from: "$rootDir/tools/coverage.gradle"
   apply from: "$rootDir/tools/ktlint.gradle"
 
   afterEvaluate { Project project ->
@@ -139,6 +138,8 @@ subprojects {
           test.java.srcDirs += 'src/test/kotlin'
           androidTest.java.srcDirs += 'src/androidTest/kotlin'
         }
+
+        buildTypes { debug { testCoverageEnabled = true } }
       }
     }
 

@@ -4,6 +4,8 @@ sudo: false
 
 env:
   - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+  - LANG=en_US.UTF-8
+  - LC_ALL=en_US.UTF-8
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -25,6 +27,7 @@ android:
     - extra-google-m2repository
     - extra-google-google_play_services
     - sys-img-armeabi-v7a-android-27
+    - sys-img-x86-android-27
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_cb141303541b_key -iv $encrypted_cb141303541b_iv -in ./tools/gae/credentials.tar.gz.enc -out credentials.tar.gz -d
@@ -43,16 +46,26 @@ before_install:
 install:
   - gcloud config set project $FIREBASE_PROJECT
 
+before_script:
+  - android list targets
+  - echo no | android create avd --force -n test -t android-27 --abi x86 -no-accel --tag google_apis
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+
 script:
   - make build-ci
   - make ktlint
+  - make combined-coverage
 
 after_success:
   - make sonar
-  - ./gradlew coveralls
+  - make upload-data-coveralls
 
 deploy:
   provider: script
   script: fastlane playstore
+  skip_cleanup: true
   on:
     branch: master

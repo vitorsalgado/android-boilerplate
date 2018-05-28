@@ -52,11 +52,11 @@ checkstyle:
 pmd:
 	./gradlew pmd --$(LEVEL)
 
-full-coverage:
-	clear && \
-	./gradlew fullCoverageReport && \
-	echo "JaCoCo Coverage Report" && \
-	echo file://$(CONTEXT)/app/build/reports/jacoco/fullCoverageReport/html/index.html
+combined-coverage:
+	./gradlew createCombinedCoverageReport -PdisablePreDex --quiet
+
+upload-data-coveralls:
+	./gradlew coveralls --quiet
 
 check-security:
 	clear && \

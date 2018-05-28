@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 apply from: "$rootDir/tools/layout-ids.gradle"
 apply from: "$rootDir/tools/test-butler.gradle"
+apply from: "$rootDir/tools/coverage.gradle"
 
 final app_name = 'Boilerplate'
 
@@ -62,7 +63,6 @@ android {
       debuggable true
       signingConfig signingConfigs.debug
 
-      testCoverageEnabled = BuildUtils.isCI
       ext.alwaysUpdateBuildId = false
       ext.enableCrashlytics = false
 
