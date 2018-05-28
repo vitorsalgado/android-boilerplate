@@ -1,0 +1,21 @@
+complexity:
+  TooManyFunctions:
+    threshold: 20
+
+test-pattern:
+  active: true
+  patterns:
+    - '.*/test/.*'
+    - '.*Test.kt'
+    - '.*Spec.kt'
+  exclude-rule-sets:
+    - 'comments'
+
+console-reports:
+  active: true
+
+output-reports:
+  active: true
+  exclude:
+    - 'PlainOutputReport'
+    - 'XmlOutputReport'

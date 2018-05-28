@@ -37,7 +37,6 @@ object Versions {
   val google_services = "3.2.1"
   val owasp_dependency_check = "3.1.2"
   val sonar = "2.6.1"
-  val spotbugs_plugin = "1.6.0"
   val timber = "4.7.0"
   val facebook_sdk = "4.33.0"
 
@@ -50,4 +49,5 @@ object Versions {
   val jacoco = "0.8.1"
   val coveralls = "2.8.2"
   val ktlint = "0.23.1"
+  val detekt = "1.0.0.RC7"
 }

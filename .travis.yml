@@ -4,7 +4,7 @@ sudo: false
 
 env:
   global:
-    - ADB_INSTALL_TIMEOUT=5 # minutes
+    - ADB_INSTALL_TIMEOUT=5
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -57,7 +57,7 @@ before_script:
 
 script:
   - make build-ci
-  - make ktlint
+  - make static-check
   - make combined-coverage
 
 after_success:

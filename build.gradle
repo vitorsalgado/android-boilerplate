@@ -1,8 +1,5 @@
-import com.github.spotbugs.SpotBugsTask
-
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "org.sonarqube"
-apply plugin: "com.github.spotbugs"
 apply from: "$rootDir/build.utils.gradle"
 
 buildscript {
@@ -23,8 +20,8 @@ buildscript {
     classpath "io.fabric.tools:gradle:${Versions.fabric}"
     classpath "org.owasp:dependency-check-gradle:${Versions.owasp_dependency_check}"
     classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${Versions.sonar}"
-    classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:${Versions.spotbugs_plugin}"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
     classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:${Versions.coveralls}"
   }
 }
@@ -104,8 +101,8 @@ subprojects {
 
   setPreDex(it)
 
-  apply from: "$rootDir/tools/linters.gradle"
   apply from: "$rootDir/tools/ktlint.gradle"
+  apply from: "$rootDir/tools/detek.gradle"
 
   afterEvaluate { Project project ->
     project.tasks.whenTaskAdded {
@@ -140,15 +137,6 @@ subprojects {
         }
 
         buildTypes { debug { testCoverageEnabled = true } }
-      }
-    }
-
-    tasks.withType(SpotBugsTask) {
-      excludeFilter rootProject.file("tools/linters/spotbugs-filter.xml")
-      reports {
-        xml.enabled = false
-        html.enabled = true
-        html.setDestination rootProject.file("reports/spotbugs/index.html")
       }
     }
   }

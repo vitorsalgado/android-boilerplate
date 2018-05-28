@@ -1,0 +1,13 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+detekt {
+  version = "${Versions.detekt}"
+  profile("main") {
+    input = "$projectDir"
+    config = "$project.rootDir/detekt-ruleset.yml"
+    filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    output = "${project.buildDir}/reports/detekt.xml"
+    parallel = true
+    disableDefaultRuleSets = false
+  }
+}
