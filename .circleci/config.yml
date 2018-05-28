@@ -42,9 +42,9 @@ jobs:
       - run:
           name: Google Services
           command: |
-            mkdir -p app/ && touch app/google-services.json
-            echo $GOOGLE_SERVICES_JSON >> app/google-services.json
-            echo $PLAYSTORE_ACCOUNT_JSON >> app/distribution/key.json
+            mkdir -p app/distribution && touch app/google-services.json && touch app/distribution/key.json
+            echo "${GOOGLE_SERVICES_JSON}" >> app/google-services.json
+            echo "${PLAYSTORE_ACCOUNT_JSON}" >> app/distribution/key.json
 
       - run:
           name: Fastlane
