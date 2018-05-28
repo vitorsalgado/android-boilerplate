@@ -11,7 +11,6 @@ jobs:
       CIRCLE_JDK_VERSION: oraclejdk8
       LANG: en_US.UTF-8
       CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-      PATH: $PATH:$CIRCLE_WORKING_DIRECTORY/google-cloud-sdk/bin
 
     steps:
       - checkout
@@ -32,8 +31,8 @@ jobs:
             tar xf google-cloud-sdk-127.0.0-linux-x86_64.tar.gz
             echo "y" | ./google-cloud-sdk/bin/gcloud components update beta
             tar -xzf credentials.tar.gz
-            gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
-            gcloud config set project $FIREBASE_PROJECT
+            ./google-cloud-sdk/bin/gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
+            ./google-cloud-sdk/bin/gcloud config set project $FIREBASE_PROJECT
 
       - run:
           name: Licenses
@@ -67,7 +66,7 @@ jobs:
           command: |
             ./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --results-dir $CIRCLE_BUILD_NUM
             mkdir -p firebase
-            gsutil -m cp -r -U "`gsutil ls gs://test-lab-4vup0p5qp17aw-w1y8vwf6x7mvq/$CIRCLE_BUILD_NUM/Nexus6-21-en-portrait | tail -1`*" $CIRCLE_WORKING_DIRECTORY/firebase/
+            ./google-cloud-sdk/bin/gsutil -m cp -r -U "`./google-cloud-sdk/bin/gsutil ls gs://test-lab-4vup0p5qp17aw-w1y8vwf6x7mvq/$CIRCLE_BUILD_NUM/Nexus6-21-en-portrait | tail -1`*" $CIRCLE_WORKING_DIRECTORY/firebase/
             mkdir -p app/build/outputs/code-coverage/connected && cp firebase/artifacts/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
 
       - run:
