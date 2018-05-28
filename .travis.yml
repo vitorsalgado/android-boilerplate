@@ -14,13 +14,17 @@ cache:
 
 android:
   components:
-    - android-27
-    - build-tools-27.0.3
     - tools
     - platform-tools
+    - tools
+    - build-tools-27.0.3
+    - android-27
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-google-google_play_services
+    - addon-google_apis-google-27
+    - add-on
+    - extra
     - sys-img-armeabi-v7a-android-27
     - sys-img-x86-android-27
 
@@ -44,8 +48,9 @@ install:
 before_script:
   - emulator -list-avds
   - android list targets
+  - echo no | android create avd --force -n test -t android-27 --abi armeabi-v7a
   - emulator \
-    -avd android-27 \
+    -avd test \
     -netfast \
     -netdelay none \
     -no-boot-anim \
@@ -53,8 +58,7 @@ before_script:
     -no-snapshot-update-time \
     -no-audio \
     -no-window \
-    -use-system-libs \
-    -port 5554
+    -use-system-libs &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
