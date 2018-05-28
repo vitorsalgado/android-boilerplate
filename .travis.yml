@@ -43,16 +43,9 @@ before_install:
 install:
   - gcloud config set project $FIREBASE_PROJECT
 
-before_script:
-  - echo no | android create avd --force -n test -t android-27 --abi armeabi-v7a
-  - emulator -avd test -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-
 script:
   - make build-ci
   - make ktlint
-  - ./gradlew connectedCheck -PdisablePreDex --quiet
 
 after_success:
   - make sonar
