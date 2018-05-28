@@ -135,7 +135,6 @@ dependencies {
   // ---------------------------------------------------------------------------------------------
   // Project Libraries
   // ---------------------------------------------------------------------------------------------
-  implementation project(':libs:resources')
   implementation project(':libs:toolkit')
   implementation project(':libs:toolkit-android')
   implementation project(':libs:api')

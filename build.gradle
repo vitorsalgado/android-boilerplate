@@ -65,10 +65,10 @@ allprojects {
   }
 
   tasks.withType(Test) {
-    //if (project.hasProperty("skipReports")) {
+    if (project.hasProperty("skipReports")) {
       reports.html.enabled = true
       reports.junitXml.enabled = true
-    //}
+    }
 
     jacoco.includeNoLocationClasses = true
 

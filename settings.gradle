@@ -1,7 +1,7 @@
 rootProject.name = 'Boilerplate'
 
 include ':app'
-include ':libs:toolkit', ':libs:toolkit-android', ':libs:api', ':libs:analytics', ':libs:resources'
+include ':libs:toolkit', ':libs:toolkit-android', ':libs:api', ':libs:analytics'
 
 def changeBuildFileName = { project -> project.buildFileName = project.name + '.gradle' }
 def isGroupDir = { dir -> dir == 'libs' }

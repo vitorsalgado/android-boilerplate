@@ -2,8 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 dependencies {
-  implementation project(':libs:resources')
-
   // ---------------------------------------------------------------------------------------------
   // Kotlin
   // ---------------------------------------------------------------------------------------------

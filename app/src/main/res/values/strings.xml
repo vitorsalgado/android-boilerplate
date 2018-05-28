@@ -1,12 +1,12 @@
 <resources>
   <!-- GENERAL APPLICATION RESOURCES -->
   <!-- ######################################################################################### -->
-
-  <!-- application -->
   <string name="account_type">br.com.vitorsalgado.example</string>
   <string name="facebook_app_id">822968334426637</string>
 
-  <!-- navigation -->
+
+  <!-- NAVIGATION -->
+  <!-- ######################################################################################### -->
   <string name="nav_group">Example</string>
   <string name="nav_title_logged_out">Sign in or register</string>
   <string name="nav_item_home">Start</string>
@@ -16,12 +16,31 @@
 
   <!-- FEATURES -->
   <!-- ######################################################################################### -->
+
   <!-- login -->
   <string name="login_title">Login</string>
   <string name="login_terms_and_conditions">By continuing, you agree to our Terms of Service and
     Privacy Policy
   </string>
   <string name="login_button_facebook">Enter with Facebook</string>
+
   <!-- about -->
   <string name="about_title">About</string>
+
+
+  <string name="error">Error</string>
+  <string name="double_back_to_exit">Click BACK one more time to exit</string>
+  <string name="version">Version</string>
+  <string name="version_description">Version %s</string>
+  <string name="licenses_description">This project contains several open-source libraries.
+    See licenses clicking on link below.
+  </string>
+  <string name="licenses">Licenses</string>
+  <string name="close">Close</string>
+
+
+  <!-- ERRORS -->
+  <string name="error_no_internet_connection">Network unavailable :( \nVerify your data connection
+    and try again.
+  </string>
 </resources>
