@@ -54,7 +54,7 @@ script:
   - ./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --results-dir $TRAVIS_BUILD_NUMBER --no-record-video
   - mkdir -p firebase
   - gsutil -m cp -r -U "`gsutil ls gs://test-lab-4vup0p5qp17aw-w1y8vwf6x7mvq/$TRAVIS_BUILD_NUMBER/Nexus6-21-en-portrait | tail -1`*" $TRAVIS_BUILD_DIR/firebase/
-  - mkdir -p app/build/outputs/code-coverage/connected && cp $TRAVIS_BUILD_DIR/firebase/artifacts/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
+  - mkdir -p app/build/outputs/code-coverage/connected && cp $TRAVIS_BUILD_DIR/firebase/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
 
   - ./gradlew jacocoTestReport
 

@@ -32,19 +32,14 @@ Check the list below:
 ### Static Analysis Tools 
 The following static analysis tools are set up on this project:
 
-* [SpotBugs](https://github.com/spotbugs/spotbugs): Static analysis tool to look for bugs in Java code:
+* [Ktlint](https://github.com/shyiko/ktlint): Lint for Kotlin
 ```
-make check
-```
-
-* [PMD](https://pmd.github.io/): It finds common programming flaws like unused variables, empty catch blocks, unnecessary object creation, and so forth. See [this project's PMD ruleset](tools/linters/pmd-ruleset.xml).
-``` 
-make pmd
+./gradlew ktlint
 ```
 
-* [Checkstyle](http://checkstyle.sourceforge.net/): It ensures that the code style follows the guidelines. See our [checkstyle config file](tools/linters/checkstyle.xml).
+* [Detekt](https://github.com/arturbosch/detekt): Static analysis tool for Kotlin
 ```
-make checkstyle
+./gradlew detektCheck
 ```
 
 * [SonarQube](https://www.sonarqube.org/): Continuous code inspection tool.
@@ -54,11 +49,6 @@ SONARQUBE_ORG=<YOUR_SONARQUBE_ORGANIZATION_KEY>
 SONARQUBE_TOKEN=<YOUR_GENERATED_SONARQUBE_TOKEN>
 
 make sonar
-```
-
-* [Ktlint](https://github.com/shyiko/ktlint): Lint for Kotlin
-```
-./gradlew ktlint
 ```
 
 ### Security Tools
