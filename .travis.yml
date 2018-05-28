@@ -2,11 +2,6 @@ language: android
 jdk: openjdk8
 sudo: false
 
-env:
-  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
-  - LANG=en_US.UTF-8
-  - LC_ALL=en_US.UTF-8
-
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
