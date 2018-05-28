@@ -34,7 +34,7 @@ before_install:
   - tar xf google-cloud-sdk-127.0.0-linux-x86_64.tar.gz
   - echo "y" | ./google-cloud-sdk/bin/gcloud components update beta
   - tar -xzf credentials.tar.gz
-  - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
+  - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file app/distribution/key.json
   - yes | sdkmanager "platforms;android-27"
   - make set-licenses
   - mkdir -p app/ && touch app/google-services.json

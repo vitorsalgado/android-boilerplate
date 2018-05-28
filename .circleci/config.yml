@@ -31,7 +31,7 @@ jobs:
             tar xf google-cloud-sdk-127.0.0-linux-x86_64.tar.gz
             echo "y" | ./google-cloud-sdk/bin/gcloud components update beta
             tar -xzf credentials.tar.gz
-            ./google-cloud-sdk/bin/gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
+            ./google-cloud-sdk/bin/gcloud auth activate-service-account $GCLOUD_EMAIL --key-file app/distribution/key.json
             ./google-cloud-sdk/bin/gcloud config set project $FIREBASE_PROJECT
 
       - run:
