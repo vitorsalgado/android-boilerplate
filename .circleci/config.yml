@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Decrypt Keys
           command: |
-            openssl aes-256-cbc -d -in distribution/release.keystore.cipher -out distribution/release.keystore -md sha256 -k $DECRYPT_KEY
+            openssl aes-256-cbc -d -in app/distribution/release.keystore.cipher -out app/distribution/release.keystore -md sha256 -k $DECRYPT_KEY
             openssl aes-256-cbc -d -in tools/gae/credentials.enc -out credentials.tar.gz -md sha256 -k $DECRYPT_KEY
 
       - run:
@@ -65,9 +65,9 @@ jobs:
           name: Test Lab
           command: |
             ./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --results-dir $CIRCLE_BUILD_NUM
-            mkdir -p firebase
-            ./google-cloud-sdk/bin/gsutil -m cp -r -U "`./google-cloud-sdk/bin/gsutil ls gs://test-lab-4vup0p5qp17aw-w1y8vwf6x7mvq/$CIRCLE_BUILD_NUM/Nexus6-21-en-portrait | tail -1`*" $CIRCLE_WORKING_DIRECTORY/firebase/
-            mkdir -p app/build/outputs/code-coverage/connected && cp firebase/artifacts/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
+            mkdir -p $CIRCLE_WORKING_DIRECTORY/firebase
+            ./google-cloud-sdk/bin/gsutil -m cp -U "`./google-cloud-sdk/bin/gsutil ls gs://test-lab-4vup0p5qp17aw-w1y8vwf6x7mvq/$CIRCLE_BUILD_NUM/Nexus6-21-en-portrait | tail -1`*" $CIRCLE_WORKING_DIRECTORY/firebase/
+            mkdir -p app/build/outputs/code-coverage/connected && cp $CIRCLE_WORKING_DIRECTORY/firebase/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
 
       - run:
           name: Jacoco
