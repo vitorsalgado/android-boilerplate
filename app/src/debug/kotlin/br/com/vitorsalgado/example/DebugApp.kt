@@ -47,13 +47,11 @@ class DebugApp : App() {
       .detectAll()
       .penaltyFlashScreen()
       .penaltyLog()
-      .penaltyDeath()
       .build())
 
     StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
       .detectAll()
       .penaltyLog()
-      .penaltyDeath()
       .build())
   }
 

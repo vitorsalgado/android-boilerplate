@@ -38,7 +38,13 @@ check:
 	./gradlew check --$(LEVEL)
 
 combined-coverage:
-	./gradlew createCombinedCoverageReport --stacktrace
+	./gradlew createCombinedCoverageReport
+
+assemble-android-test:
+	./gradlew :app:assembleDebugAndroidTest
+
+test-lab:
+	./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --device model=Nexus7,version=19,locale=en,orientation=landscape
 
 upload-data-coveralls:
 	./gradlew coveralls --quiet
