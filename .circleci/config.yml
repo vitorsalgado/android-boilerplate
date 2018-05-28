@@ -39,7 +39,6 @@ jobs:
           command: |
             yes | sdkmanager "platforms;android-27"
             yes | sdkmanager --licenses || true
-            make set-licenses
 
       - run:
           name: Google Services
