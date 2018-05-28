@@ -22,7 +22,6 @@ jobs:
           name: Decrypt Keys
           command: |
             openssl aes-256-cbc -d -in app/distribution/release.keystore.cipher -out app/distribution/release.keystore -md sha256 -k $DECRYPT_KEY
-            openssl aes-256-cbc -d -in tools/gae/credentials.enc -out credentials.tar.gz -md sha256 -k $DECRYPT_KEY
 
       - run:
           name: Google Cloud SDK
@@ -30,7 +29,7 @@ jobs:
             wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-127.0.0-linux-x86_64.tar.gz
             tar xf google-cloud-sdk-127.0.0-linux-x86_64.tar.gz
             echo "y" | ./google-cloud-sdk/bin/gcloud components update beta
-            tar -xzf credentials.tar.gz
+            echo $PLAYSTORE_ACCOUNT_JSON | base64 --decode > app/distribution/key.json
             ./google-cloud-sdk/bin/gcloud auth activate-service-account $GCLOUD_EMAIL --key-file app/distribution/key.json
             ./google-cloud-sdk/bin/gcloud config set project $FIREBASE_PROJECT
 
@@ -44,7 +43,6 @@ jobs:
           command: |
             mkdir -p app/distribution && touch app/google-services.json && touch app/distribution/key.json
             echo $GOOGLE_SERVICES_JSON | base64 --decode > app/google-services.json
-            echo $PLAYSTORE_ACCOUNT_JSON | base64 --decode > app/distribution/key.json
 
       - run:
           name: Fastlane
