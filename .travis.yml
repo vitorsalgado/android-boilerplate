@@ -51,10 +51,10 @@ script:
   - make static-check
   - make assemble-android-test
 
-  - ./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --use-orchestrator --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec --results-dir $TRAVIS_BUILD_NUMBER
+  - ./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --results-dir $TRAVIS_BUILD_NUMBER
   - mkdir -p firebase
   - gsutil -m cp -r -U "`gsutil ls gs://test-lab-4vup0p5qp17aw-w1y8vwf6x7mvq | tail -1`*" $TRAVIS_BUILD_DIR/firebase/
-  - mkdir -p app/build/outputs/code-coverage/connected && cp firebase/$TRAVIS_BUILD_NUMBER/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
+  - mkdir -p app/build/outputs/code-coverage/connected && cp firebase/$TRAVIS_BUILD_NUMBER/Nexus6-21-en-portrait/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
 
 after_success:
   - make sonar
