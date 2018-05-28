@@ -1,0 +1,96 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/android:api-27-alpha
+
+    working_directory: ~/android-boilerplate
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+      CIRCLE_JDK_VERSION: oraclejdk8
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/app.gradle" }}--{{ checksum "build.utils.gradle" }}--{{ checksum "libs/analytics/analytics.gradle" }}--{{ checksum "libs/api/api.gradle" }}--{{ checksum "libs/toolkit/toolkit.gradle" }}--{{ checksum "libs/toolkit-android/toolkit-android.gradle" }}--{{ checksum "buildSrc/build.gradle.kts" }}
+
+      - run:
+          name: Decrypt Keys
+          command: |
+            openssl aes-256-cbc -d -in distribution/release.keystore.cipher -out distribution/release.keystore -md sha256 -k $DECRYPT_KEY
+            openssl aes-256-cbc -d -in tools/gae/credentials.enc -out credentials.tar.gz -md sha256 -k $DECRYPT_KEY
+
+      - run:
+          name: Google Cloud SDK
+          command: |
+            wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-127.0.0-linux-x86_64.tar.gz
+            tar xf google-cloud-sdk-127.0.0-linux-x86_64.tar.gz
+            echo "y" | ./google-cloud-sdk/bin/gcloud components update beta
+            tar -xzf credentials.tar.gz
+            gcloud auth activate-service-account $GCLOUD_EMAIL --key-file client-secret.json
+            gcloud config set project $FIREBASE_PROJECT
+
+      - run:
+          name: Licenses
+          command: |
+            yes | sdkmanager "platforms;android-27"
+            yes | sdkmanager --licenses || true
+            make set-licenses
+
+      - run:
+          name: Google Services
+          command: |
+            mkdir -p app/ && touch app/google-services.json
+            echo $GOOGLE_SERVICES_JSON >> app/google-services.json
+            echo $PLAYSTORE_ACCOUNT_JSON >> app/distribution/key.json
+
+      - run:
+          name: Fastlane
+          command: |
+            bundle install
+            bundle update
+
+      - run:
+          name: Build
+          command: |
+            make build-ci
+            make static-check
+            make assemble-android-test
+
+      - run:
+          name: Test Lab
+          command: |
+            ./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --results-dir $CIRCLE_BUILD_NUM
+            mkdir -p firebase
+            gsutil -m cp -r -U "`gsutil ls gs://test-lab-4vup0p5qp17aw-w1y8vwf6x7mvq/$CIRCLE_BUILD_NUM/Nexus6-21-en-portrait | tail -1`*" $CIRCLE_WORKING_DIRECTORY/firebase/
+            mkdir -p app/build/outputs/code-coverage/connected && cp firebase/artifacts/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
+
+      - run:
+          name: Jacoco
+          command: ./gradlew jacocoTestReport
+
+      - run:
+          name: Sonar
+          command: make sonar
+
+      - run:
+          name: Coveralls
+          command: ./gradlew coveralls
+
+      - store_artifacts:
+          path: app/build/reports/jacoco/jacocoTestReport
+          destination: coverage-report
+
+      - store_artifacts:
+          path: app/build/reports/tests/testDebugUnitTest
+          destination: local-test-report
+
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/app.gradle" }}--{{ checksum "build.utils.gradle" }}--{{ checksum "libs/analytics/analytics.gradle" }}--{{ checksum "libs/api/api.gradle" }}--{{ checksum "libs/toolkit/toolkit.gradle" }}--{{ checksum "libs/toolkit-android/toolkit-android.gradle" }}--{{ checksum "buildSrc/build.gradle.kts" }}
