@@ -12,6 +12,7 @@ jobs:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
       CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+      PATH: $PATH:$CIRCLE_WORKING_DIRECTORY/google-cloud-sdk/bin
 
     steps:
       - checkout
