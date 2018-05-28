@@ -44,7 +44,7 @@ assemble-android-test:
 	./gradlew :app:assembleDebugAndroidTest --quiet
 
 test-lab:
-	./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --use-orchestrator --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec"
+	./google-cloud-sdk/bin/gcloud beta firebase test android run --type instrumentation --use-orchestrator --app ./app/build/outputs/apk/debug/app-debug.apk --test ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=Nexus6,version=21,locale=en,orientation=portrait --directories-to-pull /sdcard --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" --results-dir=
 
 upload-data-coveralls:
 	./gradlew coveralls --quiet
