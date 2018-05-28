@@ -43,8 +43,17 @@ install:
 
 before_script:
   - android list targets
-  - echo no | android create avd --force -n test -t android-27 --tag google_apis
-  - emulator -avd test -no-skin -no-audio -no-window &
+  - emulator \
+    -avd "Android 8.1.0" \
+    -netfast \
+    -netdelay none \
+    -no-boot-anim \
+    -no-snapshot-save \
+    -no-snapshot-update-time \
+    -no-audio \
+    -no-window \
+    -use-system-libs \
+    -port 5554"
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
