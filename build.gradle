@@ -3,7 +3,7 @@ apply plugin: "org.sonarqube"
 apply from: "$rootDir/build.utils.gradle"
 
 buildscript {
-  ext.kotlin_version = '1.2.41'
+  ext.kotlin_version = '1.2.50'
 
   repositories {
     google()
@@ -13,7 +13,7 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:3.1.2"
+    classpath 'com.android.tools.build:gradle:3.1.3'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     classpath "org.jacoco:org.jacoco.core:${Versions.jacoco}"
     classpath "com.google.gms:google-services:${Versions.google_services}"

@@ -1,5 +1,5 @@
 object Versions {
-  val kotlin = "1.2.41"
+  val kotlin = "1.2.50"
 
   // support
   val supportLibrary = "27.1.1"
