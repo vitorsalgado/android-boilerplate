@@ -20,7 +20,8 @@ dependencies {
   // ---------------------------------------------------------------------------------------------
   testImplementation TestDependencies.kotlinTest
   testImplementation TestDependencies.kotlinTestJUnit
-  testImplementation TestDependencies.junit
+  testImplementation TestDependencies.junit5Api
+  testRuntimeOnly TestDependencies.junit5Engine
   testImplementation TestDependencies.mockito
   testImplementation TestDependencies.hamcrestAll
 }

@@ -3,13 +3,10 @@ package br.com.vitorsalgado.example.toolkit
 import br.com.vitorsalgado.example.toolkit.FX.anyOf
 import br.com.vitorsalgado.example.toolkit.FX.curry
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@RunWith(JUnit4::class)
 class FXTest {
   @Test
   fun `anyOf should return true when any of functions evaluates to true`() {
@@ -26,8 +23,7 @@ class FXTest {
   }
 
   @Test
-  fun `curry should reduce a function with multiple arguments into a function that accepts just one`(
-  ) {
+  fun `curry should reduce a function with multiple arguments into a function that accepts just one`() {
     val fn: (Int, Int) -> Int = { a, b -> a + b }
     val addTwo = curry(fn)(2)
 

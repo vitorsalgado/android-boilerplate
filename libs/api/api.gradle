@@ -24,7 +24,8 @@ dependencies {
   // ---------------------------------------------------------------------------------------------
   // Test Libs
   // ---------------------------------------------------------------------------------------------
-  testImplementation TestDependencies.junit
+  testImplementation TestDependencies.junit5Api
+  testRuntimeOnly TestDependencies.junit5Engine
   testImplementation TestDependencies.mockito
   testImplementation TestDependencies.hamcrestAll
   testImplementation TestDependencies.requestMatcher

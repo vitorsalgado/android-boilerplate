@@ -12,12 +12,9 @@ import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import java.io.File
 import java.io.IOException
 
-@RunWith(JUnit4::class)
 class ApiTest {
   @Rule
   @JvmField

@@ -4,11 +4,8 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import java.util.Arrays
 
-@RunWith(JUnit4::class)
 class FbUtilsTest {
   @Test
   fun convertShouldReturnParamsSeparatedByComma() {

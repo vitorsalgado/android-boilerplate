@@ -16,11 +16,13 @@ static def setPreDex(project) {
   }
 }
 
-task incrementVersionNumberByBuild << {
-  def version_code = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim()) +
-    Integer.valueOf(build_number)
+task incrementVersionNumberByBuild {
+  doLast {
+    def version_code = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim()) +
+      Integer.valueOf(build_number)
 
-  file("$rootDir/VERSION_CODE").write(version_code.toString())
+    file("$rootDir/VERSION_CODE").write(version_code.toString())
+  }
 }
 
 ext.shouldSkip = this.&shouldSkip

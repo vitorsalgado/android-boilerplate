@@ -1,4 +1,4 @@
-FROM node:8.9.4 AS build-env
+FROM node:8.11.3 AS build-env
 WORKDIR /usr/app
 COPY package.json package-lock.json cli.js ./
 RUN npm install --production

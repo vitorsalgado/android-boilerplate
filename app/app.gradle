@@ -14,6 +14,7 @@ android {
     applicationId "br.com.vitorsalgado.example"
     multiDexEnabled false
     testInstrumentationRunner "br.com.vitorsalgado.example.InstrumentationRunner"
+    testInstrumentationRunnerArguments clearPackageData: "true"
   }
 
   dexOptions {
@@ -107,6 +108,7 @@ android {
   }
 
   testOptions {
+    execution 'ANDROID_TEST_ORCHESTRATOR'
     animationsDisabled true
     unitTests {
       includeAndroidResources = true
@@ -215,6 +217,7 @@ dependencies {
   androidTestImplementation TestDependencies.junit
   androidTestImplementation TestDependencies.mockitoAndroid
   androidTestImplementation TestDependencies.supportTestRunner
+  androidTestUtil TestDependencies.testOrchestrator
   androidTestImplementation TestDependencies.supportTestRules
   androidTestImplementation TestDependencies.supportTestEspressoCore
   androidTestImplementation TestDependencies.supportTestEspressoContrib

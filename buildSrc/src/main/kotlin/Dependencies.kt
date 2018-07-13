@@ -45,6 +45,8 @@ object Dependencies {
 
 object TestDependencies {
   val junit = "junit:junit:${Versions.junit}"
+  val junit5Api = "org.junit.jupiter:junit-jupiter-api:${Versions.junit5}"
+  val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit5}"
   val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
   val mockito = "org.mockito:mockito-core:${Versions.mockito}"
   val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockito}"
@@ -58,6 +60,7 @@ object TestDependencies {
   val kotlinTestJUnit = "org.jetbrains.kotlin:kotlin-test-junit"
 
   val supportTestRunner = "com.android.support.test:runner:${Versions.testSupportLibrary}"
+  val testOrchestrator = "com.android.support.test:orchestrator:${Versions.testSupportLibrary}"
   val supportTestRules = "com.android.support.test:rules:${Versions.testSupportLibrary}"
   val supportTestEspressoCore = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
   val supportTestEspressoContrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espresso}"
