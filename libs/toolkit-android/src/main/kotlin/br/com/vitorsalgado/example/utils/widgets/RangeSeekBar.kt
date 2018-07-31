@@ -2,26 +2,23 @@ package br.com.vitorsalgado.example.utils.widgets
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.graphics.Paint.Style
-import android.graphics.RectF
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import br.com.vitorsalgado.example.utils.DimensionUtils
 import br.com.vitorsalgado.example.utils.R
 import java.math.BigDecimal
 
 @Suppress("UNCHECKED_CAST")
-class RangeSeekBar<T : Number> : android.support.v7.widget.AppCompatImageView {
+class RangeSeekBar<T : Number> : AppCompatImageView {
 
   private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
   private var mDefaultColor: Int = 0 // Color.argb(0xFF, 0x33, 0xB5, 0xE5);

@@ -4,13 +4,11 @@ import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.widget.TimePicker
+import androidx.fragment.app.DialogFragment
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class ClockTimePickerDialog : DialogFragment(), TimePickerDialog.OnTimeSetListener {
   companion object {

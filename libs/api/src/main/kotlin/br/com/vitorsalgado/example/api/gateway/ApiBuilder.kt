@@ -29,9 +29,7 @@ object ApiBuilder {
   fun build(
     @NonNull okBuilder: OkHttpClient.Builder,
     @NonNull gson: Gson,
-    @NonNull config: Config
-  ): Api {
-
+    @NonNull config: Config): Api {
     val httpCacheDirectory = File(config.cacheDir, config.cacheName)
     val cacheSize = config.cacheSize
     val cache = Cache(httpCacheDirectory, cacheSize.toLong())

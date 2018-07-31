@@ -1,11 +1,11 @@
 package br.com.vitorsalgado.example.utils
 
 import android.content.Context
-import android.support.annotation.DrawableRes
-import android.support.v4.content.ContextCompat
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 
 object PagerUtils {
   fun createPager(context: Context, indicators: Array<ImageView>, container: ViewGroup, @DrawableRes selected: Int, @DrawableRes unselected: Int) {

@@ -3,8 +3,9 @@ object Versions {
 
   // support
   val supportLibrary = "27.1.1"
-  val testSupportLibrary = "1.0.2"
+  val testSupportLibrary = "1.1.0-alpha1"
   val constraintLayout = "1.1.2"
+  val orchestrator = "1.1.0-alpha1"
 
   // test dependencies
   val junit = "4.12"
@@ -12,7 +13,7 @@ object Versions {
   val hamcrest = "1.3"
   val testButler = "1.3.2"
   val robolectric = "3.8"
-  val espresso = "3.0.1"
+  val espresso = "3.1.0-alpha1"
   val mockito = "2.19.0"
   val requestmatcher = "2.2.0"
   val jsonpathassert = "2.2.0"

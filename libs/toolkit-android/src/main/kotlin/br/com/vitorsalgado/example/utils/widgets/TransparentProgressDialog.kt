@@ -2,12 +2,12 @@ package br.com.vitorsalgado.example.utils.widgets
 
 import android.app.Dialog
 import android.content.Context
-import android.support.annotation.ColorRes
-import android.support.annotation.StyleRes
-import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import androidx.annotation.ColorRes
+import androidx.annotation.StyleRes
+import androidx.core.content.ContextCompat
 import br.com.vitorsalgado.example.utils.R
 import br.com.vitorsalgado.example.utils.delegates.viewWithId
 

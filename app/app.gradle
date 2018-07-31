@@ -108,7 +108,7 @@ android {
   }
 
   testOptions {
-    execution 'ANDROID_TEST_ORCHESTRATOR'
+    execution 'ANDROIDX_TEST_ORCHESTRATOR'
     animationsDisabled true
     unitTests {
       includeAndroidResources = true
@@ -118,8 +118,10 @@ android {
 
   applicationVariants.all { variant ->
     if (variant.buildType.name == "release" || BuildUtils.isCI) {
-      variant.mergedFlavor.versionCode = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim())
-      variant.mergedFlavor.versionName = file("$rootDir/VERSION").text
+      variant.outputs.each { output ->
+        output.versionNameOverride = file("$rootDir/VERSION").text
+        //output.versionOverride = versionCode = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim())
+      }
     }
   }
 

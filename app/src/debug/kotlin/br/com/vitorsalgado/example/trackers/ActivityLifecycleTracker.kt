@@ -3,7 +3,7 @@ package br.com.vitorsalgado.example.trackers
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 import br.com.vitorsalgado.example.utils.LogUtility
 

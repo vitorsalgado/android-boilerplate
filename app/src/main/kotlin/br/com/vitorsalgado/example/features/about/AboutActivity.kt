@@ -3,10 +3,10 @@ package br.com.vitorsalgado.example.features.about
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import br.com.vitorsalgado.example.R
 import br.com.vitorsalgado.example.utils.AppUtils
 import br.com.vitorsalgado.example.utils.delegates.viewWithId

@@ -1,8 +1,8 @@
 package br.com.vitorsalgado.example.utils
 
 import android.app.Activity
-import android.support.v7.widget.Toolbar
 import android.view.WindowManager
+import androidx.appcompat.widget.Toolbar
 
 object StatusBarUtils {
   fun makeStatusBarTranslucent(activity: Activity, toolbar: Toolbar) {

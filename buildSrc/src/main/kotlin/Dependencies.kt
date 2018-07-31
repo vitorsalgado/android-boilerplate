@@ -7,7 +7,7 @@ object Dependencies {
   val supportV4 = "com.android.support:support-v4:${Versions.supportLibrary}"
   val supportAppCompatV7 = "com.android.support:appcompat-v7:${Versions.supportLibrary}"
   val supportV13 = "com.android.support:support-v13:${Versions.supportLibrary}"
-  val supportConstraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
+  val supportConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
 
   val firebaseCore = "com.google.firebase:firebase-core:${Versions.firebase_core}"
   val firebaseMessaging = "com.google.firebase:firebase-messaging:${Versions.firebase_messaging}"
@@ -59,11 +59,11 @@ object TestDependencies {
   val kotlinTest = "org.jetbrains.kotlin:kotlin-test"
   val kotlinTestJUnit = "org.jetbrains.kotlin:kotlin-test-junit"
 
-  val supportTestRunner = "com.android.support.test:runner:${Versions.testSupportLibrary}"
-  val testOrchestrator = "com.android.support.test:orchestrator:${Versions.testSupportLibrary}"
-  val supportTestRules = "com.android.support.test:rules:${Versions.testSupportLibrary}"
-  val supportTestEspressoCore = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
-  val supportTestEspressoContrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espresso}"
-  val supportTestEspressoIntents = "com.android.support.test.espresso:espresso-intents:${Versions.espresso}"
-  val supportTestEspressoWeb = "com.android.support.test.espresso:espresso-web:${Versions.espresso}"
+  val supportTestRunner = "androidx.test:runner:${Versions.testSupportLibrary}"
+  val testOrchestrator = "androidx.test:orchestrator:${Versions.orchestrator}"
+  val supportTestRules = "androidx.test:rules:${Versions.testSupportLibrary}"
+  val supportTestEspressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+  val supportTestEspressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
+  val supportTestEspressoIntents = "androidx.test.espresso:espresso-intents:${Versions.espresso}"
+  val supportTestEspressoWeb = "androidx.test.espresso:espresso-web:${Versions.espresso}"
 }
