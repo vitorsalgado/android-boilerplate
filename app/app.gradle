@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
 
 apply from: "$rootDir/tools/layout-ids.gradle"
 apply from: "$rootDir/tools/test-butler.gradle"
@@ -174,6 +175,8 @@ dependencies {
   }
   implementation Dependencies.archExtensions
   kapt Dependencies.archCompiler
+  implementation Dependencies.navigationFragment
+  implementation Dependencies.navigationUI
   implementation Dependencies.firebaseCore
   implementation Dependencies.firebaseMessaging
   implementation Dependencies.firebaseConfig

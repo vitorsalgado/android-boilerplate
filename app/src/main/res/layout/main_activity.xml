@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical">
+  tools:context=".features.main.MainActivity">
 
-  <com.google.android.material.appbar.AppBarLayout
+  <fragment
+    android:id="@+id/navHost"
+    android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    app:defaultNavHost="true"
+    app:navGraph="@navigation/nav_graph" />
 
-    <com.google.android.material.tabs.TabLayout
-      android:id="@+id/tabs"
-      android:layout_width="match_parent"
-      android:layout_height="?android:attr/actionBarSize"
-      android:background="@color/secondaryDark"
-      android:gravity="top"
-      app:tabIndicatorColor="@android:color/transparent" />
-
-  </com.google.android.material.appbar.AppBarLayout>
-
-  <androidx.viewpager.widget.ViewPager
-    android:id="@+id/tabPager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

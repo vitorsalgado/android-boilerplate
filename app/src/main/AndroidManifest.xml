@@ -52,6 +52,7 @@
       android:name=".features.main.MainActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Launcher">
+      <nav-graph android:value="@navigation/nav_graph" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

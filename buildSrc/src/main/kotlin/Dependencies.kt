@@ -8,6 +8,8 @@ object Dependencies {
   val supportAppCompatV7 = "com.android.support:appcompat-v7:${Versions.supportLibrary}"
   val supportV13 = "com.android.support:support-v13:${Versions.supportLibrary}"
   val supportConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+  val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+  val navigationUI = "android.arch.navigation:navigation-ui:${Versions.navigation}"
 
   val firebaseCore = "com.google.firebase:firebase-core:${Versions.firebase_core}"
   val firebaseMessaging = "com.google.firebase:firebase-messaging:${Versions.firebase_messaging}"

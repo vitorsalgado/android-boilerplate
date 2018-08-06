@@ -1,11 +1,12 @@
 object Versions {
-  val kotlin = "1.2.51"
+  val kotlin = "1.2.60"
 
   // support
   val supportLibrary = "27.1.1"
   val testSupportLibrary = "1.1.0-alpha1"
   val constraintLayout = "1.1.2"
   val orchestrator = "1.1.0-alpha1"
+  val navigation = "1.0.0-alpha04"
 
   // test dependencies
   val junit = "4.12"
@@ -52,4 +53,5 @@ object Versions {
   val coveralls = "2.8.2"
   val ktlint = "0.24.0"
   val detekt = "1.0.0.RC7"
+  val spotless = "3.14.0"
 }
