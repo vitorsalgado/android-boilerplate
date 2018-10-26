@@ -69,7 +69,6 @@ android {
       ext.enableCrashlytics = false
 
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
-      consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
 
       resValue 'string', 'app_name', "1." + app_name + ".debug"
@@ -93,7 +92,6 @@ android {
       ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes.txt"
 
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
-      consumerProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
       resValue 'string', 'app_name', app_name
       buildConfigField 'String', 'API_URI', '"http://api.prod"'

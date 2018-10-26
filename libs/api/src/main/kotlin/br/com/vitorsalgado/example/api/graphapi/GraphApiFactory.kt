@@ -7,7 +7,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 
-object GraphApiBuilder {
+object GraphApiFactory {
   private var graphApi: GraphApi? = null
 
   operator fun get(config: Config, okBuilder: OkHttpClient.Builder): GraphApi {

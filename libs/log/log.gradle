@@ -1,0 +1,17 @@
+apply plugin: 'idea'
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+  implementation Dependencies.kotlinStandardLib
+
+  // ---------------------------------------------------------------------------------------------
+  // Test Libs
+  // ---------------------------------------------------------------------------------------------
+  testImplementation TestDependencies.kotlinTest
+  testImplementation TestDependencies.kotlinTestJUnit
+  testImplementation TestDependencies.junit5Api
+  testRuntimeOnly TestDependencies.junit5Engine
+  testImplementation TestDependencies.mockito
+  testImplementation TestDependencies.hamcrestAll
+}

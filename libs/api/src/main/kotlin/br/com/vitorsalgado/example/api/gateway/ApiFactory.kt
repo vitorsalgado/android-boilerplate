@@ -10,7 +10,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 
-object ApiBuilder {
+object ApiFactory {
   internal var api: Api? = null
 
   operator fun get(
