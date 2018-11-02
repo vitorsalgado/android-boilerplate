@@ -3,7 +3,7 @@ import java.nio.file.Paths
 
 rootProject.name = 'Boilerplate'
 
-include ':app', ':authencation'
+include ':app', ':domain-authencation'
 include ':libs:log', ':libs:toolkit', ':libs:toolkit-android', ':libs:api', ':libs:analytics'
 
 def buildFileChanged = { project -> !Files.exists(Paths.get("$project.projectDir/build.gradle")) }
