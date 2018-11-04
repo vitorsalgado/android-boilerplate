@@ -3,7 +3,7 @@ package br.com.vitorsalgado.example.services.authenticator
 import android.accounts.AccountManager
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.annotation.WorkerThread
+import androidx.annotation.WorkerThread
 import com.facebook.drawee.backends.pipeline.Fresco
 import io.reactivex.Completable
 import javax.inject.Inject

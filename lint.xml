@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lint>
-  <issue id="ObsoleteSdkInt" severity="error"/>
+  <issue id="ObsoleteSdkInt" severity="error" />
 
   <!-- Ignores -->
-  <issue id="Typos" severity="ignore"/>
-  <issue id="UnusedIds" severity="ignore"/>
-  <issue id="GoogleAppIndexingWarning" severity="ignore"/>
+  <issue id="Typos" severity="ignore" />
+  <issue id="UnusedIds" severity="ignore" />
+  <issue id="GoogleAppIndexingWarning" severity="ignore" />
   <issue id="UnusedResources">
-    <ignore path="build/generated/res/google-services/**"/>
+    <ignore path="build/generated/res/google-services/**" />
   </issue>
 </lint>

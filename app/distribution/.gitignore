@@ -1,3 +1,4 @@
 release.keystore
 release.jks
 *.json
+*.pepk

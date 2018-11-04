@@ -1,3 +1,6 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
 static def shouldSkip(project) { return project.name == "libs" }
 
 static def isAndroidModule(project) {
@@ -22,6 +25,21 @@ task incrementVersionNumberByBuild {
       Integer.valueOf(build_number)
 
     file("$rootDir/VERSION_CODE").write(version_code.toString())
+  }
+}
+
+task generateLocalTestFolders {
+  group 'utils'
+  description 'Generates Kotlin local test folder'
+
+  doLast {
+    subprojects {
+      def isGroupDir = { dir -> dir == 'libs' }
+      def testDir = "$it.projectDir/src/test"
+
+      if (!Files.exists(Paths.get(testDir)) && !isGroupDir(it.name))
+        Files.createDirectories(Paths.get("$testDir/kotlin"))
+    }
   }
 }
 

@@ -81,8 +81,8 @@ keystores/
 
 # IDEs
 *.iml
-.idea/workspace.xml
-.idea/
+!/.idea/codeStyles/codeStyleConfig.xml
+/.idea/
 .project
 .vscode/
 
@@ -104,3 +104,4 @@ reports/
 .sonarlint/
 qark
 fastlane/report.xml
+.my_recovery/

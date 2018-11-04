@@ -1,9 +1,11 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "org.sonarqube"
 apply from: "$rootDir/build.utils.gradle"
 
 buildscript {
-  ext.kotlin_version = '1.2.51'
+  ext.kotlin_version = Versions.kotlin
 
   repositories {
     google()
@@ -13,7 +15,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.1.3'
+    classpath 'com.android.tools.build:gradle:3.4.0-alpha02'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     classpath "org.jacoco:org.jacoco.core:${Versions.jacoco}"
     classpath "com.google.gms:google-services:${Versions.google_services}"
@@ -22,10 +24,12 @@ buildscript {
     classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${Versions.sonar}"
     classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
     classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:${Versions.coveralls}"
+    classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
-ext.testButler = '1.3.2'
+ext.testButler = Versions.testButler
 ext.java_version = JavaVersion.VERSION_1_8
 
 allprojects {
@@ -57,9 +61,16 @@ allprojects {
     targetCompatibility = java_version
 
     configure(options) {
+      options.compilerArgs << "-Xlint:deprecation"
       options.encoding = "utf-8"
       options.incremental = true
       options.fork = true
+    }
+  }
+
+  tasks.withType(KotlinCompile).all {
+    kotlinOptions {
+      jvmTarget = java_version
     }
   }
 
@@ -79,18 +90,6 @@ allprojects {
       maxParallelForks BuildUtils.cores
       forkEvery 10
       events = ["failed", "passed", "skipped", "standardOut", "standardError"]
-    }
-  }
-
-  gradle.projectsEvaluated {
-    tasks.withType(JavaCompile) {
-      options.compilerArgs << "-Xlint:deprecation"
-    }
-  }
-
-  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-      jvmTarget = java_version
     }
   }
 }
@@ -117,11 +116,11 @@ subprojects {
           targetCompatibility JavaVersion.VERSION_1_8
         }
 
-        compileSdkVersion Android.target_sdk
+        compileSdkVersion 28
 
         defaultConfig {
-          minSdkVersion Android.min_sdk
-          targetSdkVersion Android.target_sdk
+          minSdkVersion 21
+          targetSdkVersion 28
           versionCode 1
           versionName "1.0"
           vectorDrawables.useSupportLibrary true
@@ -146,6 +145,6 @@ task clean(type: Delete) {
 }
 
 wrapper {
-  gradleVersion = '4.9'
+  gradleVersion = '4.10.2'
   distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }

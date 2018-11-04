@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
 
 apply from: "$rootDir/tools/layout-ids.gradle"
 apply from: "$rootDir/tools/test-butler.gradle"
@@ -68,7 +69,6 @@ android {
       ext.enableCrashlytics = false
 
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
-      consumerProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
 
       resValue 'string', 'app_name', "1." + app_name + ".debug"
@@ -92,7 +92,6 @@ android {
       ext.betaDistributionReleaseNotesFilePath = "$projectDir/release-notes.txt"
 
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
-      consumerProguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
       resValue 'string', 'app_name', app_name
       buildConfigField 'String', 'API_URI', '"http://api.prod"'
@@ -118,8 +117,10 @@ android {
 
   applicationVariants.all { variant ->
     if (variant.buildType.name == "release" || BuildUtils.isCI) {
-      variant.mergedFlavor.versionCode = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim())
-      variant.mergedFlavor.versionName = file("$rootDir/VERSION").text
+      variant.outputs.each { output ->
+        output.versionNameOverride = file("$rootDir/VERSION").text
+        //output.versionOverride = versionCode = Integer.valueOf(file("$rootDir/VERSION_CODE").readLines()[0].trim())
+      }
     }
   }
 
@@ -138,7 +139,7 @@ dependencies {
   // Project Libraries
   // ---------------------------------------------------------------------------------------------
   implementation project(':libs:toolkit')
-  implementation project(':libs:toolkit-android')
+  implementation project(':libs:utils')
   implementation project(':libs:api')
   implementation project(':libs:analytics')
 
@@ -150,28 +151,14 @@ dependencies {
   // ---------------------------------------------------------------------------------------------
   // Dependencies
   // ---------------------------------------------------------------------------------------------
-  implementation Dependencies.supportAnnotations
-  implementation Dependencies.supportConstraintLayout
-  implementation(Dependencies.supportAppCompatV7) {
-    exclude module: 'support-annotations'
-    exclude module: 'support-v4'
-    exclude module: 'cardview-v7'
-  }
-  implementation(Dependencies.supportDesign) {
-    exclude module: 'support-v4'
-    exclude module: 'appcompat-v7'
-    exclude module: 'recyclerview-v7'
-    exclude module: 'cardview-v7'
-  }
-  implementation Dependencies.supportV4
-  implementation Dependencies.supportV13
-  implementation(Dependencies.supportRecyclerView) {
-    exclude module: 'support-annotations'
-    exclude module: 'support-compat'
-    exclude module: 'support-core-ui'
-  }
+  implementation Dependencies.constraintLayout
+  implementation(Dependencies.appcompat)
+  implementation(Dependencies.design)
+  implementation(Dependencies.recyclerView)
   implementation Dependencies.archExtensions
   kapt Dependencies.archCompiler
+  implementation Dependencies.navigationFragment
+  implementation Dependencies.navigationUI
   implementation Dependencies.firebaseCore
   implementation Dependencies.firebaseMessaging
   implementation Dependencies.firebaseConfig
@@ -196,6 +183,7 @@ dependencies {
   releaseImplementation Dependencies.leakCanaryNoOp
   testImplementation Dependencies.leakCanaryNoOp
   debugImplementation Dependencies.leakCanary
+  debugImplementation Dependencies.leakCanaryFragment
   debugImplementation Dependencies.stetho
   debugImplementation Dependencies.stethoOkHttp3
   debugImplementation Dependencies.traceur
@@ -218,11 +206,11 @@ dependencies {
   androidTestImplementation TestDependencies.mockitoAndroid
   androidTestImplementation TestDependencies.supportTestRunner
   androidTestUtil TestDependencies.testOrchestrator
-  androidTestImplementation TestDependencies.supportTestRules
-  androidTestImplementation TestDependencies.supportTestEspressoCore
-  androidTestImplementation TestDependencies.supportTestEspressoContrib
-  androidTestImplementation TestDependencies.supportTestEspressoIntents
-  androidTestImplementation TestDependencies.supportTestEspressoWeb
+  androidTestImplementation TestDependencies.testRules
+  androidTestImplementation TestDependencies.testEspressoCore
+  androidTestImplementation TestDependencies.testEspressoContrib
+  androidTestImplementation TestDependencies.testEspressoIntents
+  androidTestImplementation TestDependencies.testEspressoWeb
   androidTestImplementation TestDependencies.testButler
 }
 

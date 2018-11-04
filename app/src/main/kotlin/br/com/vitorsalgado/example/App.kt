@@ -3,11 +3,9 @@ package br.com.vitorsalgado.example
 import android.app.Activity
 import android.app.Application
 import android.content.ComponentCallbacks2
-import br.com.vitorsalgado.example.configurers.Analytics
-import br.com.vitorsalgado.example.configurers.FrescoPipelines
-import br.com.vitorsalgado.example.configurers.RemoteConfig
+import br.com.vitorsalgado.example.config.FrescoPipelines
+import br.com.vitorsalgado.example.config.RemoteConfig
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.google.firebase.FirebaseApp
 import com.squareup.leakcanary.RefWatcher
 import dagger.android.AndroidInjector
@@ -31,14 +29,9 @@ abstract class App : Application(), HasActivityInjector {
     super.onCreate()
 
     setupDependenciesManager()
-
-    val fresco = FrescoPipelines.setup(this)
-    trackFresco(fresco)
-    Fresco.initialize(this, fresco.build())
-
+    FrescoPipelines.setup(this)
     FirebaseApp.initializeApp(this)
     RemoteConfig.setup()
-    Analytics.setup(this)
 
     refWatcher = enableLeakCanary()
     instance = this
@@ -76,9 +69,5 @@ abstract class App : Application(), HasActivityInjector {
 
   protected open fun enableLeakCanary(): RefWatcher {
     return RefWatcher.DISABLED
-  }
-
-  protected open fun trackFresco(builder: ImagePipelineConfig.Builder) {
-    // DebugApp should override and properly implement this
   }
 }

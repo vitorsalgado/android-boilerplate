@@ -4,7 +4,7 @@ import android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import br.com.vitorsalgado.example.api.gateway.Api
+import br.com.vitorsalgado.example.api.bff.Api
 
 class AccountAuthenticatorService : Service() {
   private var api: Api? = null

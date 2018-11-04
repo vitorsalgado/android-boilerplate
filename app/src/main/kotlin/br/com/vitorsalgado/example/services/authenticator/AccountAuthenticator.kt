@@ -9,8 +9,8 @@ import android.accounts.NetworkErrorException
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import br.com.vitorsalgado.example.api.gateway.Api
-import br.com.vitorsalgado.example.api.gateway.dtos.OAuthResponse
+import br.com.vitorsalgado.example.api.bff.Api
+import br.com.vitorsalgado.example.api.bff.dtos.OAuthResponse
 import br.com.vitorsalgado.example.features.authentication.LoginActivity
 import br.com.vitorsalgado.example.services.authenticator.AuthConstants.Companion.ACCOUNT_AUTHTOKEN_TYPE
 import br.com.vitorsalgado.example.services.authenticator.AuthConstants.Companion.ACCOUNT_EXPIRESIN

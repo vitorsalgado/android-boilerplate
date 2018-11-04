@@ -1,5 +1,7 @@
 package br.com.vitorsalgado.example
 
+import br.com.vitorsalgado.example.trackers.FrescoDebugCacheStatsTracker
+import com.facebook.imagepipeline.cache.ImageCacheStatsTracker
 import com.facebook.stetho.okhttp3.StethoInterceptor
 
 import okhttp3.OkHttpClient
@@ -12,6 +14,10 @@ internal class PerBuildComponentProvider {
     return OkHttpClient.Builder()
       .addNetworkInterceptor(StethoInterceptor())
       .addInterceptor(HttpLoggingInterceptor().setLevel(BODY))
+  }
+
+  fun imageCacheStatsTracker(): ImageCacheStatsTracker {
+    return FrescoDebugCacheStatsTracker()
   }
 
   companion object {

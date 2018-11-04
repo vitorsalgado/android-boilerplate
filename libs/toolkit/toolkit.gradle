@@ -4,7 +4,6 @@ apply plugin: 'kotlin'
 
 dependencies {
   implementation Dependencies.kotlinStandardLib
-  implementation Dependencies.supportAnnotations
   implementation Dependencies.rxAndroid
   implementation Dependencies.rxJava
   implementation Dependencies.gson
