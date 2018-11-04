@@ -2,10 +2,10 @@ package br.com.vitorsalgado.example.api
 
 import br.com.concretesolutions.requestmatcher.LocalTestRequestMatcherRule
 import br.com.concretesolutions.requestmatcher.RequestMatcherRule
-import br.com.vitorsalgado.example.api.gateway.Api
-import br.com.vitorsalgado.example.api.gateway.ApiFactory
-import br.com.vitorsalgado.example.api.gateway.Config
-import br.com.vitorsalgado.example.api.gateway.dtos.OAuthResponse
+import br.com.vitorsalgado.example.api.bff.Api
+import br.com.vitorsalgado.example.api.bff.ApiFactory
+import br.com.vitorsalgado.example.api.bff.Config
+import br.com.vitorsalgado.example.api.bff.dtos.OAuthResponse
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse

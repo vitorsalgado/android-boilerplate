@@ -1,11 +1,9 @@
 package br.com.vitorsalgado.example
 
 import android.os.StrictMode
-import br.com.vitorsalgado.example.trackers.ActivityLifecycleTracker
-import br.com.vitorsalgado.example.trackers.FragmentLifecycleTracker
-import br.com.vitorsalgado.example.trackers.FrescoCacheStatsTracker
+import br.com.vitorsalgado.example.trackers.ActivityDebugLifecycleTracker
+import br.com.vitorsalgado.example.trackers.FragmentDebugLifecycleTracker
 import br.com.vitorsalgado.example.utils.LogUtility
-import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
@@ -24,9 +22,10 @@ class DebugApp : App() {
       Stetho.newInitializerBuilder(this)
         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-        .build())
+        .build()
+    )
 
-    trackActivitiesAndFragmentsLifecycle()
+    trackActivitiesAndFragmentsLifecycleForDebug()
     Traceur.enableLogging()
     Timber.plant(Timber.DebugTree())
 
@@ -43,25 +42,25 @@ class DebugApp : App() {
   }
 
   private fun enableStrictMode() {
-    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-      .detectAll()
-      .penaltyFlashScreen()
-      .penaltyLog()
-      .build())
+    StrictMode.setThreadPolicy(
+      StrictMode.ThreadPolicy.Builder()
+        .detectAll()
+        .penaltyFlashScreen()
+        .penaltyLog()
+        .build()
+    )
 
-    StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-      .detectAll()
-      .penaltyLog()
-      .build())
+    StrictMode.setVmPolicy(
+      StrictMode.VmPolicy.Builder()
+        .detectAll()
+        .penaltyLog()
+        .build()
+    )
   }
 
-  override fun trackFresco(builder: ImagePipelineConfig.Builder) {
-    builder.setImageCacheStatsTracker(FrescoCacheStatsTracker())
-  }
-
-  private fun trackActivitiesAndFragmentsLifecycle() {
-    val fragmentLifecycleTracker = FragmentLifecycleTracker()
-    val activityLifecycleTracker = ActivityLifecycleTracker(fragmentLifecycleTracker)
+  private fun trackActivitiesAndFragmentsLifecycleForDebug() {
+    val fragmentLifecycleTracker = FragmentDebugLifecycleTracker()
+    val activityLifecycleTracker = ActivityDebugLifecycleTracker(fragmentLifecycleTracker)
 
     registerActivityLifecycleCallbacks(activityLifecycleTracker)
   }

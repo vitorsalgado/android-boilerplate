@@ -3,18 +3,27 @@ import java.nio.file.Paths
 
 rootProject.name = 'Boilerplate'
 
-include ':app', ':domain-authencation'
-include ':libs:log', ':libs:toolkit', ':libs:toolkit-android', ':libs:api', ':libs:analytics'
+include ':app'
+include ':libs:log', ':libs:toolkit', ':libs:utils', ':libs:api', ':libs:analytics'
+include ':features:feat-authentication'
+include ':tools'
 
 def buildFileChanged = { project -> !Files.exists(Paths.get("$project.projectDir/build.gradle")) }
 
+def isUsingKotlinDSL = { project -> Files.exists(Paths.get("$project.projectDir/$project.name" + ".gradle.kts"))}
+
 def changeBuildFileName = { project ->
   if (buildFileChanged(project)) {
+    if (isUsingKotlinDSL(project)) {
+      project.buildFileName = project.name + '.gradle.kts'
+      return
+    }
+
     project.buildFileName = project.name + '.gradle'
   }
 }
 
-def isGroupDir = { dir -> dir == 'libs' }
+def isGroupDir = { dir -> dir == 'libs' || dir == 'features' }
 
 /**
  * Changes gradle internal build file name reference according

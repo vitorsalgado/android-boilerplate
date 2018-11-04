@@ -1,12 +1,16 @@
 object Versions {
-  val kotlin = "1.2.71"
+  val kotlin = "1.3.0"
 
   // support
-  val supportLibrary = "27.1.1"
-  val testSupportLibrary = "1.1.0-alpha1"
+  val testCore = "1.1.0"
   val constraintLayout = "1.1.2"
-  val orchestrator = "1.1.0-alpha1"
+  val orchestrator = "1.1.0"
   val navigation = "1.0.0-alpha04"
+
+  //
+  val design = "1.0.0-rc01"
+  val androidx = "1.0.0"
+  //
 
   // test dependencies
   val junit = "4.12"
@@ -25,7 +29,7 @@ object Versions {
   val play_services = "16.0.1"
   val firebase_core = "16.0.4"
   val firebase_messaging = "17.3.4"
-  val firebase_remote_config = "16.0.1"
+  val firebase_remote_config = "16.1.0"
   val gson = "2.8.5"
   val fresco = "1.9.0"
   val rxAndroid = "2.0.2"
@@ -37,7 +41,7 @@ object Versions {
   val dagger = "2.16"
   val fabric = "1.25.4"
   val rootbeer = "0.0.7"
-  val google_services = "4.1.0"
+  val google_services = "4.2.0"
   val owasp_dependency_check = "3.2.1"
   val sonar = "2.6.1"
   val timber = "4.7.1"
@@ -47,7 +51,7 @@ object Versions {
   val arch = "1.1.1"
 
   // utils
-  val leakCanary = "1.5.4"
+  val leakCanary = "1.6.2"
   val stetho = "1.5.0"
   val jacoco = "0.8.1"
   val coveralls = "2.8.2"

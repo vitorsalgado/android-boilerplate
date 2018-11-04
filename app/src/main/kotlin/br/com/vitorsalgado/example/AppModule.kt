@@ -3,9 +3,9 @@ package br.com.vitorsalgado.example
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import br.com.vitorsalgado.example.api.gateway.Api
-import br.com.vitorsalgado.example.api.gateway.ApiFactory
-import br.com.vitorsalgado.example.api.gateway.Config
+import br.com.vitorsalgado.example.api.bff.Api
+import br.com.vitorsalgado.example.api.bff.ApiFactory
+import br.com.vitorsalgado.example.api.bff.Config
 import com.facebook.CallbackManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

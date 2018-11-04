@@ -3,7 +3,8 @@ import java.util.regex.Pattern
 import static java.util.regex.Pattern.compile
 
 task listLayoutIDs {
-  group "QA"
+  group 'utils'
+  description 'Print all IDs contained in Android layout files'
 
   doLast {
     final Pattern VIEW = compile("<([\\w.]+)")

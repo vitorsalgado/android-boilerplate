@@ -10,7 +10,7 @@ class AnalyticsActivityLifecycle : Application.ActivityLifecycleCallbacks {
 
   override fun onActivityResumed(activity: Activity?) {
     if (activity is TraceableScreen) {
-      AnalyticsUtils.trackView(activity, (activity as TraceableScreen).screenName)
+      AnalyticsUtils.trackView(activity, (activity as TraceableScreen).name)
     }
   }
 

@@ -139,7 +139,7 @@ dependencies {
   // Project Libraries
   // ---------------------------------------------------------------------------------------------
   implementation project(':libs:toolkit')
-  implementation project(':libs:toolkit-android')
+  implementation project(':libs:utils')
   implementation project(':libs:api')
   implementation project(':libs:analytics')
 
@@ -151,26 +151,10 @@ dependencies {
   // ---------------------------------------------------------------------------------------------
   // Dependencies
   // ---------------------------------------------------------------------------------------------
-  implementation Dependencies.supportAnnotations
-  implementation Dependencies.supportConstraintLayout
-  implementation(Dependencies.supportAppCompatV7) {
-    exclude module: 'support-annotations'
-    exclude module: 'support-v4'
-    exclude module: 'cardview-v7'
-  }
-  implementation(Dependencies.supportDesign) {
-    exclude module: 'support-v4'
-    exclude module: 'appcompat-v7'
-    exclude module: 'recyclerview-v7'
-    exclude module: 'cardview-v7'
-  }
-  implementation Dependencies.supportV4
-  implementation Dependencies.supportV13
-  implementation(Dependencies.supportRecyclerView) {
-    exclude module: 'support-annotations'
-    exclude module: 'support-compat'
-    exclude module: 'support-core-ui'
-  }
+  implementation Dependencies.constraintLayout
+  implementation(Dependencies.appcompat)
+  implementation(Dependencies.design)
+  implementation(Dependencies.recyclerView)
   implementation Dependencies.archExtensions
   kapt Dependencies.archCompiler
   implementation Dependencies.navigationFragment
@@ -199,6 +183,7 @@ dependencies {
   releaseImplementation Dependencies.leakCanaryNoOp
   testImplementation Dependencies.leakCanaryNoOp
   debugImplementation Dependencies.leakCanary
+  debugImplementation Dependencies.leakCanaryFragment
   debugImplementation Dependencies.stetho
   debugImplementation Dependencies.stethoOkHttp3
   debugImplementation Dependencies.traceur
@@ -221,11 +206,11 @@ dependencies {
   androidTestImplementation TestDependencies.mockitoAndroid
   androidTestImplementation TestDependencies.supportTestRunner
   androidTestUtil TestDependencies.testOrchestrator
-  androidTestImplementation TestDependencies.supportTestRules
-  androidTestImplementation TestDependencies.supportTestEspressoCore
-  androidTestImplementation TestDependencies.supportTestEspressoContrib
-  androidTestImplementation TestDependencies.supportTestEspressoIntents
-  androidTestImplementation TestDependencies.supportTestEspressoWeb
+  androidTestImplementation TestDependencies.testRules
+  androidTestImplementation TestDependencies.testEspressoCore
+  androidTestImplementation TestDependencies.testEspressoContrib
+  androidTestImplementation TestDependencies.testEspressoIntents
+  androidTestImplementation TestDependencies.testEspressoWeb
   androidTestImplementation TestDependencies.testButler
 }
 
