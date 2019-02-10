@@ -1,5 +1,5 @@
 object Versions {
-  val kotlin = "1.3.0"
+  val kotlin = "1.3.20"
 
   // support
   val testCore = "1.1.0"
@@ -16,10 +16,10 @@ object Versions {
   val junit = "4.12"
   val junit5 = "5.2.0"
   val hamcrest = "1.3"
-  val testButler = "1.3.2"
+  val testButler = "1.4.0"
   val robolectric = "3.8"
   val espresso = "3.1.0-alpha1"
-  val mockito = "2.19.0"
+  val mockito = "2.23.0"
   val requestmatcher = "2.2.0"
   val jsonpathassert = "2.2.0"
 
@@ -39,7 +39,7 @@ object Versions {
   val crashlytics = "2.9.5"
   val traceur = "1.0.1"
   val dagger = "2.16"
-  val fabric = "1.25.4"
+  val fabric = "1.27.1"
   val rootbeer = "0.0.7"
   val google_services = "4.2.0"
   val owasp_dependency_check = "3.2.1"

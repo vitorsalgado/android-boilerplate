@@ -1,0 +1,3 @@
+[submodule "@wiremock-toolkit"]
+	path = @wiremock-toolkit
+	url = git@github.com:vitorsalgado/wiremock-toolkit

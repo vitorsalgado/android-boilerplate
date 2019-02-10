@@ -110,6 +110,6 @@ cp:
 
 new-project:
 	npm install && \
-	node cli.js
+	node project-starter-cli.js
 
-.PHONY: build qark
+.PHONY: build

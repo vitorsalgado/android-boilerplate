@@ -2,9 +2,9 @@
   "name": "refactor.tool",
   "version": "1.0.0",
   "description": "CLI tool to change currently boilerplate structure to a new desired one",
-  "main": "cli.js",
+  "main": "project-starter-cli.js",
   "scripts": {
-    "start": "node cli"
+    "start": "node project-starter-cli"
   },
   "license": "Apache-2.0",
   "dependencies": {

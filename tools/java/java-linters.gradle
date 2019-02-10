@@ -1,4 +1,4 @@
-def lintersDir = "$rootDir/tools/java/linters"
+def lintersDir = "$rootDir/tools/linters/java/config"
 def reportsDir = "$rootDir/reports"
 
 afterEvaluate { project ->

@@ -4,10 +4,10 @@ import android.accounts.AccountManager.ACTION_AUTHENTICATOR_INTENT
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import br.com.vitorsalgado.example.api.bff.Api
+import br.com.vitorsalgado.example.api.bff.BffApi
 
 class AccountAuthenticatorService : Service() {
-  private var api: Api? = null
+  private var bffApi: BffApi? = null
   private var authenticator: AccountAuthenticator? = null
 
   override fun onBind(intent: Intent?): IBinder? {
@@ -18,7 +18,7 @@ class AccountAuthenticatorService : Service() {
 
   private fun getAuthenticator(): AccountAuthenticator {
     if (authenticator == null) {
-      authenticator = AccountAuthenticator(this, this.api!!)
+      authenticator = AccountAuthenticator(this, this.bffApi!!)
     }
 
     return authenticator as AccountAuthenticator

@@ -81,7 +81,6 @@ keystores/
 
 # IDEs
 *.iml
-!/.idea/codeStyles/codeStyleConfig.xml
 /.idea/
 .project
 .vscode/

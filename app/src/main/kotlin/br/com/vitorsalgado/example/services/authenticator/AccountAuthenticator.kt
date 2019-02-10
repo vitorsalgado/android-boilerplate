@@ -9,7 +9,7 @@ import android.accounts.NetworkErrorException
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import br.com.vitorsalgado.example.api.bff.Api
+import br.com.vitorsalgado.example.api.bff.BffApi
 import br.com.vitorsalgado.example.api.bff.dtos.OAuthResponse
 import br.com.vitorsalgado.example.features.authentication.LoginActivity
 import br.com.vitorsalgado.example.services.authenticator.AuthConstants.Companion.ACCOUNT_AUTHTOKEN_TYPE
@@ -18,7 +18,7 @@ import br.com.vitorsalgado.example.services.authenticator.AuthConstants.Companio
 import br.com.vitorsalgado.example.utils.LogUtility
 import java.util.UUID
 
-class AccountAuthenticator internal constructor(private val context: Context, private val api: Api) : AbstractAccountAuthenticator(context) {
+class AccountAuthenticator internal constructor(private val context: Context, private val bffApi: BffApi) : AbstractAccountAuthenticator(context) {
 
   override fun editProperties(accountAuthenticatorResponse: AccountAuthenticatorResponse, s: String): Bundle? {
     return null
@@ -96,7 +96,7 @@ class AccountAuthenticator internal constructor(private val context: Context, pr
 
     if (AuthUtils.isAccessTokenExpired(expiresIn)) {
       val state = UUID.randomUUID().toString()
-      oauth = api.refreshToken("", state, authToken, refreshToken)
+      oauth = bffApi.refreshToken("", state, authToken, refreshToken)
         .blockingFirst()
         .body
 

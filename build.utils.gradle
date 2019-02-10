@@ -1,7 +1,10 @@
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.regex.Pattern
 
-static def shouldSkip(project) { return project.name == "libs" }
+import static java.util.regex.Pattern.compile
+
+static def shouldSkip(project) { return project.name == "libs" || project.name == "features" }
 
 static def isAndroidModule(project) {
   return project.plugins.find {
@@ -34,11 +37,44 @@ task generateLocalTestFolders {
 
   doLast {
     subprojects {
-      def isGroupDir = { dir -> dir == 'libs' }
+      def isGroupDir = { dir -> dir == 'libs' || dir == 'features' }
       def testDir = "$it.projectDir/src/test"
 
       if (!Files.exists(Paths.get(testDir)) && !isGroupDir(it.name))
         Files.createDirectories(Paths.get("$testDir/kotlin"))
+    }
+  }
+}
+
+task listLayoutIDs {
+  group 'utils'
+  description 'Print all IDs contained in Android layout files'
+
+  doLast {
+    final Pattern VIEW = compile("<([\\w.]+)")
+    final Pattern ID = compile("android:id=\"(.*?)\"")
+
+    def layoutDir = "${project.projectDir.absolutePath}/src/main/res/layout"
+
+    println "LayoutDir = $layoutDir"
+
+    def files = new File(layoutDir).listFiles()
+
+    files.each {
+      println "\n${it.getName()}"
+      String viewType
+
+      it.newReader().lines().each {
+        def viewMatcher = VIEW.matcher(it)
+
+        if (viewMatcher.find())
+          viewType = viewMatcher.group(1)
+
+        def idMatcher = ID.matcher(it)
+
+        if (idMatcher.find())
+          println "\t${idMatcher.group(1)} -> $viewType"
+      }
     }
   }
 }

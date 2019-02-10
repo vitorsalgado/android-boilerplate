@@ -3,8 +3,8 @@ package br.com.vitorsalgado.example
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import br.com.vitorsalgado.example.api.bff.Api
-import br.com.vitorsalgado.example.api.bff.ApiFactory
+import br.com.vitorsalgado.example.api.bff.BffApi
+import br.com.vitorsalgado.example.api.bff.BffApiFactory
 import br.com.vitorsalgado.example.api.bff.Config
 import com.facebook.CallbackManager
 import com.google.gson.Gson
@@ -45,12 +45,12 @@ internal class AppModule {
 
   @Provides
   @Singleton
-  fun provideApi(okBuilder: OkHttpClient.Builder, gson: Gson): Api {
+  fun provideApi(okBuilder: OkHttpClient.Builder, gson: Gson): BffApi {
     val uri = BuildConfig.API_URI
     val cache = "br.com.vitorsalgado.example.network.cache"
     val config = Config(uri, File(cache), cache, 100 * 1024 * 1024)
 
-    return ApiFactory.build(okBuilder, gson, config)
+    return BffApiFactory.build(okBuilder, gson, config)
   }
 
   @Provides

@@ -26,6 +26,7 @@
   <!-- ####################################################################################### -->
 
   <application
+    android:name=".App"
     android:allowBackup="false"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
@@ -52,7 +53,7 @@
       android:name=".features.main.MainActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.Launcher">
-      <nav-graph android:value="@navigation/nav_graph" />
+      <nav-graph android:value="@navigation/navigation" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -78,17 +79,10 @@
 
     <!-- Firebase -->
     <service
-      android:name=".services.push.MessagingService"
+      android:name=".services.push.DefaultFirebaseMessagingService"
       tools:ignore="ExportedService">
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
-      </intent-filter>
-    </service>
-    <service
-      android:name=".services.push.InstanceIdService"
-      tools:ignore="ExportedService">
-      <intent-filter>
-        <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
       </intent-filter>
     </service>
     <!-- Authenticator -->

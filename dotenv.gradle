@@ -2,9 +2,9 @@ def load() {
   def envFile = '.env'
   def env = [:]
 
-  File file = new File("$rootDir/$envFilev")
+  File file = new File("$rootDir/$envFile")
 
-  if(!file.exists()) {
+  if (!file.exists()) {
     println('******************************')
     println('no .env file found')
     return
@@ -25,10 +25,15 @@ def apply() {
   android {
     defaultConfig {
       project.env.each { k, v ->
-        def escaped = v.replaceAll("%","\\\\u0025")
+        def escaped = v.replaceAll("%", "\\\\u0025")
         buildConfigField "String", k, "\"$v\""
         resValue "string", k, "\"$escaped\""
       }
     }
   }
 }
+
+load()
+
+ext.loadEnvs = this.&load
+ext.applyEnvsInAndroidConfig = this.&apply

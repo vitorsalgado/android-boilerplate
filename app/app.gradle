@@ -4,8 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
-apply from: "$rootDir/tools/layout-ids.gradle"
-apply from: "$rootDir/tools/test-butler.gradle"
+apply from: "$rootDir/tools/instrumentation/test-butler.gradle"
 apply from: "$rootDir/tools/coverage.gradle"
 
 final app_name = 'Boilerplate'
@@ -30,8 +29,8 @@ android {
     check 'Interoperability'
     checkAllWarnings true
     warningsAsErrors true
-    lintConfig file("$rootDir/lint.xml")
-    baseline file("$rootDir/lint-baseline.xml")
+    lintConfig file("$projectDir/lint.xml")
+    baseline file("$projectDir/lint-baseline.xml")
 
     if (BuildUtils.isCI) {
       textReport true
@@ -94,7 +93,7 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
 
       resValue 'string', 'app_name', app_name
-      buildConfigField 'String', 'API_URI', '"http://api.prod"'
+      buildConfigField 'String', 'API_URI', '"http://bffApi.prod"'
     }
 
     applicationVariants.all { variant ->
@@ -138,10 +137,9 @@ dependencies {
   // ---------------------------------------------------------------------------------------------
   // Project Libraries
   // ---------------------------------------------------------------------------------------------
-  implementation project(':libs:toolkit')
-  implementation project(':libs:utils')
-  implementation project(':libs:api')
-  implementation project(':libs:analytics')
+  implementation project(':utils')
+  implementation project(':api')
+  implementation project(':analytics')
 
   // ---------------------------------------------------------------------------------------------
   // Kotlin

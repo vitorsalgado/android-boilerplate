@@ -13,7 +13,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
-abstract class App : Application(), HasActivityInjector {
+open class App : Application(), HasActivityInjector {
   companion object {
     const val SHARED_PREFERENCES = "br.com.vitorsalgado.example.shared_prefs"
     const val DATABASE = "br.com.vitorsalgado.example.database"

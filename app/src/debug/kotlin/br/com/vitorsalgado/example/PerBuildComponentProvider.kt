@@ -16,7 +16,7 @@ internal class PerBuildComponentProvider {
       .addInterceptor(HttpLoggingInterceptor().setLevel(BODY))
   }
 
-  fun imageCacheStatsTracker(): ImageCacheStatsTracker {
+  fun imageCacheStatsTracker(): ImageCacheStatsTracker? {
     return FrescoDebugCacheStatsTracker()
   }
 

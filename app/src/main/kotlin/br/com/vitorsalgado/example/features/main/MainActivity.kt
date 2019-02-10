@@ -8,23 +8,17 @@ import android.os.Handler
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
+import androidx.navigation.findNavController
 import br.com.vitorsalgado.example.R
 import br.com.vitorsalgado.example.utils.AppUtils
-import br.com.vitorsalgado.example.utils.delegates.viewWithId
 import com.google.android.material.tabs.TabLayout
 
-class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
+class MainActivity : AppCompatActivity() {
   private var mCurrentTab = 0
   private var mDoubleBackToExitPressedOnce = false
   private val mDoubleBackHandler = Handler()
   private val mExitRunnable = { mDoubleBackToExitPressedOnce = false }
   private var mExitToast: Toast? = null
-
-  private val tabPager: ViewPager by viewWithId(R.id.tabPager)
-  private val tabs: TabLayout by viewWithId(R.id.tabs)
 
   companion object {
     private const val REQUEST_CODE_RECOVER_PLAY_SERVICES = 9001
@@ -52,6 +46,8 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     setLayout()
   }
 
+  override fun onSupportNavigateUp() = findNavController(R.id.navHost).navigateUp()
+
   override fun onBackPressed() {
     if (mDoubleBackToExitPressedOnce) {
       super.onBackPressed()
@@ -78,24 +74,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
   // endregion
 
-  // region TabLayout Events
-
-  override fun onTabSelected(tab: TabLayout.Tab) {
-    tabPager.currentItem = tab.position
-    mCurrentTab = tab.position
-
-    setTabColor(tab, ContextCompat.getColor(this, R.color.tab_selected))
-  }
-
-  override fun onTabUnselected(tab: TabLayout.Tab) {
-    setTabColor(tab, ContextCompat.getColor(this, R.color.tab_selected))
-  }
-
-  override fun onTabReselected(tab: TabLayout.Tab) {
-  }
-
-  // endregion
-
   // region Helpers
 
   private fun setTabIcon(tab: TabLayout.Tab?, @DrawableRes icon: Int) {
@@ -113,27 +91,6 @@ class MainActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
   private fun setLayout() {
     setTheme(R.style.AppTheme)
     setContentView(R.layout.main_activity)
-
-    val fragments = ArrayList<Fragment>()
-    // Here we add the fragments for tabbed navigation
-    val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, fragments)
-    tabPager.adapter = viewPagerAdapter
-
-    // Offscreen limit according to total tabs
-    // binding.tabPager.setOffscreenPageLimit(<TOTAL_TABS>);
-
-    tabs.setupWithViewPager(tabPager)
-    tabs.tabGravity = TabLayout.GRAVITY_FILL
-    tabs.addOnTabSelectedListener(this)
-
-    tabPager.currentItem = mCurrentTab
-
-    // Adding tab icons
-    // setTabIcon(binding.tablayoutMain.getTabAt(0), <ICON_RESOURCE>);
-
-    // Initializing tabs states
-    // setTabColor(binding.tablayoutMain.getTabAt(0), ContextCompat.getColor(this, R.color.tab_unselected));
-    // setTabColor(binding.tablayoutMain.getTabAt(mCurrentTab), ContextCompat.getColor(this, R.color.tab_seletected));
   }
 
   // endregion

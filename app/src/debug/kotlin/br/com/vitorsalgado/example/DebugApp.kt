@@ -1,5 +1,6 @@
 package br.com.vitorsalgado.example
 
+import android.net.TrafficStats
 import android.os.StrictMode
 import br.com.vitorsalgado.example.trackers.ActivityDebugLifecycleTracker
 import br.com.vitorsalgado.example.trackers.FragmentDebugLifecycleTracker
@@ -28,6 +29,7 @@ class DebugApp : App() {
     trackActivitiesAndFragmentsLifecycleForDebug()
     Traceur.enableLogging()
     Timber.plant(Timber.DebugTree())
+    TrafficStats.setThreadStatsTag(1)
 
     enableStrictMode()
   }
