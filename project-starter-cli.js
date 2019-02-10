@@ -43,7 +43,7 @@ Inquirer.prompt(
     const libraries = [
       `${root}/app`,
       `${root}/analytics`,
-      `${root}/utis`,
+      `${root}/utils`,
       `${root}/api`
     ]
 
