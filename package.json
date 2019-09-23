@@ -8,6 +8,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "inquirer": "^5.0.0"
+    "inquirer": "^5.0.0",
+    "chokidar": "2.0.0"
   }
 }
